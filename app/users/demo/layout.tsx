@@ -1,5 +1,6 @@
 import {
   LayoutDashboard,
+  LayoutDashboardIcon,
   PanelLeft,
   ReceiptText,
   Table2Icon,
@@ -17,17 +18,17 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import React from "react";
 
-export default function DashBoardNav() {
+export default function DashBoardNav({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   const home = "/users/demo";
   return (
     <>
       <Sheet>
         <SheetTrigger asChild>
-          <Button
-            size="icon"
-            variant="outline"
-            className="sm:hidden fixed top-2 left-2 z-50"
-          >
+          <Button size="icon" variant="outline" className="sm:hidden">
             <PanelLeft className="h-5 w-5" />
             <span className="sr-only">Toggle Menu</span>
           </Button>
@@ -35,10 +36,10 @@ export default function DashBoardNav() {
         <SheetContent side="left" className="sm:max-w-xs">
           <nav className="grid gap-6 text-lg font-medium">
             <Link
-              href={`${home}`}
+              href={home}
               className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
             >
-              <LayoutDashboard className="h-5 w-5" />
+              <LayoutDashboardIcon className="h-5 w-5" />
               Dashboard
             </Link>
 
@@ -46,11 +47,12 @@ export default function DashBoardNav() {
 
             <Link
               href={`${home}/rct`}
-              className="flex items-center gap-4 px-2.5 text-foreground"
+              className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
             >
               <ReceiptText className="h-5 w-5" />
               Receipt
             </Link>
+
             <Link
               href={`${home}/db`}
               className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
@@ -61,7 +63,7 @@ export default function DashBoardNav() {
           </nav>
         </SheetContent>
       </Sheet>
-      <aside className="fixed inset-y-0 left-0 z-20 hidden w-14 flex-col border-r bg-background sm:flex">
+      <aside className="fixed inset-y-0 left-0 z-50 hidden w-14 flex-col border-r bg-background sm:flex">
         <nav className="flex flex-col items-center gap-4 px-2 sm:py-4">
           <TooltipProvider>
             <Tooltip>
@@ -110,6 +112,7 @@ export default function DashBoardNav() {
           </TooltipProvider>
         </nav>
       </aside>
+      <div className="sm:ml-14">{children}</div>
     </>
   );
 }
