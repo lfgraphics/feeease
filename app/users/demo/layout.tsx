@@ -17,9 +17,16 @@ import {
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import React from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
-// constants.ts
 export const home = "/users/demo";
+
+const classes = ["Nursery", "LKG", "UKG", "1st", "2nd", "3rd"];
 
 export default function DashBoardNav({
   children,
@@ -45,7 +52,31 @@ export default function DashBoardNav({
               Dashboard
             </Link>
 
-            <div>classes will be listed here</div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  id="ddm"
+                  variant="outline"
+                  size="default"
+                  className="overflow-hidden w-32"
+                >
+                  Classes
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="center">
+                {classes.map((item, index) => (
+                  <DropdownMenuItem>
+                    <Link
+                      key={index}
+                      href={`${home}/class/${item}`}
+                      className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                    >
+                      {item}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
 
             <Link
               href={`${home}/rct`}
@@ -65,7 +96,7 @@ export default function DashBoardNav({
           </nav>
         </SheetContent>
       </Sheet>
-      <aside className="fixed inset-y-0 left-0 z-50 hidden w-14 flex-col border-r bg-background sm:flex">
+      <aside className="fixed inset-y-0 left-0 z-50 hidden w-24 flex-col border-r bg-background sm:flex">
         <nav className="flex flex-col items-center gap-4 px-2 sm:py-4">
           <TooltipProvider>
             <Tooltip>
@@ -82,7 +113,29 @@ export default function DashBoardNav({
             </Tooltip>
           </TooltipProvider>
 
-          <div>classes will be listed here</div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="default" className="w-20">
+                Classes
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              align="start"
+              className="flex flex-col gap-2 items-start p-4"
+            >
+              {classes.map((item, index) => (
+                <DropdownMenuItem>
+                  <Link
+                    key={index}
+                    className="w-full"
+                    href={`${home}/class/${item}`}
+                  >
+                    {item}
+                  </Link>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
 
           <TooltipProvider>
             <Tooltip>
@@ -114,7 +167,7 @@ export default function DashBoardNav({
           </TooltipProvider>
         </nav>
       </aside>
-      <div className="sm:ml-14">{children}</div>
+      <div className="ml-4 sm:ml-24 sm:mr-4 my-4">{children}</div>
     </>
   );
 }

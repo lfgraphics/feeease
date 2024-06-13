@@ -27,6 +27,7 @@ interface MonthlyFeeChartProps {
   data: number[];
   fillType?: "none" | "filled" | "gradient";
   gradientColors?: string[];
+  lineColor: string;
   width?: string;
   maxWidth?: string;
   height?: string;
@@ -37,6 +38,7 @@ const MonthlyFeeChart: React.FC<MonthlyFeeChartProps> = ({
   data,
   fillType = "none",
   gradientColors,
+  lineColor,
   width,
   maxWidth,
   height,
@@ -47,12 +49,12 @@ const MonthlyFeeChart: React.FC<MonthlyFeeChartProps> = ({
       {
         label: "Total Collection Recorded",
         data,
-        borderColor: "rgba(54, 162, 235, 1)",
+        borderColor: lineColor,
         backgroundColor:
           fillType === "filled" ? "rgba(54, 162, 235, 0.2)" : undefined,
         borderWidth: 2,
         fill: fillType !== "none",
-        tension: 0.1,
+        tension: 0.3,
         ...(fillType === "gradient" && gradientColors
           ? {
               backgroundColor: (context: any) => {

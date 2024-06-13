@@ -134,13 +134,22 @@ const ContactForm = () => {
               errors={state.errors}
             />
           </div>
-          <button
-            type="submit"
-            disabled={state.submitting}
-            className="bg-blue-500 p-2 rounded-md hover:bg-blue-700 w-full text-white"
-          >
-            Submit
-          </button>
+          <div className="flex gap-2 my-4">
+            <button
+              type="reset"
+              disabled={state.submitting}
+              className="bg-gray-500 p-2 rounded-md hover:bg-blue-700 w-full text-white"
+            >
+              Clear
+            </button>
+            <button
+              type="submit"
+              disabled={state.submitting}
+              className="bg-blue-500 p-2 rounded-md hover:bg-blue-700 w-full text-white"
+            >
+              Submit
+            </button>
+          </div>
         </>
       )}
     </form>

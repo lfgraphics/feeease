@@ -14,11 +14,28 @@ const ContactUs = () => {
       <div className=" rounded-lg p-8 md:border-l-2">
         <h2 className="text-2xl font-bold mb-4">Contact Details</h2>
         <div className="mb-4">
-          <h3 className="text-lg font-semibold mb-2">Location 1</h3>
-          <p>School/Institute Name</p>
-          <p>Contact Number: +91 XXXXXXXXXX</p>
-          <p>Email: example1@example.com</p>
-          <p>Address: ABC Street, XYZ City</p>
+          <h3 className="text-lg font-semibold mb-2">Cod Vista Office</h3>
+          <ul>
+            <li>
+              <p className="text-lg">
+                Shop Number 9, 1st Floor, <br /> SK Plaza Complex, <br />
+                Choteqazipur, Miyan Bazar Dakshini, <br /> Gorakhpur, Uttar
+                Pradesh, 273001
+              </p>
+            </li>
+            <li className="text-lg">
+              <a
+                href="mailto:contact@codvista.com"
+                className="hover:text-blue-700"
+              >
+                contact@codvista.com
+              </a>
+              {"    "}
+              <a href="tel:+919005228782" className="hover:text-blue-700">
+                (+91) 6393 440 986
+              </a>
+            </li>
+          </ul>
         </div>
         <div>
           <h3 className="text-lg font-semibold mb-2">Location 2</h3>

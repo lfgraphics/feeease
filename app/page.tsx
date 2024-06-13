@@ -43,7 +43,12 @@ export default function Home() {
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900">
       <header className="w-full py-8 bg-blue-600 shadow-md sticky top-0">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-          <h1 className="text-3xl font-bold text-white">FeeEase</h1>
+          <Image
+            src="/images/assets/logo-horizontal.png"
+            alt="Loading"
+            width={160}
+            height={60}
+          />
           <nav>
             <Link
               href="/contactus"
@@ -90,7 +95,7 @@ export default function Home() {
             <Image
               width={800}
               height={600}
-              src="/images/home/dashboard.jpg"
+              src="/images/home/dashboard.png"
               alt="FeeEase App Interface"
               className="rounded-lg shadow-lg "
             />
