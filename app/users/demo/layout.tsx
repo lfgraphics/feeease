@@ -18,12 +18,14 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import React from "react";
 
+// constants.ts
+export const home = "/users/demo";
+
 export default function DashBoardNav({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const home = "/users/demo";
   return (
     <>
       <Sheet>

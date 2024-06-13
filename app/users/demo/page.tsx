@@ -1,6 +1,12 @@
 import Image from "next/image";
 
-import { Search } from "lucide-react";
+import {
+  FilePlus,
+  NotepadText,
+  Search,
+  UserPlus,
+  UserRoundSearch,
+} from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 
@@ -8,17 +14,15 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
+  CardTitle,
   CardFooter,
   CardHeader,
-  CardTitle,
+  CardDescription,
 } from "@/components/ui/card";
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
@@ -35,17 +39,27 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import {
-  LineChart,
-  Line,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-} from "recharts";
-const data = [{ name: "Page A", uv: 400, pv: 2400, amt: 2400 }];
+import MonthlyFeeChart from "@/components/Chart";
+import Link from "next/link";
+import { home } from "./layout";
 
 export default function Dashboard() {
+  const labels = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const data = [12000, 11500, 12000, 15000, 12000, 11500, 13000, 12000, 12000, 11500, 13000, 15000];
+
   return (
     <>
       <div className="flex min-h-screen w-full flex-col bg-muted/40 sm:-ml-8">
@@ -67,7 +81,7 @@ export default function Dashboard() {
                   className="overflow-hidden rounded-full"
                 >
                   <Image
-                    src="/placeholder-user.jpg"
+                    src="/images/assets/logo.png"
                     width={36}
                     height={36}
                     alt="Avatar"
@@ -86,9 +100,28 @@ export default function Dashboard() {
           <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
             <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
               <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
+                <Card
+                  x-chunk="dashboard-05-chunk-2"
+                  className="insights sm:col-span-2"
+                >
+                  <CardHeader className="pb-2">
+                    <CardTitle>Total amount collected each month</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className=" min-w-[300px] max-w-[100%]">
+                      <MonthlyFeeChart
+                        labels={labels}
+                        data={data}
+                        fillType="filled"
+                        width="100%"
+                        height="150px"
+                      />
+                    </div>
+                  </CardContent>
+                </Card>
                 <Card x-chunk="dashboard-05-chunk-1" className="revenue">
                   <CardHeader className="pb-2">
-                    <CardDescription>Total Revenue</CardDescription>
+                    <CardTitle>Total Revenue</CardTitle>
                     <CardTitle className="text-4xl">$1,329</CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -102,7 +135,7 @@ export default function Dashboard() {
                 </Card>
                 <Card x-chunk="dashboard-05-chunk-2" className="pending">
                   <CardHeader className="pb-2">
-                    <CardDescription>Pendign This Month</CardDescription>
+                    <CardTitle>Pendign This Month</CardTitle>
                     <CardTitle className="text-4xl">$5,329</CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -116,7 +149,7 @@ export default function Dashboard() {
                 </Card>
                 <Card x-chunk="dashboard-05-chunk-2" className="reminders">
                   <CardHeader className="pb-2">
-                    <CardDescription>Reminders</CardDescription>
+                    <CardTitle>Reminders</CardTitle>
                     <CardTitle className="text-4xl">$5,329</CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -128,50 +161,82 @@ export default function Dashboard() {
                     <Progress value={12} aria-label="12% increase" />
                   </CardFooter>
                 </Card>
-                <Card x-chunk="dashboard-05-chunk-2" className="insights">
-                  <CardHeader className="pb-2">
-                    <CardDescription>
-                      Total amount collected each month
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-xs text-muted-foreground">
-                      Line chart will be displayed here working on it
-                      {/* <LineChart
-                        width={600}
-                        height={300}
-                        data={data}
-                        margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
-                      >
-                        <Line type="monotone" dataKey="uv" stroke="#8884d8" />
-                        <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-                        <XAxis dataKey="name" />
-                        <YAxis />
-                        <Tooltip />
-                      </LineChart> */}
-                    </div>
-                  </CardContent>
-                  <CardFooter>
-                    {/* <Progress value={12} aria-label="12% increase" /> */}
-                  </CardFooter>
-                </Card>
-                <Card className="" x-chunk="dashboard-05-chunk-0">
+                <Card className="student" x-chunk="dashboard-05-chunk-0">
                   <CardHeader className="pb-3">
                     <CardTitle>New Student</CardTitle>
-                    <CardDescription className="max-w-lg text-balance leading-relaxed">
-                      Introducing Our Dynamic Fees Management Dashboard for
-                      Seamless Management and Insightful Analysis.
-                    </CardDescription>
                   </CardHeader>
-                  <CardFooter>
-                    <Button>Add New Student</Button>
-                  </CardFooter>
+                  <Link href={`${home}/addstudent`} className="text-center">
+                    <CardContent className="text-center flex flex-col justify-center items-center mt-6">
+                      <UserPlus size={48} strokeWidth={3} />
+                      <CardDescription className="pt-3">
+                        Add new Student
+                      </CardDescription>
+                    </CardContent>
+                  </Link>
+                </Card>
+                <Card className="class" x-chunk="dashboard-05-chunk-0">
+                  <CardHeader className="pb-3">
+                    <CardTitle>New Class</CardTitle>
+                  </CardHeader>
+                  <Link href={`${home}/addclass`} className="text-center">
+                    <CardContent className="text-center flex flex-col justify-center items-center mt-6">
+                      <FilePlus size={48} strokeWidth={3} />
+                      <CardDescription className="pt-3">
+                        Add new Class
+                      </CardDescription>
+                    </CardContent>
+                  </Link>
+                </Card>
+                <Card className="find" x-chunk="dashboard-05-chunk-0">
+                  <CardHeader className="pb-3">
+                    <CardTitle>Find</CardTitle>
+                  </CardHeader>
+                  <Link href={`${home}/find`} className="text-center">
+                    <CardContent className="text-center flex flex-col justify-center items-center mt-6">
+                      <UserRoundSearch size={48} strokeWidth={3} />
+                      <CardDescription className="pt-3">
+                        Find Student
+                      </CardDescription>
+                    </CardContent>
+                  </Link>
+                </Card>
+                <Card className="report" x-chunk="dashboard-05-chunk-0">
+                  <CardHeader className="pb-3">
+                    <CardTitle>Report</CardTitle>
+                  </CardHeader>
+                  <Link href={`${home}/report`} className="text-center">
+                    <CardContent className="text-center flex flex-col justify-center items-center mt-6">
+                      <NotepadText size={48} strokeWidth={3} />
+                      <CardDescription className="pt-3">
+                        Generate and Print Report
+                      </CardDescription>
+                    </CardContent>
+                  </Link>
+                </Card>
+                <Card
+                  x-chunk="dashboard-05-chunk-2"
+                  className="insights sm:col-span-3"
+                >
+                  <CardHeader className="pb-2">
+                    <CardTitle>Total amount collected each month</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className=" min-w-[300px] max-w-[100%]">
+                      <MonthlyFeeChart
+                        labels={labels}
+                        data={data}
+                        fillType="filled"
+                        width="100%"
+                        height="150px"
+                      />
+                    </div>
+                  </CardContent>
                 </Card>
               </div>
               <Card x-chunk="dashboard-05-chunk-3">
                 <CardHeader className="px-7">
                   <CardTitle>Payments</CardTitle>
-                  <CardDescription>Most recent paid fees.</CardDescription>
+                  <CardTitle>Most recent paid fees.</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <Table>
@@ -193,163 +258,21 @@ export default function Dashboard() {
                     <TableBody>
                       <TableRow className="bg-accent">
                         <TableCell>
-                          <div className="font-medium">Liam Johnson</div>
+                          <div className="font-medium">Yusuf Khan</div>
                           <div className="hidden text-sm text-muted-foreground md:inline">
-                            liam@example.com
+                            yusuf.5678
                           </div>
                         </TableCell>
                         <TableCell className="hidden sm:table-cell">
-                          Sale
+                          Monthly
                         </TableCell>
                         <TableCell className="hidden sm:table-cell">
-                          <Badge className="text-xs" variant="secondary">
-                            Fulfilled
-                          </Badge>
+                          July
                         </TableCell>
                         <TableCell className="hidden md:table-cell">
-                          2023-06-23
+                          13-05-2024
                         </TableCell>
-                        <TableCell className="text-right">$250.00</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>
-                          <div className="font-medium">Olivia Smith</div>
-                          <div className="hidden text-sm text-muted-foreground md:inline">
-                            olivia@example.com
-                          </div>
-                        </TableCell>
-                        <TableCell className="hidden sm:table-cell">
-                          Refund
-                        </TableCell>
-                        <TableCell className="hidden sm:table-cell">
-                          <Badge className="text-xs" variant="outline">
-                            Declined
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="hidden md:table-cell">
-                          2023-06-24
-                        </TableCell>
-                        <TableCell className="text-right">$150.00</TableCell>
-                      </TableRow>
-                      {/* <TableRow>
-                          <TableCell>
-                            <div className="font-medium">Liam Johnson</div>
-                            <div className="hidden text-sm text-muted-foreground md:inline">
-                              liam@example.com
-                            </div>
-                          </TableCell>
-                          <TableCell className="hidden sm:table-cell">
-                            Sale
-                          </TableCell>
-                          <TableCell className="hidden sm:table-cell">
-                            <Badge className="text-xs" variant="secondary">
-                              Fulfilled
-                            </Badge>
-                          </TableCell>
-                          <TableCell className="hidden md:table-cell">
-                            2023-06-23
-                          </TableCell>
-                          <TableCell className="text-right">$250.00</TableCell>
-                        </TableRow> */}
-                      <TableRow>
-                        <TableCell>
-                          <div className="font-medium">Noah Williams</div>
-                          <div className="hidden text-sm text-muted-foreground md:inline">
-                            noah@example.com
-                          </div>
-                        </TableCell>
-                        <TableCell className="hidden sm:table-cell">
-                          Subscription
-                        </TableCell>
-                        <TableCell className="hidden sm:table-cell">
-                          <Badge className="text-xs" variant="secondary">
-                            Fulfilled
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="hidden md:table-cell">
-                          2023-06-25
-                        </TableCell>
-                        <TableCell className="text-right">$350.00</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>
-                          <div className="font-medium">Emma Brown</div>
-                          <div className="hidden text-sm text-muted-foreground md:inline">
-                            emma@example.com
-                          </div>
-                        </TableCell>
-                        <TableCell className="hidden sm:table-cell">
-                          Sale
-                        </TableCell>
-                        <TableCell className="hidden sm:table-cell">
-                          <Badge className="text-xs" variant="secondary">
-                            Fulfilled
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="hidden md:table-cell">
-                          2023-06-26
-                        </TableCell>
-                        <TableCell className="text-right">$450.00</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>
-                          <div className="font-medium">Liam Johnson</div>
-                          <div className="hidden text-sm text-muted-foreground md:inline">
-                            liam@example.com
-                          </div>
-                        </TableCell>
-                        <TableCell className="hidden sm:table-cell">
-                          Sale
-                        </TableCell>
-                        <TableCell className="hidden sm:table-cell">
-                          <Badge className="text-xs" variant="secondary">
-                            Fulfilled
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="hidden md:table-cell">
-                          2023-06-23
-                        </TableCell>
-                        <TableCell className="text-right">$250.00</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>
-                          <div className="font-medium">Olivia Smith</div>
-                          <div className="hidden text-sm text-muted-foreground md:inline">
-                            olivia@example.com
-                          </div>
-                        </TableCell>
-                        <TableCell className="hidden sm:table-cell">
-                          Refund
-                        </TableCell>
-                        <TableCell className="hidden sm:table-cell">
-                          <Badge className="text-xs" variant="outline">
-                            Declined
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="hidden md:table-cell">
-                          2023-06-24
-                        </TableCell>
-                        <TableCell className="text-right">$150.00</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>
-                          <div className="font-medium">Emma Brown</div>
-                          <div className="hidden text-sm text-muted-foreground md:inline">
-                            emma@example.com
-                          </div>
-                        </TableCell>
-                        <TableCell className="hidden sm:table-cell">
-                          Sale
-                        </TableCell>
-                        <TableCell className="hidden sm:table-cell">
-                          <Badge className="text-xs" variant="secondary">
-                            Fulfilled
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="hidden md:table-cell">
-                          2023-06-26
-                        </TableCell>
-                        <TableCell className="text-right">$450.00</TableCell>
+                        <TableCell className="text-right">₹300</TableCell>
                       </TableRow>
                     </TableBody>
                   </Table>
