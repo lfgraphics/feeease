@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import { Loader } from "lucide-react";
 
 const Loading: React.FC = () => {

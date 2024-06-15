@@ -35,6 +35,7 @@ import MonthlyFeeChart from "@/components/Chart";
 import Link from "next/link";
 
 import { home } from "./layout";
+import React from "react";
 
 export default function Dashboard() {
   const labels = [
