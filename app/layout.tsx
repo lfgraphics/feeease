@@ -7,8 +7,8 @@ import { Suspense } from "react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "FeeEase",
-  description: "FeeEase - A responsive and powerfull fees management software",
+  title: "FeeEase - Complete School Management",
+  description: "FeeEase - A responsive and powerful school management software for fees, attendance, staff, and more.",
 };
 
 export default function RootLayout({
@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Suspense fallback="loadinding.....">
+        <Suspense fallback="loading.....">
         {children}
         </Suspense>
       </body>

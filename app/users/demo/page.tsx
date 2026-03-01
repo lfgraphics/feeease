@@ -139,7 +139,7 @@ export default function Dashboard() {
                 </Card>
                 <Card x-chunk="dashboard-05-chunk-2" className="pending">
                   <CardHeader className="pb-2">
-                    <CardTitle>Pendign This Month</CardTitle>
+                    <CardTitle>Pending This Month</CardTitle>
                     <CardTitle className="text-4xl">$5,329</CardTitle>
                   </CardHeader>
                   <CardContent>

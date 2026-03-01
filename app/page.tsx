@@ -1,397 +1,457 @@
-import { Star } from "lucide-react";
+import { Star, Banknote, CalendarCheck, Users, GraduationCap, Wallet, BarChart3, Printer, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
 export const metadata = {
-  title: "FeeEase - Powerful Fee Management Tool",
+  title: "FeeEase - Complete School Management Solution",
   description:
-    "FeeEase offers a powerful fee management solution with online and offline capabilities. Streamline fee collection, track payments, and manage student accounts effortlessly.",
+    "FeeEase is the ultimate school management platform. Streamline fees, expenses, attendance, staff salaries, and student records in one powerful, easy-to-use application.",
   keywords:
-    "Fee Management, Online Fee Collection, Offline Fee Management, Student Accounts, Payment Tracking",
+    "School Management, Fee Collection, Expense Tracking, Attendance System, Salary Management, Staff Administration, Student Records",
   author: "FeeEase Team",
   viewport: "width=device-width, initial-scale=1",
   robots: "index, follow",
-  canonical: "https://www.mysheetapp.com",
+  canonical: "https://www.feeease.com",
   openGraph: {
     type: "website",
-    url: "https://www.mysheetapp.com",
-    title: "FeeEase - Powerful Fee Management Tool",
+    url: "https://www.feeease.com",
+    title: "FeeEase - Complete School Management Solution",
     description:
-      "FeeEase offers a powerful fee management solution with online and offline capabilities. Streamline fee collection, track payments, and manage student accounts effortlessly.",
+      "Manage your entire school ecosystem with FeeEase. Fees, expenses, attendance, salaries, and more.",
     images: [
       {
-        url: "https://www.mysheetapp.com/images/og-image.jpg",
+        url: "/images/og-image.jpg", // Assumed path
         width: 800,
         height: 600,
-        alt: "FeeEase",
+        alt: "FeeEase Dashboard",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    site: "@mysheetapp",
-    title: "FeeEase - Powerful Fee Management Tool",
+    site: "@feeease",
+    title: "FeeEase - Complete School Management Solution",
     description:
-      "FeeEase offers a powerful fee management solution with online and offline capabilities. Streamline fee collection, track payments, and manage student accounts effortlessly.",
-    image: "https://www.mysheetapp.com/images/twitter-image.jpg",
+      "Manage your entire school ecosystem with FeeEase. Fees, expenses, attendance, salaries, and more.",
+    image: "/images/twitter-image.jpg",
   },
 };
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 text-gray-900">
-      <header className="w-full py-8 bg-blue-600 shadow-md sticky top-0">
+    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 font-sans">
+      {/* Header */}
+      <header className="w-full py-4 bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-          <Image
-            src="/images/assets/logo-horizontal.png"
-            alt="Loading"
-            width={160}
-            height={60}
-          />
-          <nav>
-            <Link
-              href="/contactus"
-              className="bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-950"
-            >
-              Get Started
+          <div className="flex items-center gap-2">
+            <Image
+              src="/images/assets/logo-horizontal.png"
+              alt="FeeEase Logo"
+              width={140}
+              height={50}
+              className="object-contain"
+              priority
+            />
+          </div>
+          <nav className="hidden md:flex items-center gap-6">
+            <Link href="#features" className="text-slate-600 hover:text-blue-600 font-medium transition-colors">
+              Features
             </Link>
-            <Link
-              href="/login"
-              className="bg-transparent border border-white text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out ml-2"
-            >
-              Login
+            <Link href="#testimonials" className="text-slate-600 hover:text-blue-600 font-medium transition-colors">
+              Testimonials
             </Link>
+            <div className="flex items-center gap-3 ml-4">
+              <Link
+                href="/login"
+                className="text-slate-700 hover:text-blue-600 font-medium px-4 py-2 transition-colors"
+              >
+                Login
+              </Link>
+              <Link
+                href="/contactus"
+                className="bg-blue-600 text-white px-5 py-2.5 rounded-full font-medium hover:bg-blue-700 shadow-lg shadow-blue-200 transition-all hover:scale-105"
+              >
+                Get Started
+              </Link>
+            </div>
           </nav>
         </div>
       </header>
 
-      <section className="w-full py-16 bg-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center">
-          <div className="lg:w-1/2 lg:pr-8">
-            <h2 className="text-4xl font-bold mb-4">
-              Welcome to <span className="text-blue-600">FeeEase</span>
-            </h2>
-            <p className="text-xl mb-4 text-gray-800">
-              Effortlessly manage your school's fees with FeeEase. Our
-              comprehensive fee management tool simplifies collection, tracks
-              payments, and provides detailed analytics, all in one intuitive
-              platform.
+      {/* Hero Section */}
+      <section className="w-full py-20 lg:py-32 bg-gradient-to-b from-blue-50 to-white relative overflow-hidden">
+        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-blue-100 rounded-full blur-3xl opacity-50"></div>
+        <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 bg-purple-100 rounded-full blur-3xl opacity-50"></div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center relative z-10">
+          <div className="lg:w-1/2 lg:pr-12 mb-12 lg:mb-0 text-center lg:text-left">
+            <h1 className="text-5xl lg:text-6xl font-extrabold mb-6 leading-tight text-slate-900">
+              The All-In-One <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+                School Operating System
+              </span>
+            </h1>
+            <p className="text-xl mb-8 text-slate-600 leading-relaxed">
+              Simplify your educational institution's management. From <strong>Fee Collection</strong> and <strong>Expense Tracking</strong> to <strong>Attendance</strong> and <strong>Staff Salaries</strong>, FeeEase brings everything into one intuitive, modern dashboard.
             </p>
-            <ul className="text-lg list-disc list-inside text-gray-700 mb-8">
-              <li>Streamline your fee collection process</li>
-              <li>Real-time payment tracking and updates</li>
-              <li>Customizable reports and analytics</li>
-              <li>Seamless online and offline data access</li>
-            </ul>
-            <Link
-              href="/contactus"
-              className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out"
-            >
-              Get Started
-            </Link>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+              <Link
+                href="/contactus"
+                className="bg-blue-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-blue-700 shadow-xl shadow-blue-200 transition-all hover:-translate-y-1"
+              >
+                Start Your Free Trial
+              </Link>
+              <Link
+                href="#features"
+                className="bg-white text-slate-700 border border-slate-200 px-8 py-4 rounded-full font-bold text-lg hover:bg-slate-50 hover:border-slate-300 transition-all"
+              >
+                Explore Features
+              </Link>
+            </div>
           </div>
-          <div className="lg:w-1/2 lg:pl-8 mt-8 lg:mt-0">
-            <Image
-              width={800}
-              height={600}
-              src="/images/home/dashboard.png"
-              alt="FeeEase App Interface"
-              className="rounded-lg shadow-lg "
-            />
+          <div className="lg:w-1/2 relative">
+            <div className="relative rounded-2xl shadow-2xl overflow-hidden border border-slate-200 bg-white">
+               <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/10 to-purple-500/10 pointer-events-none"></div>
+               <Image
+                width={800}
+                height={600}
+                src="/images/home/dashboard.png"
+                alt="FeeEase Modern Dashboard"
+                className="w-full h-auto object-cover"
+                priority
+              />
+            </div>
+            {/* Floating Badges */}
+            <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-xl shadow-lg border border-slate-100 flex items-center gap-3 animate-bounce-slow">
+              <div className="p-2 bg-green-100 rounded-lg text-green-600">
+                <Banknote size={24} />
+              </div>
+              <div>
+                <p className="text-xs text-slate-500 font-semibold uppercase">Revenue</p>
+                <p className="text-lg font-bold text-slate-900">+25% Growth</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="w-full py-16">
+      {/* Features Grid */}
+      <section id="features" className="w-full py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h3
-            className="text-3xl font-bold text-center mb-8 bg-[url('/images/assets/yellowBrush.png')] bg-no-repeat bg-center"
-            style={{ backgroundSize: "100% 100%" }}
-          >
-            Key Features
-          </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-              <h4 className="text-2xl font-semibold mb-2">
-                Online and Offline Availability
-              </h4>
-              <p>
-                Access your data anytime, anywhere, with weekly syncing or
-                during every online session.
-              </p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-              <h4 className="text-2xl font-semibold mb-2">
-                On-Demand Product Installation
-              </h4>
-              <p>
-                Get our web-based app installed on demand to suit your needs
-                perfectly.
-              </p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-              <h4 className="text-2xl font-semibold mb-2">
-                Subscription-Based Model
-              </h4>
-              <p>
-                Enjoy affordable installation and monthly costs, including a
-                thermal printer setup for receipt printing.
-              </p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-              <h4 className="text-2xl font-semibold mb-2">
-                Cost-Effective Solution
-              </h4>
-              <p>
-                Our web-based app costs less than the fee of a single student,
-                making it a highly economical choice.
-              </p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-              <h4 className="text-2xl font-semibold mb-2">
-                Easy and Friendly UI
-              </h4>
-              <p>
-                Enjoy an intuitive interface similar to Excel, making navigation
-                and usage a breeze.
-              </p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-              <h4 className="text-2xl font-semibold mb-2">
-                Dashboard with Multiple Features
-              </h4>
-              <p>
-                Access a comprehensive dashboard displaying total revenue,
-                pending fees, payment reminders, and more, with detailed graphs
-                for better visualization.
-              </p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-              <h4 className="text-2xl font-semibold mb-2">
-                Easy Receipt Creation and Printing
-              </h4>
-              <p>
-                Create and print receipts effortlessly, with automatic fee
-                detection based on student class and month/exam of payment,
-                along with a record of all past transactions.
-              </p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-              <h4 className="text-2xl font-semibold mb-2">
-                Manage Classes/Batches Separately
-              </h4>
-              <p>
-                Easily manage and view data for each class or batch separately
-                for better organization and efficiency.
-              </p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-              <h4 className="text-2xl font-semibold mb-2">
-                Efficient Customer Support
-              </h4>
-              <p>
-                Receive personalized customer support to address any queries or
-                issues promptly and effectively.
-              </p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-              <h4 className="text-2xl font-semibold mb-2">
-                Personalized Receipts and Accounts
-              </h4>
-              <p>
-                Provide users with personalized receipts and accounts tailored
-                to their branding preferences and our user-friendly interface.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="w-full py-16 bg-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h3 className="text-3xl font-bold text-center mb-8">How It Works</h3>
-          <div className="flex flex-col lg:flex-row lg:space-x-8">
-            <div className="flex-1 bg-white p-6 rounded-lg shadow-lg mb-8 lg:mb-0">
-              <h4 className="text-2xl font-semibold mb-2">
-                Connect with Sales Team
-              </h4>
-              <p>
-                Contact our sales team to discuss your requirements and provide
-                your branding data.
-              </p>
-            </div>
-            <div className="flex-1 bg-white p-6 rounded-lg shadow-lg mb-8 lg:mb-0">
-              <h4 className="text-2xl font-semibold mb-2">
-                Personalized Setup
-              </h4>
-              <p>
-                We'll create your personalized dashboard, set up your branded
-                receipts, and provide a thermal printer for printing. On-demand
-                1-on-1 training is also available.
-              </p>
-            </div>
-            <div className="flex-1 bg-white p-6 rounded-lg shadow-lg">
-              <h4 className="text-2xl font-semibold mb-2">
-                Start Your Subscription
-              </h4>
-              <p>
-                Begin your subscription with a minimal initial investment and
-                start managing your fees effortlessly.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <div className="container mx-auto">
-        <section className="w-full py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h3 className="text-3xl font-bold text-center mb-8">
-              Benefits and Differences
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-blue-600 font-semibold tracking-wide uppercase text-sm mb-3">Powerful Capabilities</h2>
+            <h3 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
+              Everything You Need to Run Your School
             </h3>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div className="bg-white p-6 rounded-lg shadow-lg">
-                <h4 className="text-2xl font-semibold mb-4">
-                  Benefits of FeeEase
-                </h4>
-                <ul className="list-disc list-inside">
-                  <li>
-                    <strong>Personalized Setup:</strong> Connect with our sales
-                    team for tailored setup, including a personalized dashboard
-                    and branded receipts.
-                  </li>
-                  <li>
-                    <strong>Branded Receipts:</strong> Enhance your professional
-                    image with branded receipts reflecting your organization's
-                    identity.
-                  </li>
-                  <li>
-                    <strong>On-Demand Training:</strong> Get up to speed quickly
-                    with on-demand 1-on-1 training sessions for efficient
-                    platform usage.
-                  </li>
-                  <li>
-                    <strong>Thermal Printer Integration:</strong> Enjoy seamless
-                    printing with a provided thermal printer for receipt
-                    generation.
-                  </li>
-                  <li>
-                    <strong>Minimal Initial Investment:</strong> Start your
-                    subscription with a minimal upfront investment, ensuring
-                    affordability.
-                  </li>
-                </ul>
-              </div>
-              <div className="bg-white p-6 rounded-lg shadow-lg">
-                <h4 className="text-2xl font-semibold mb-4">
-                  Differences from Other Solutions
-                </h4>
-                <ul className="list-disc list-inside">
-                  <li>
-                    <strong>Personalization:</strong> FeeEase offers a highly
-                    personalized experience compared to generic fee management
-                    solutions.
-                  </li>
-                  <li>
-                    <strong>Thermal Printer Provision:</strong> Unlike other
-                    platforms, FeeEase provides a thermal printer for
-                    hassle-free receipt printing.
-                  </li>
-                  <li>
-                    <strong>On-Demand Training:</strong> Benefit from on-demand
-                    1-on-1 training, setting FeeEase apart from solutions with
-                    limited support options.
-                  </li>
-                  <li>
-                    <strong>Affordable Subscription Model:</strong> FeeEase
-                    stands out with its affordable subscription model, making it
-                    accessible to all.
-                  </li>
-                  <li>
-                    <strong>Comprehensive Support:</strong> Receive
-                    comprehensive customer support throughout your FeeEase
-                    journey, ensuring a smooth experience.
-                  </li>
-                </ul>
-              </div>
-            </div>
+            <p className="text-lg text-slate-600">
+              Stop juggling multiple spreadsheets and disjointed software. FeeEase integrates all core administrative functions into a single, cohesive platform.
+            </p>
           </div>
-        </section>
-      </div>
 
-      <section className="w-full py-16 bg-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h3 className="text-3xl font-bold text-center mb-8">Testimonials</h3>
-          <div className="flex justify-center">
-            <div className="max-w-3xl grid grid-cols-1 gap-8 lg:grid-cols-2">
-              <div className="bg-white rounded-lg shadow-lg">
-                <div className="p-6">
-                  <Image
-                    width={300}
-                    height={300}
-                    src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                    alt="User 1"
-                    className="w-20 h-20 rounded-full mx-auto mb-4"
-                  />
-                  <div className="text-center mb-2">
-                    <p className="text-lg font-semibold">John Doe</p>
-                    <div className="flex justify-center">
-                      <Star className="fill-yellow-400 stroke-none scale-125 m-1" />
-                      <Star className="fill-yellow-400 stroke-none scale-125 m-1" />
-                      <Star className="fill-yellow-400 stroke-none scale-125 m-1" />
-                      <Star className="fill-yellow-400 stroke-none scale-125 m-1" />
-                      <Star className="fill-yellow-400 stroke-none scale-125 m-1" />
-                    </div>
-                  </div>
-                  <p className="text-lg text-center">
-                    "FeeEase has transformed our fee management process. It's
-                    efficient and user-friendly, making our job so much easier."
-                  </p>
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Feature 1: Fee Management */}
+            <div className="group bg-slate-50 p-8 rounded-2xl hover:bg-white hover:shadow-xl hover:shadow-blue-100 transition-all duration-300 border border-slate-100 hover:border-blue-100">
+              <div className="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 mb-6 group-hover:scale-110 transition-transform">
+                <Wallet size={28} />
               </div>
-              <div className="bg-white rounded-lg shadow-lg">
-                <div className="p-6">
-                  <Image
-                    width={300}
-                    height={300}
-                    src="https://images.unsplash.com/photo-1639149888905-fb39731f2e6c?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                    alt="User 2"
-                    className="w-20 h-20 rounded-full mx-auto mb-4"
-                  />
-                  <div className="text-center mb-2">
-                    <p className="text-lg font-semibold">Jane Smith</p>
-                    <div className="flex justify-center">
-                      <Star className="fill-yellow-400 stroke-none scale-125 m-1" />
-                      <Star className="fill-yellow-400 stroke-none scale-125 m-1" />
-                      <Star className="fill-yellow-400 stroke-none scale-125 m-1" />
-                      <Star className="fill-yellow-400 stroke-none scale-125 m-1" />
-                      <Star className="fill-yellow-400 stroke-none scale-125 m-1" />
-                    </div>
-                  </div>
-                  <p className="text-lg text-center">
-                    "We can now track payments in real-time and generate custom
-                    reports effortlessly. Highly recommend this tool!"
-                  </p>
-                </div>
+              <h4 className="text-xl font-bold mb-3 text-slate-900">Smart Fee Management</h4>
+              <p className="text-slate-600 leading-relaxed">
+                Automate fee collection, generate digital receipts, and track pending payments. Send automated reminders to parents via WhatsApp or SMS.
+              </p>
+            </div>
+
+            {/* Feature 2: Expense Tracking */}
+            <div className="group bg-slate-50 p-8 rounded-2xl hover:bg-white hover:shadow-xl hover:shadow-purple-100 transition-all duration-300 border border-slate-100 hover:border-purple-100">
+              <div className="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center text-purple-600 mb-6 group-hover:scale-110 transition-transform">
+                <BarChart3 size={28} />
               </div>
-              {/* Add more testimonials here */}
+              <h4 className="text-xl font-bold mb-3 text-slate-900">Expense Tracking</h4>
+              <p className="text-slate-600 leading-relaxed">
+                Keep a close eye on school expenditures. Categorize spending, upload bills, and generate monthly financial health reports.
+              </p>
+            </div>
+
+            {/* Feature 3: Attendance */}
+            <div className="group bg-slate-50 p-8 rounded-2xl hover:bg-white hover:shadow-xl hover:shadow-green-100 transition-all duration-300 border border-slate-100 hover:border-green-100">
+              <div className="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center text-green-600 mb-6 group-hover:scale-110 transition-transform">
+                <CalendarCheck size={28} />
+              </div>
+              <h4 className="text-xl font-bold mb-3 text-slate-900">Smart Attendance</h4>
+              <p className="text-slate-600 leading-relaxed">
+                Mark student attendance digitally. View monthly reports, track absentees, and manage holiday calendars effortlessly.
+              </p>
+            </div>
+
+            {/* Feature 4: Staff & Salary */}
+            <div className="group bg-slate-50 p-8 rounded-2xl hover:bg-white hover:shadow-xl hover:shadow-orange-100 transition-all duration-300 border border-slate-100 hover:border-orange-100">
+              <div className="w-14 h-14 bg-orange-100 rounded-xl flex items-center justify-center text-orange-600 mb-6 group-hover:scale-110 transition-transform">
+                <Users size={28} />
+              </div>
+              <h4 className="text-xl font-bold mb-3 text-slate-900">Staff & Salary Manager</h4>
+              <p className="text-slate-600 leading-relaxed">
+                Manage teacher profiles, and automate salary calculations. Generate payslips and maintain staff records securely.
+              </p>
+            </div>
+
+            {/* Feature 5: Students */}
+            <div className="group bg-slate-50 p-8 rounded-2xl hover:bg-white hover:shadow-xl hover:shadow-pink-100 transition-all duration-300 border border-slate-100 hover:border-pink-100">
+              <div className="w-14 h-14 bg-pink-100 rounded-xl flex items-center justify-center text-pink-600 mb-6 group-hover:scale-110 transition-transform">
+                <GraduationCap size={28} />
+              </div>
+              <h4 className="text-xl font-bold mb-3 text-slate-900">Student Profiles</h4>
+              <p className="text-slate-600 leading-relaxed">
+                Detailed student profiles with academic history, fee records, and guardian contact information all in one place.
+              </p>
+            </div>
+
+             {/* Feature 6: Modern UI */}
+             <div className="group bg-slate-50 p-8 rounded-2xl hover:bg-white hover:shadow-xl hover:shadow-indigo-100 transition-all duration-300 border border-slate-100 hover:border-indigo-100">
+              <div className="w-14 h-14 bg-indigo-100 rounded-xl flex items-center justify-center text-indigo-600 mb-6 group-hover:scale-110 transition-transform">
+                <ShieldCheck size={28} />
+              </div>
+              <h4 className="text-xl font-bold mb-3 text-slate-900">Secure & Modern</h4>
+              <p className="text-slate-600 leading-relaxed">
+                Bank-grade security meets modern design. No more clunky, excel-like interfaces. Experience a fluid, responsive app that works on any device.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      <footer className="w-full py-8 bg-white shadow-md">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-lg">
-            Ready to streamline your fee management process?
+      {/* Comparison Section */}
+      <section className="w-full py-20 bg-slate-900 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <h3 className="text-3xl font-bold mb-6">Why Choose FeeEase?</h3>
+              <p className="text-slate-400 mb-8 text-lg">
+                We understand the unique challenges of managing a school. Our platform is built to solve real-world problems with features you'll actually use.
+              </p>
+              
+              <div className="space-y-6">
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
+                    <Printer size={20} />
+                  </div>
+                  <div>
+                    <h5 className="font-bold text-lg mb-1">Thermal Printer Integration</h5>
+                    <p className="text-slate-400">Print professional receipts instantly. We provide the hardware you need.</p>
+                  </div>
+                </div>
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400">
+                    <Wallet size={20} />
+                  </div>
+                  <div>
+                    <h5 className="font-bold text-lg mb-1">Affordable Pricing</h5>
+                    <p className="text-slate-400">Cost-effective subscription model that fits your school's budget.</p>
+                  </div>
+                </div>
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center text-green-400">
+                    <Users size={20} />
+                  </div>
+                  <div>
+                    <h5 className="font-bold text-lg mb-1">Dedicated Support</h5>
+                    <p className="text-slate-400">On-demand 1-on-1 training and priority customer support whenever you need it.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-slate-800 p-8 rounded-3xl border border-slate-700">
+              <h4 className="text-xl font-bold mb-6">The FeeEase Advantage</h4>
+              <ul className="space-y-4">
+                {[
+                  "Complete School Management Suite",
+                  "Modern, Mobile-First Interface",
+                  "Real-time Data Sync",
+                  "Customizable Reports & Analytics",
+                  "Secure Cloud/Offline Storage",
+                  "Automated WhatsApp Reminders (addition feature)",
+                  "Branded Receipts with Thermal Printer",
+                  "Dedicated 1-on-1 Support"
+                ].map((item, index) => (
+                  <li key={index} className="flex items-center gap-3">
+                    <div className="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs">✓</div>
+                    <span className="text-slate-300 font-medium">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section className="w-full py-20 bg-slate-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-blue-600 font-semibold tracking-wide uppercase text-sm mb-3">Simple Process</h2>
+            <h3 className="text-3xl md:text-4xl font-bold text-slate-900">How to Get Started</h3>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+            {/* Connecting Line (Desktop) */}
+            <div className="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-slate-200 -z-10 transform -translate-y-1/2"></div>
+
+            {/* Step 1 */}
+            <div className="bg-white p-8 rounded-2xl shadow-lg border border-slate-100 relative text-center">
+              <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-6 shadow-lg shadow-blue-200 border-4 border-white">1</div>
+              <h4 className="text-xl font-bold mb-3 text-slate-900">Connect with Sales</h4>
+              <p className="text-slate-600">
+                Contact our team to discuss your school's specific needs. We'll tailor a package just for you.
+              </p>
+            </div>
+
+            {/* Step 2 */}
+            <div className="bg-white p-8 rounded-2xl shadow-lg border border-slate-100 relative text-center">
+              <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-6 shadow-lg shadow-blue-200 border-4 border-white">2</div>
+              <h4 className="text-xl font-bold mb-3 text-slate-900">Personalized Setup</h4>
+              <p className="text-slate-600">
+                We set up your dashboard, configure your branded receipts, and install your <strong>thermal printer</strong>.
+              </p>
+            </div>
+
+            {/* Step 3 */}
+            <div className="bg-white p-8 rounded-2xl shadow-lg border border-slate-100 relative text-center">
+              <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-6 shadow-lg shadow-blue-200 border-4 border-white">3</div>
+              <h4 className="text-xl font-bold mb-3 text-slate-900">Go Live</h4>
+              <p className="text-slate-600">
+                Start managing your school efficiently. Enjoy 1-on-1 training and ongoing support.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section id="testimonials" className="w-full py-24 bg-slate-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h3 className="text-3xl font-bold text-center mb-16 text-slate-900">Trusted by Modern Schools</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="bg-white p-8 rounded-2xl shadow-lg shadow-slate-200/50">
+              <div className="flex gap-1 mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} size={18} className="fill-yellow-400 text-yellow-400" />
+                ))}
+              </div>
+              <p className="text-slate-600 mb-6 italic">"FeeEase has completely transformed how we manage our finances. The expense tracking and fee collection modules work seamlessly together."</p>
+              <div className="flex items-center gap-4">
+                <div className="relative w-12 h-12 rounded-full overflow-hidden">
+                   <Image
+                    src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=1780&auto=format&fit=crop"
+                    alt="Principal"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div>
+                  <p className="font-bold text-slate-900">John Doe</p>
+                  <p className="text-sm text-slate-500">Principal, St. Xavier's</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white p-8 rounded-2xl shadow-lg shadow-slate-200/50">
+              <div className="flex gap-1 mb-4">
+                 {[...Array(5)].map((_, i) => (
+                  <Star key={i} size={18} className="fill-yellow-400 text-yellow-400" />
+                ))}
+              </div>
+              <p className="text-slate-600 mb-6 italic">"The attendance and salary management features save us hours of manual work every month. It's truly an all-in-one solution."</p>
+              <div className="flex items-center gap-4">
+                <div className="relative w-12 h-12 rounded-full overflow-hidden">
+                   <Image
+                    src="https://images.unsplash.com/photo-1639149888905-fb39731f2e6c?q=80&w=1964&auto=format&fit=crop"
+                    alt="Admin"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div>
+                  <p className="font-bold text-slate-900">Jane Smith</p>
+                  <p className="text-sm text-slate-500">Admin, Greenway School</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white p-8 rounded-2xl shadow-lg shadow-slate-200/50">
+              <div className="flex gap-1 mb-4">
+                 {[...Array(5)].map((_, i) => (
+                  <Star key={i} size={18} className="fill-yellow-400 text-yellow-400" />
+                ))}
+              </div>
+              <p className="text-slate-600 mb-6 italic">"Finally, a system that looks modern and is easy to use. No more clunky spreadsheets. The parents love the digital receipts!"</p>
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-lg">
+                  R
+                </div>
+                <div>
+                  <p className="font-bold text-slate-900">Robert Brown</p>
+                  <p className="text-sm text-slate-500">Director, Modern Academy</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="w-full py-20 bg-blue-600 text-white relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full bg-[url('/images/assets/pattern.png')] opacity-10"></div>
+        <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
+          <h2 className="text-4xl font-bold mb-6">Ready to Modernize Your School?</h2>
+          <p className="text-xl text-blue-100 mb-10">
+            Join hundreds of schools that trust FeeEase for their daily operations.
           </p>
-          <Link
-            href="/contactus"
-            className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 mt-4 inline-block"
-          >
-            Sign Up Now
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+             <Link
+                href="/contactus"
+                className="bg-white text-blue-600 px-8 py-4 rounded-full font-bold text-lg hover:bg-blue-50 shadow-xl transition-all hover:scale-105"
+              >
+                Schedule a Demo
+              </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-slate-900 text-slate-400 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="col-span-1 md:col-span-2">
+            <Image
+              src="/images/assets/logo-horizontal.png" // Ideally a white version
+              alt="FeeEase"
+              width={120}
+              height={40}
+              className="mb-4 opacity-80 invert" 
+            />
+            <p className="text-sm leading-relaxed max-w-xs">
+              FeeEase is the comprehensive operating system for modern schools, designed to simplify administration and improve efficiency.
+            </p>
+          </div>
+          <div>
+            <h4 className="text-white font-bold mb-4">Product</h4>
+            <ul className="space-y-2 text-sm">
+              <li><Link href="#" className="hover:text-white transition-colors">Fee Management</Link></li>
+              <li><Link href="#" className="hover:text-white transition-colors">Attendance</Link></li>
+              <li><Link href="#" className="hover:text-white transition-colors">Staff & Salary</Link></li>
+              <li><Link href="#" className="hover:text-white transition-colors">Expense Tracking</Link></li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="text-white font-bold mb-4">Company</h4>
+            <ul className="space-y-2 text-sm">
+              <li><Link href="/contactus" className="hover:text-white transition-colors">Contact Us</Link></li>
+              <li><Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link></li>
+              <li><Link href="#" className="hover:text-white transition-colors">Terms of Service</Link></li>
+            </ul>
+          </div>
+        </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-slate-800 text-center text-sm">
+          &copy; {new Date().getFullYear()} FeeEase. All rights reserved.
         </div>
       </footer>
     </div>
