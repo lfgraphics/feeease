@@ -31,7 +31,7 @@ const ContactForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-6">
+    <form onSubmit={handleSubmit}>
       <h2 className="text-2xl font-bold mb-4 text-center">Get in Touch</h2>
       {succeeded ? (
         <div className="text-center py-8">
@@ -148,7 +148,7 @@ const ContactForm = () => {
               placeholder="Tell us about your requirements..."
             ></textarea>
           </div>
-          <div className="flex gap-4 mt-6">
+          <div className="flex flex-col md:flex-row gap-4 mt-6">
             <button
               type="reset"
               disabled={submitting}

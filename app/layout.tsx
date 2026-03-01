@@ -1,10 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { Suspense } from "react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://fee-ease.vercel.app'),
@@ -31,9 +30,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className="font-sans">
         <Suspense fallback="loading.....">
-        {children}
+          <Header />
+          {children}
+          <Footer />
         </Suspense>
       </body>
     </html>

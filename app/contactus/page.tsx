@@ -7,33 +7,6 @@ import Image from "next/image";
 const ContactUs = () => {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900">
-      {/* Header */}
-      <header className="w-full py-4 bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-          <Link href="/" className="flex items-center gap-2">
-            <Image
-              src="/images/assets/logo-horizontal.png"
-              alt="FeeEase Logo"
-              width={140}
-              height={50}
-              className="object-contain"
-              priority
-            />
-          </Link>
-          <nav className="hidden md:flex items-center gap-6">
-            <Link href="/" className="text-slate-600 hover:text-blue-600 font-medium transition-colors">
-              Home
-            </Link>
-            <Link
-              href="/"
-              className="bg-blue-600 text-white px-5 py-2.5 rounded-full font-medium hover:bg-blue-700 shadow-lg shadow-blue-200 transition-all hover:scale-105"
-            >
-              Get Started
-            </Link>
-          </nav>
-        </div>
-      </header>
-
       {/* Hero Section */}
       <div className="bg-blue-600 text-white py-20 relative overflow-hidden">
         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-blue-500 rounded-full blur-3xl opacity-50"></div>
@@ -130,11 +103,6 @@ const ContactUs = () => {
                   <span className="font-medium text-white">Closed</span>
                 </div>
               </div>
-              {/* <div className="mt-6 pt-6 border-t border-slate-700">
-                <p className="text-sm text-slate-400">
-                  Need urgent help? <a href="mailto:codvistaitsolutions@gmail.com" className="text-blue-400 hover:text-blue-300">Email Support Team</a> or <a href="tel:+916393440986" className="text-blue-400 hover:text-blue-300">Call</a>
-                </p>
-              </div> */}
             </div>
           </div>
         </div>
@@ -152,15 +120,6 @@ const ContactUs = () => {
         >
         </iframe>
       </div>
-
-      {/* Footer */}
-      <footer className="bg-slate-900 text-slate-400 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-sm">
-            &copy; {new Date().getFullYear()} FeeEase. All rights reserved.
-          </p>
-        </div>
-      </footer>
     </div>
   );
 };
