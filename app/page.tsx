@@ -10,18 +10,17 @@ export const metadata = {
   keywords:
     "School Management, Fee Collection, Expense Tracking, Attendance System, Salary Management, Staff Administration, Student Records",
   author: "FeeEase Team",
-  viewport: "width=device-width, initial-scale=1",
   robots: "index, follow",
-  canonical: "https://www.feeease.com",
+  canonical: "https://fee-ease.vercel.app",
   openGraph: {
     type: "website",
-    url: "https://www.feeease.com",
+    url: "https://fee-ease.vercel.app",
     title: "FeeEase - Complete School Management Solution",
     description:
       "Manage your entire school ecosystem with FeeEase. Fees, expenses, attendance, salaries, and more.",
     images: [
       {
-        url: "/images/og-image.jpg", // Assumed path
+        url: "/images/assets/logo.jpeg", // Assumed path
         width: 800,
         height: 600,
         alt: "FeeEase Dashboard",
@@ -34,7 +33,7 @@ export const metadata = {
     title: "FeeEase - Complete School Management Solution",
     description:
       "Manage your entire school ecosystem with FeeEase. Fees, expenses, attendance, salaries, and more.",
-    image: "/images/twitter-image.jpg",
+    image: "/images/assets/logo.jpeg",
   },
 };
 

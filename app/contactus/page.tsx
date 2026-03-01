@@ -36,8 +36,8 @@ const ContactUs = () => {
 
       {/* Hero Section */}
       <div className="bg-blue-600 text-white py-20 relative overflow-hidden">
-         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-blue-500 rounded-full blur-3xl opacity-50"></div>
-         <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 bg-purple-500 rounded-full blur-3xl opacity-50"></div>
+        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-blue-500 rounded-full blur-3xl opacity-50"></div>
+        <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 bg-purple-500 rounded-full blur-3xl opacity-50"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Get in Touch</h1>
           <p className="text-xl text-blue-100 max-w-2xl mx-auto">
@@ -67,7 +67,7 @@ const ContactUs = () => {
                 <Building2 className="text-blue-600" />
                 Head Office
               </h3>
-              
+
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
                   <div className="bg-blue-50 p-3 rounded-lg text-blue-600 shrink-0">
@@ -130,27 +130,27 @@ const ContactUs = () => {
                   <span className="font-medium text-white">Closed</span>
                 </div>
               </div>
-              <div className="mt-6 pt-6 border-t border-slate-700">
+              {/* <div className="mt-6 pt-6 border-t border-slate-700">
                 <p className="text-sm text-slate-400">
-                  Need urgent help? <a href="mailto:support@feeease.com" className="text-blue-400 hover:text-blue-300">Email Support Team</a>
+                  Need urgent help? <a href="mailto:codvistaitsolutions@gmail.com" className="text-blue-400 hover:text-blue-300">Email Support Team</a> or <a href="tel:+916393440986" className="text-blue-400 hover:text-blue-300">Call</a>
                 </p>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
       </div>
-      
+
       {/* Map Section (Optional Placeholder) */}
       <div className="w-full h-96 bg-slate-200 relative">
-          <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3562.972328867336!2d83.3705!3d26.7565!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjbCsDQ1JzIzLjQiTiA4M8KwMjInMTMuOCJF!5e0!3m2!1sen!2sin!4v1625641234567!5m2!1sen!2sin" 
-            width="100%" 
-            height="100%" 
-            style={{ border: 0, filter: "grayscale(1)" }} 
-            allowFullScreen={true} 
-            loading="lazy"
-            title="Office Location"
-          ></iframe>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3562.9172007566453!2d83.35708458048995!3d26.74701821678824!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3991455a9b6915eb%3A0x9ef224d4a9e6725a!2sCod%20Vista!5e0!3m2!1sen!2sin!4v1772403275631!5m2!1sen!2sin"
+          width="100%"
+          height="100%"
+          style={{ border: 0 }}
+          allowFullScreen={true}
+          loading="lazy"
+          title="Office Location"
+        >
+        </iframe>
       </div>
 
       {/* Footer */}
