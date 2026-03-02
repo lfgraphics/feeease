@@ -61,7 +61,7 @@ export default function Home() {
                 href="/contactus"
                 className="bg-blue-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-blue-700 shadow-xl shadow-blue-200 transition-all hover:-translate-y-1"
               >
-                Start Your Free Trial
+                Get Started Now
               </Link>
               <Link
                 href="#features"
