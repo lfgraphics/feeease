@@ -229,10 +229,11 @@ export default function Home() {
                   "Modern, Mobile-First Interface",
                   "Real-time Data Sync",
                   "Customizable Reports & Analytics",
-                  "Secure Cloud/Offline Storage",
-                  "Automated WhatsApp Reminders (addition feature)",
                   "Branded Receipts with Thermal Printer",
-                  "Dedicated 1-on-1 Support"
+                  "Dedicated 1-on-1 Support",
+                  "Secure Cloud Storage (addition feature)",
+                  "Automated WhatsApp Reminders (addition feature)",
+                  "And any customization you need (addition feature)"
                 ].map((item, index) => (
                   <li key={index} className="flex items-center gap-3">
                     <div className="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs">✓</div>
