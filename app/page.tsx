@@ -180,6 +180,63 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Live Demo Section */}
+      <section className="w-full py-24 bg-gradient-to-b from-white to-blue-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="max-w-3xl mx-auto mb-12">
+            <h2 className="text-blue-600 font-semibold tracking-wide uppercase text-sm mb-3">Experience It Yourself</h2>
+            <h3 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
+              Try the FeeEase Live Demo
+            </h3>
+            <p className="text-lg text-slate-600 mb-8">
+              Explore the full power of FeeEase with our interactive demo. No sign-up required. 
+              Test drive the features, see the interface, and experience the simplicity firsthand.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <Link
+                href="https://try-fee-ease.vercel.app/"
+                target="_blank"
+                className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white transition-all duration-200 bg-blue-600 font-lg rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 hover:bg-blue-700 hover:shadow-xl hover:-translate-y-1"
+              >
+                <span className="mr-2">Launch Live Demo</span>
+                <span className="relative flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
+                </span>
+                <svg className="w-5 h-5 ml-2 -mr-1 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                </svg>
+              </Link>
+            </div>
+            
+            <p className="mt-4 text-sm text-slate-500">
+              * This is a read-only simulation. Data is stored locally in your browser.
+            </p>
+          </div>
+
+          <div className="relative mx-auto max-w-5xl rounded-xl shadow-2xl overflow-hidden border border-slate-200 bg-white transform transition-transform hover:scale-[1.01] duration-500">
+            <div className="absolute top-0 left-0 w-full h-8 bg-slate-100 border-b border-slate-200 flex items-center px-4 gap-2">
+              <div className="w-3 h-3 rounded-full bg-red-400"></div>
+              <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
+              <div className="w-3 h-3 rounded-full bg-green-400"></div>
+              <div className="ml-4 bg-white px-3 py-1 rounded text-xs text-slate-400 flex-1 text-center font-mono">
+                try-fee-ease.vercel.app
+              </div>
+            </div>
+            <div className="mt-8 aspect-video w-full bg-slate-50 relative group">
+                <iframe 
+                    src="https://try-fee-ease.vercel.app/" 
+                    className="w-full h-full border-0"
+                    title="FeeEase Live Demo"
+                    loading="lazy"
+                ></iframe>
+                <div className="absolute inset-0 bg-transparent pointer-events-none group-hover:bg-slate-900/5 transition-colors duration-300"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Comparison Section */}
       <section className="w-full py-20 bg-slate-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
