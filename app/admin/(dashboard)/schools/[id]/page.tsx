@@ -4,16 +4,26 @@ import { DeploymentManager } from "@/components/admin/DeploymentManager";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
-import { ArrowLeft, ExternalLink, Mail, Phone, MapPin } from "lucide-react";
+import { ArrowLeft, ExternalLink, Mail, Phone, MapPin, ShieldAlert } from "lucide-react";
 import { getSchoolById } from "@/actions/schools";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 export default async function SchoolDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const school = await getSchoolById(id);
+  const session = await getServerSession(authOptions);
 
   if (!school) {
     notFound();
   }
+
+  // Permissions Logic
+  const role = session?.user?.role;
+  const isSuperAdmin = role === 'super_admin';
+  const isOperationsAdmin = role === 'operations_admin';
+  
+  const canViewCredentials = isSuperAdmin || isOperationsAdmin;
 
   return (
     <div className="container mx-auto py-6 max-w-6xl space-y-8">
@@ -43,13 +53,15 @@ export default async function SchoolDetailPage({ params }: { params: Promise<{ i
                 </div>
             </div>
             
-            <div className="flex flex-wrap gap-3 self-start">
-                 <Badge variant={school.subscription.status === 'active' ? 'default' : 'secondary'} className="text-sm px-3 py-1">
-                    {school.subscription.status}
-                </Badge>
-                <Badge variant="outline" className="text-sm px-3 py-1">
-                    {school.subscription.plan} Plan
-                </Badge>
+            <div className="flex flex-col items-end gap-3 self-start">
+                 <div className="flex gap-2">
+                    <Badge variant={school.subscription.status === 'active' ? 'default' : 'secondary'} className="text-sm px-3 py-1">
+                        {school.subscription.status}
+                    </Badge>
+                    <Badge variant="outline" className="text-sm px-3 py-1">
+                        {school.subscription.plan} Plan
+                    </Badge>
+                 </div>
             </div>
         </div>
       </div>
@@ -127,7 +139,7 @@ export default async function SchoolDetailPage({ params }: { params: Promise<{ i
           </CardContent>
         </Card>
 
-        {/* License Manager */}
+        {/* License Manager - Visible to all admins */}
         <div className="md:col-span-2 lg:col-span-3">
           <LicenseManager
             schoolId={school._id.toString()}
@@ -137,13 +149,27 @@ export default async function SchoolDetailPage({ params }: { params: Promise<{ i
           />
         </div>
 
-        {/* Deployment Info */}
-        <div className="md:col-span-2 lg:col-span-3">
-          <DeploymentManager
-            schoolId={school._id.toString()}
-            initialDeployment={school.decryptedDeployment}
-          />
-        </div>
+        {/* Deployment Info - Hidden for Support Admin */}
+        {canViewCredentials ? (
+            <div className="md:col-span-2 lg:col-span-3">
+            <DeploymentManager
+                schoolId={school._id.toString()}
+                initialDeployment={school.decryptedDeployment}
+            />
+            </div>
+        ) : (
+            <div className="md:col-span-2 lg:col-span-3">
+                <Card className="bg-muted/30 border-dashed">
+                    <CardContent className="flex flex-col items-center justify-center py-12 text-center text-muted-foreground">
+                        <ShieldAlert className="h-12 w-12 mb-4 opacity-50" />
+                        <h3 className="text-lg font-semibold">Access Restricted</h3>
+                        <p className="text-sm max-w-sm mt-2">
+                            You do not have permission to view deployment credentials and sensitive configuration details.
+                        </p>
+                    </CardContent>
+                </Card>
+            </div>
+        )}
 
       </div>
     </div>

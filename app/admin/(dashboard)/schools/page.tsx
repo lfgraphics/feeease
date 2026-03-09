@@ -6,6 +6,9 @@ import { Eye, Search, ChevronLeft, ChevronRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { StatusFilter } from "@/components/admin/StatusFilter";
 import { getSchools } from "@/actions/schools";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { DeleteSchoolDialog } from "@/components/admin/DeleteSchoolDialog";
 
 export default async function SchoolsPage({
   searchParams,
@@ -14,6 +17,8 @@ export default async function SchoolsPage({
 }) {
   const resolvedSearchParams = await searchParams;
   const { schools, totalPages, currentPage, totalSchools } = await getSchools(resolvedSearchParams);
+  const session = await getServerSession(authOptions);
+  const isSuperAdmin = session?.user?.role === "super_admin";
 
   const query = typeof resolvedSearchParams.query === 'string' ? resolvedSearchParams.query : '';
   const statusFilter = typeof resolvedSearchParams.status === 'string' ? resolvedSearchParams.status : 'all';
@@ -27,18 +32,18 @@ export default async function SchoolsPage({
       {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="relative flex-1">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <form>
-                <Input 
-                    name="query" 
-                    placeholder="Search by school, admin, mobile..." 
-                    className="pl-8" 
-                    defaultValue={query}
-                />
-            </form>
+          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+          <form>
+            <Input
+              name="query"
+              placeholder="Search by school, admin, mobile..."
+              className="pl-8"
+              defaultValue={query}
+            />
+          </form>
         </div>
         <div className="w-full sm:w-[200px]">
-             <StatusFilter defaultValue={statusFilter} />
+          <StatusFilter defaultValue={statusFilter} />
         </div>
       </div>
 
@@ -51,47 +56,51 @@ export default async function SchoolsPage({
               <TableHead>Plan</TableHead>
               <TableHead>License Status</TableHead>
               <TableHead>Deployment</TableHead>
-              <TableHead>Actions</TableHead>
+              <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {schools.length === 0 ? (
-                <TableRow>
-                    <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
-                        No schools found matching your criteria.
-                    </TableCell>
-                </TableRow>
+              <TableRow>
+                <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
+                  No schools found matching your criteria.
+                </TableCell>
+              </TableRow>
             ) : (
-                schools.map((school) => (
+              schools.map((school) => (
                 <TableRow key={school._id}>
-                    <TableCell className="font-medium">{school.name}</TableCell>
-                    <TableCell>
+                  <TableCell className="font-medium">{school.name}</TableCell>
+                  <TableCell>
                     <div className="flex flex-col">
-                        <span>{school.adminName}</span>
-                        <span className="text-xs text-muted-foreground">{school.adminMobile}</span>
+                      <span>{school.adminName}</span>
+                      <span className="text-xs text-muted-foreground">{school.adminMobile}</span>
                     </div>
-                    </TableCell>
-                    <TableCell>{school.subscription.plan}</TableCell>
-                    <TableCell>
-                        {school.displayStatus === 'destructive' && <Badge variant="destructive">Expired</Badge>}
-                        {school.displayStatus === 'default' && <Badge variant="default">Active</Badge>}
-                        {school.displayStatus === 'secondary' && <Badge variant="secondary">{school.subscription.status}</Badge>}
-                    </TableCell>
-                    <TableCell>
+                  </TableCell>
+                  <TableCell>{school.subscription.plan}</TableCell>
+                  <TableCell>
+                    {school.displayStatus === 'destructive' && <Badge variant="destructive">Expired</Badge>}
+                    {school.displayStatus === 'default' && <Badge variant="default">Active</Badge>}
+                    {school.displayStatus === 'secondary' && <Badge variant="secondary">{school.subscription.status}</Badge>}
+                  </TableCell>
+                  <TableCell>
                     <Badge variant={school.deployment.status === 'deployed' ? 'outline' : 'destructive'}>
-                        {school.deployment.status}
+                      {school.deployment.status}
                     </Badge>
-                    </TableCell>
-                    <TableCell>
-                    <Link href={`/admin/schools/${school._id}`}>
-                        <Button variant="ghost" size="sm">
-                        <Eye className="w-4 h-4 mr-2" />
-                        View
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <div className="flex items-center justify-end gap-2">
+                      <Link href={`/admin/schools/${school._id}`}>
+                        <Button size="sm">
+                          <Eye className="w-4 h-4" />
                         </Button>
-                    </Link>
-                    </TableCell>
+                      </Link>
+                      {isSuperAdmin && (
+                        <DeleteSchoolDialog schoolId={school._id} schoolName={school.name} />
+                      )}
+                    </div>
+                  </TableCell>
                 </TableRow>
-                ))
+              ))
             )}
           </TableBody>
         </Table>
@@ -100,19 +109,19 @@ export default async function SchoolsPage({
       {/* Pagination */}
       <div className="flex items-center justify-end gap-2">
         <div className="text-sm text-muted-foreground mr-4">
-            Page {currentPage} of {totalPages || 1}
+          Page {currentPage} of {totalPages || 1}
         </div>
         <Link href={`?page=${Math.max(1, currentPage - 1)}&query=${query}&status=${statusFilter}`}>
-            <Button variant="outline" size="sm" disabled={currentPage <= 1}>
-                <ChevronLeft className="h-4 w-4 mr-2" />
-                Previous
-            </Button>
+          <Button variant="outline" size="sm" disabled={currentPage <= 1}>
+            <ChevronLeft className="h-4 w-4 mr-2" />
+            Previous
+          </Button>
         </Link>
         <Link href={`?page=${Math.min(totalPages, currentPage + 1)}&query=${query}&status=${statusFilter}`}>
-            <Button variant="outline" size="sm" disabled={currentPage >= totalPages}>
-                Next
-                <ChevronRight className="h-4 w-4 ml-2" />
-            </Button>
+          <Button variant="outline" size="sm" disabled={currentPage >= totalPages}>
+            Next
+            <ChevronRight className="h-4 w-4 ml-2" />
+          </Button>
         </Link>
       </div>
     </div>
