@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Loader2, RefreshCw, Copy, Check } from "lucide-react";
-import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
@@ -55,7 +54,6 @@ export function LicenseManager({ schoolId, initialLicense, initialSubscription, 
       if (data.success) {
         setLicense(data.license);
         setSubscription(data.subscription);
-        // We might want to just update state instead of reload to keep form state clean
         toast.success("License updated successfully!");
       } else {
         toast.error(data.error);
@@ -73,6 +71,7 @@ export function LicenseManager({ schoolId, initialLicense, initialSubscription, 
         navigator.clipboard.writeText(license.licenseKey);
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
+        toast.success("License key copied!");
     }
   };
 
@@ -88,7 +87,7 @@ export function LicenseManager({ schoolId, initialLicense, initialSubscription, 
       <CardContent className="space-y-6">
         
         {/* Plan Selection */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
                 <Label>Plan</Label>
                 <Select value={plan} onValueChange={setPlan}>
@@ -132,26 +131,26 @@ export function LicenseManager({ schoolId, initialLicense, initialSubscription, 
         {/* Features Selection */}
         <div className="space-y-2">
             <Label>Features</Label>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 border p-4 rounded-md">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 border p-4 rounded-md bg-muted/20">
                 <div className="flex items-center space-x-2">
                     <Checkbox id="whatsapp" checked={features.whatsapp} onCheckedChange={(c) => handleFeatureChange("whatsapp", c as boolean)} />
-                    <Label htmlFor="whatsapp">WhatsApp</Label>
+                    <Label htmlFor="whatsapp" className="cursor-pointer">WhatsApp</Label>
                 </div>
                 <div className="flex items-center space-x-2">
                     <Checkbox id="teachers" checked={features.teachersLogin} onCheckedChange={(c) => handleFeatureChange("teachersLogin", c as boolean)} />
-                    <Label htmlFor="teachers">Teachers Login</Label>
+                    <Label htmlFor="teachers" className="cursor-pointer">Teachers Login</Label>
                 </div>
                 <div className="flex items-center space-x-2">
                     <Checkbox id="parents" checked={features.parentsLogin} onCheckedChange={(c) => handleFeatureChange("parentsLogin", c as boolean)} />
-                    <Label htmlFor="parents">Parents Login</Label>
+                    <Label htmlFor="parents" className="cursor-pointer">Parents Login</Label>
                 </div>
                 <div className="flex items-center space-x-2">
                     <Checkbox id="attendance" checked={features.attendance} onCheckedChange={(c) => handleFeatureChange("attendance", c as boolean)} />
-                    <Label htmlFor="attendance">Attendance</Label>
+                    <Label htmlFor="attendance" className="cursor-pointer">Attendance</Label>
                 </div>
                 <div className="flex items-center space-x-2">
                     <Checkbox id="payroll" checked={features.payroll} onCheckedChange={(c) => handleFeatureChange("payroll", c as boolean)} />
-                    <Label htmlFor="payroll">Payroll</Label>
+                    <Label htmlFor="payroll" className="cursor-pointer">Payroll</Label>
                 </div>
             </div>
         </div>
@@ -164,28 +163,28 @@ export function LicenseManager({ schoolId, initialLicense, initialSubscription, 
 
         {/* License Key Display */}
         {license?.licenseKey && (
-          <div className="bg-slate-50 p-4 rounded-md border mt-4">
-            <div className="flex items-center justify-between mb-2">
-                <p className="font-bold text-slate-500 text-sm">School License Key (Immutable)</p>
+          <div className="bg-muted p-4 rounded-md border mt-4 space-y-4">
+            <div className="flex items-center justify-between">
+                <p className="font-bold text-muted-foreground text-sm uppercase tracking-wider">School License Key (Immutable)</p>
                 <Button variant="ghost" size="sm" onClick={handleCopy} className="h-8">
-                    {copied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
+                    {copied ? <Check className="h-4 w-4 text-green-600 dark:text-green-400" /> : <Copy className="h-4 w-4" />}
                     <span className="ml-2">{copied ? "Copied" : "Copy"}</span>
                 </Button>
             </div>
-            <div className="font-mono text-lg font-bold tracking-widest bg-white p-3 rounded border text-center text-blue-600">
+            <div className="font-mono text-sm sm:text-lg font-bold tracking-widest bg-background p-3 rounded border text-center text-foreground break-all">
                 {license.licenseKey}
             </div>
             
-            <div className="mt-4 pt-4 border-t">
-                 <p className="font-bold text-slate-500 text-xs mb-2">Current Signed Token (System Use Only)</p>
-                 <div className="font-mono text-[10px] break-all bg-slate-100 p-2 rounded text-slate-400">
+            <div className="pt-4 border-t border-border">
+                 <p className="font-bold text-muted-foreground text-xs mb-2 uppercase tracking-wider">Current Signed Token (System Use Only)</p>
+                 <div className="font-mono text-[10px] break-all bg-background p-2 rounded text-muted-foreground border border-border">
                     {license.token || "Not Generated"}
                  </div>
             </div>
 
-            <div className="flex gap-4 text-xs text-slate-500 mt-2">
-                <span>Status: <span className="font-medium text-slate-900 capitalize">{license.status}</span></span>
-                <span>Expires: <span className="font-medium text-slate-900">{license.expiresAt ? new Date(license.expiresAt).toLocaleDateString() : "N/A"}</span></span>
+            <div className="flex flex-wrap gap-4 text-xs text-muted-foreground">
+                <span className="flex items-center gap-1">Status: <span className="font-medium text-foreground capitalize bg-background px-2 py-0.5 rounded border">{license.status}</span></span>
+                <span className="flex items-center gap-1">Expires: <span className="font-medium text-foreground bg-background px-2 py-0.5 rounded border">{license.expiresAt ? new Date(license.expiresAt).toLocaleDateString() : "N/A"}</span></span>
             </div>
           </div>
         )}

@@ -36,108 +36,139 @@ export default async function SchoolProfilePage() {
   }
 
   return (
-    <div className="container mx-auto py-10 px-4">
-      <div className="flex items-center justify-between mb-8">
-        <h1 className="text-3xl font-bold">My School Account</h1>
-        <LogoutButton />
+    <div className="container mx-auto py-10 px-4 max-w-6xl">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">School Profile</h1>
+          <p className="text-muted-foreground mt-1">Manage your school&apos;s information and subscription details.</p>
+        </div>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle>School Details</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-center gap-4">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={school.logo} alt={school.name} className="w-16 h-16 object-contain rounded border" />
-              <div>
-                <h3 className="font-bold text-lg">{school.name}</h3>
-                <p className="text-sm text-slate-500">{school.shortName}</p>
-              </div>
-            </div>
-            
-            {school.deployment?.publicAppUrl && (
-              <div className="bg-blue-50 p-3 rounded-lg border border-blue-100 mt-2">
-                <span className="font-medium text-xs text-blue-800 uppercase tracking-wide block mb-1">Your App URL</span>
-                <Link 
-                  href={school.deployment.publicAppUrl} 
-                  target="_blank" 
-                  className="flex items-center gap-2 text-blue-600 hover:text-blue-800 font-semibold break-all"
-                >
-                  {school.deployment.publicAppUrl}
-                  <ExternalLink className="h-4 w-4 flex-shrink-0" />
-                </Link>
-              </div>
-            )}
-
-            <div>
-              <span className="font-medium text-sm text-slate-500">Address</span>
-              <p>{school.address}</p>
-            </div>
-            {school.license && school.license.licenseKey && (
-                <div className="pt-2 border-t mt-2">
-                    <span className="font-medium text-sm text-slate-500 block mb-1">License Key</span>
-                    <div className="flex items-center bg-slate-100 p-2 rounded text-xs font-mono break-all">
-                        <span className="truncate text-base font-bold text-blue-600">{school.license.licenseKey}</span>
-                        <CopyButton text={school.license.licenseKey} />
-                    </div>
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {/* School Details Card - Spans 2 columns on large screens */}
+        <Card className="md:col-span-2 lg:col-span-2 overflow-hidden">
+          <CardHeader className="bg-muted/30 border-b pb-8">
+             <div className="flex flex-col sm:flex-row gap-6 items-start">
+                <div className="relative h-24 w-24 shrink-0 rounded-xl border bg-background p-2 shadow-sm">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img 
+                    src={school.logo} 
+                    alt={school.name} 
+                    className="h-full w-full object-contain" 
+                  />
                 </div>
-            )}
+                <div className="space-y-1 flex-1 min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <h2 className="text-2xl font-bold wrap-break-word leading-tight">{school.name}</h2>
+                    {school.shortName && (
+                      <Badge variant="outline" className="text-xs font-normal">
+                        {school.shortName}
+                      </Badge>
+                    )}
+                  </div>
+                  <p className="text-muted-foreground flex items-start gap-2 text-sm">
+                    {school.address}
+                  </p>
+                </div>
+             </div>
+          </CardHeader>
+          <CardContent className="pt-6 space-y-6">
+            <div className="grid gap-6 sm:grid-cols-2">
+                {school.deployment?.publicAppUrl && (
+                  <div className="space-y-2">
+                    <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Public Application URL</span>
+                    <div className="flex items-center gap-2 p-3 rounded-md bg-primary/5 border border-primary/10">
+                        <Link 
+                          href={school.deployment.publicAppUrl} 
+                          target="_blank" 
+                          className="text-sm font-semibold text-primary hover:underline truncate flex-1"
+                        >
+                          {school.deployment.publicAppUrl}
+                        </Link>
+                        <ExternalLink className="h-4 w-4 text-primary flex-shrink-0" />
+                    </div>
+                  </div>
+                )}
+                
+                {school.license && school.license.licenseKey && (
+                    <div className="space-y-2">
+                        <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">License Key</span>
+                        <div className="flex items-center justify-between gap-2 p-3 rounded-md bg-muted border border-border">
+                            <code className="text-xs font-mono font-semibold text-foreground truncate flex-1">
+                                {school.license.licenseKey}
+                            </code>
+                            <CopyButton text={school.license.licenseKey} />
+                        </div>
+                    </div>
+                )}
+            </div>
           </CardContent>
         </Card>
 
-        <Card>
+        {/* Subscription Status */}
+        <Card className="h-full flex flex-col">
           <CardHeader>
-            <CardTitle>Admin Contact</CardTitle>
+            <CardTitle>Subscription</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div>
-              <span className="font-medium text-sm text-slate-500">Name</span>
-              <p>{school.adminName}</p>
-            </div>
-            <div>
-              <span className="font-medium text-sm text-slate-500">Email</span>
-              <p>{school.adminEmail}</p>
-            </div>
-            <div>
-              <span className="font-medium text-sm text-slate-500">Mobile</span>
-              <p>{school.adminMobile}</p>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Subscription Status</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-             <div className="flex items-center justify-between">
-                <span className="font-medium">Plan</span>
-                <Badge>{school.subscription.plan}</Badge>
+          <CardContent className="flex-1 space-y-6">
+             <div className="space-y-1">
+                <span className="text-xs text-muted-foreground uppercase">Current Plan</span>
+                <div className="flex items-center justify-between">
+                    <span className="font-semibold text-lg">{school.subscription.plan}</span>
+                    <Badge variant={school.subscription.status === 'active' ? 'default' : 'secondary'}>
+                        {school.subscription.status}
+                    </Badge>
+                </div>
              </div>
-             <div className="flex items-center justify-between">
-                <span className="font-medium">Status</span>
-                <Badge variant={school.subscription.status === 'active' ? 'default' : 'secondary'}>
-                    {school.subscription.status}
-                </Badge>
-             </div>
+             
              {school.subscription.expiryDate && (
-                 <div className="flex items-center justify-between">
-                    <span className="font-medium">Expires On</span>
-                    <span>{new Date(school.subscription.expiryDate).toLocaleDateString()}</span>
+                 <div className="space-y-1">
+                    <span className="text-xs text-muted-foreground uppercase">Expires On</span>
+                    <div className="font-medium">
+                        {new Date(school.subscription.expiryDate).toLocaleDateString(undefined, {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                        })}
+                    </div>
                  </div>
              )}
           </CardContent>
         </Card>
 
+        {/* Admin Contact */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Admin Contact</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid gap-1">
+              <span className="text-xs font-medium text-muted-foreground">Name</span>
+              <p className="font-medium">{school.adminName}</p>
+            </div>
+            <div className="grid gap-1">
+              <span className="text-xs font-medium text-muted-foreground">Email</span>
+              <p className="font-medium break-all">{school.adminEmail}</p>
+            </div>
+            <div className="grid gap-1">
+              <span className="text-xs font-medium text-muted-foreground">Mobile</span>
+              <p className="font-medium">{school.adminMobile}</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Settings */}
         <Card>
             <CardHeader>
-                <CardTitle>Settings</CardTitle>
+                <CardTitle>Security</CardTitle>
             </CardHeader>
             <CardContent>
-                <p className="text-sm text-slate-500 mb-4">Update your account security settings.</p>
-                <ChangePasswordButton />
+                <div className="space-y-4">
+                    <p className="text-sm text-muted-foreground">
+                        Manage your account password and security settings.
+                    </p>
+                    <ChangePasswordButton />
+                </div>
             </CardContent>
         </Card>
       </div>

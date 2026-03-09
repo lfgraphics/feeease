@@ -10,12 +10,13 @@ import { getSchools } from "@/actions/schools";
 export default async function SchoolsPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const { schools, totalPages, currentPage, totalSchools } = await getSchools(searchParams);
+  const resolvedSearchParams = await searchParams;
+  const { schools, totalPages, currentPage, totalSchools } = await getSchools(resolvedSearchParams);
 
-  const query = typeof searchParams.query === 'string' ? searchParams.query : '';
-  const statusFilter = typeof searchParams.status === 'string' ? searchParams.status : 'all';
+  const query = typeof resolvedSearchParams.query === 'string' ? resolvedSearchParams.query : '';
+  const statusFilter = typeof resolvedSearchParams.status === 'string' ? resolvedSearchParams.status : 'all';
 
   return (
     <div className="space-y-6">
@@ -41,7 +42,7 @@ export default async function SchoolsPage({
         </div>
       </div>
 
-      <div className="rounded-md border bg-white">
+      <div className="rounded-md border">
         <Table>
           <TableHeader>
             <TableRow>

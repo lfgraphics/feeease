@@ -8,8 +8,9 @@ import { PRIVATE_KEY } from "@/lib/crypto";
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   const session = await getServerSession(authOptions);
 
   if (!session) {
@@ -20,7 +21,7 @@ export async function POST(
 
   try {
     await dbConnect();
-    const school = await School.findById(params.id);
+    const school = await School.findById(id);
 
     if (!school) {
       return NextResponse.json({ error: "School not found" }, { status: 404 });

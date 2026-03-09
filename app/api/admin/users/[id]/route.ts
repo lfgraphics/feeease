@@ -6,8 +6,9 @@ import AdminUser from "@/models/AdminUser";
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   const session = await getServerSession(authOptions);
 
   if (!session || session.user.role !== "super_admin") {
@@ -19,7 +20,7 @@ export async function PUT(
     const { fullName, email, mobileNumber, role, isActive } = body;
 
     await dbConnect();
-    const user = await AdminUser.findById(params.id);
+    const user = await AdminUser.findById(id);
 
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });

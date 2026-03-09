@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Suspense } from "react";
 import PublicLayout from "@/components/PublicLayout";
-import Providers from "@/components/Providers";
+import Providers from "@/components/providers";
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://fee-ease.vercel.app'),
@@ -19,7 +19,10 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#ffffff",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "white" },
+    { media: "(prefers-color-scheme: dark)", color: "black" },
+  ],
 };
 
 export default function RootLayout({
@@ -28,7 +31,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className="font-sans">
         <Providers>
           <Suspense fallback="loading.....">

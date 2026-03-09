@@ -4,11 +4,12 @@ import School from "@/models/School";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { schoolId: string } }
+  { params }: { params: Promise<{ schoolId: string }> }
 ) {
+  const { schoolId } = await params;
   try {
     await dbConnect();
-    const school = await School.findById(params.schoolId);
+    const school = await School.findById(schoolId);
 
     if (!school) {
       return NextResponse.json({ error: "School not found" }, { status: 404 });

@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Loader2, Upload, CheckCircle2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -14,6 +14,7 @@ import { toast } from "sonner";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { signIn } from "next-auth/react";
 
 const formSchema = z.object({
   schoolName: z.string().min(2, "School name must be at least 2 characters"),
@@ -33,8 +34,6 @@ const formSchema = z.object({
     payroll: z.boolean(),
   }),
 });
-
-import { signIn } from "next-auth/react";
 
 export function OnboardingForm() {
   const [loading, setLoading] = useState(false);
@@ -137,14 +136,14 @@ export function OnboardingForm() {
           <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto pb-10">
               {/* Basic Plan */}
               <div 
-                  className="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-200 border-2 border-transparent hover:border-blue-500 overflow-hidden flex flex-col" 
+                  className="bg-card rounded-lg shadow-md hover:shadow-xl transition-all duration-200 border-2 border-transparent hover:border-primary overflow-hidden flex flex-col" 
               >
-                  <div className="p-6 border-b">
-                      <h3 className="text-2xl font-bold text-center text-slate-900">Basic Plan</h3>
-                      <p className="text-center text-slate-500 mt-2">Essential tools for school management</p>
+                  <div className="p-6 border-b border-border">
+                      <h3 className="text-2xl font-bold text-center text-foreground">Basic Plan</h3>
+                      <p className="text-center text-muted-foreground mt-2">Essential tools for school management</p>
                   </div>
                   <div className="p-6 space-y-4 flex-1">
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 text-foreground">
                           <CheckCircle2 className="text-green-500 w-5 h-5 flex-shrink-0" />
                           <span>1N Thermal Printer Support</span>
                       </div>
@@ -170,26 +169,26 @@ export function OnboardingForm() {
                           </AccordionItem>
                       </Accordion>
                   </div>
-                  <div className="p-6 bg-slate-50 border-t">
-                      <Button className="w-full bg-blue-600 hover:bg-blue-700" onClick={() => handlePlanSelect("Basic")}>Select Basic</Button>
+                  <div className="p-6 bg-muted border-t border-border">
+                      <Button className="w-full" onClick={() => handlePlanSelect("Basic")}>Select Basic</Button>
                   </div>
               </div>
 
               {/* Custom Plan */}
               <div 
-                  className="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-200 border-2 border-transparent hover:border-purple-500 overflow-hidden flex flex-col" 
+                  className="bg-card rounded-lg shadow-md hover:shadow-xl transition-all duration-200 border-2 border-transparent hover:border-purple-500 overflow-hidden flex flex-col" 
               >
-                  <div className="p-6 border-b">
-                      <h3 className="text-2xl font-bold text-center text-slate-900">Custom Plan</h3>
-                      <p className="text-center text-slate-500 mt-2">Tailored features for advanced needs</p>
+                  <div className="p-6 border-b border-border">
+                      <h3 className="text-2xl font-bold text-center text-foreground">Custom Plan</h3>
+                      <p className="text-center text-muted-foreground mt-2">Tailored features for advanced needs</p>
                   </div>
                   <div className="p-6 space-y-4 flex-1">
-                      <div className="p-4 bg-purple-50 rounded-lg mb-4 text-purple-900">
+                      <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg mb-4 text-purple-900 dark:text-purple-300">
                           <p className="font-medium text-center">Includes everything in Basic +</p>
                       </div>
                       
-                      <div className="space-y-3">
-                          <div className="font-semibold border-b pb-2">Add-on Features:</div>
+                      <div className="space-y-3 text-foreground">
+                          <div className="font-semibold border-b border-border pb-2">Add-on Features:</div>
                           <ul className="space-y-2">
                               <li className="flex items-start gap-2">
                                   <CheckCircle2 className="text-purple-500 w-4 h-4 mt-1 flex-shrink-0" />
@@ -214,12 +213,12 @@ export function OnboardingForm() {
                           </ul>
                       </div>
                       
-                      <p className="text-xs text-slate-500 mt-4 italic text-center">
+                      <p className="text-xs text-muted-foreground mt-4 italic text-center">
                           * Select specific features in the next step. Billed per feature.
                       </p>
                   </div>
-                  <div className="p-6 bg-slate-50 border-t">
-                      <Button variant="outline" className="w-full border-purple-200 hover:bg-purple-50 text-purple-700" onClick={() => handlePlanSelect("Custom")}>Select Custom</Button>
+                  <div className="p-6 bg-muted border-t border-border">
+                      <Button variant="outline" className="w-full border-purple-200 hover:bg-purple-50 text-purple-700 dark:text-purple-300 dark:hover:bg-purple-900/20 dark:border-purple-800" onClick={() => handlePlanSelect("Custom")}>Select Custom</Button>
                   </div>
               </div>
           </div>
@@ -230,14 +229,14 @@ export function OnboardingForm() {
     <Card className="w-full max-w-3xl mx-auto shadow-xl">
       <CardHeader>
         <div className="flex items-center justify-between">
-            <Button variant="ghost" onClick={() => setSelectedPlan(null)} className="text-slate-500">
+            <Button variant="ghost" onClick={() => setSelectedPlan(null)} className="text-muted-foreground">
                 &larr; Back to Plans
             </Button>
-            <div className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+            <div className="bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 px-3 py-1 rounded-full text-sm font-medium">
                 Selected: {selectedPlan} Plan
             </div>
         </div>
-        <CardTitle className="text-2xl font-bold text-center text-blue-600 mt-4">School Registration</CardTitle>
+        <CardTitle className="text-2xl font-bold text-center text-primary mt-4">School Registration</CardTitle>
         <CardDescription className="text-center">Enter your details to complete registration.</CardDescription>
       </CardHeader>
       <CardContent>
@@ -245,8 +244,8 @@ export function OnboardingForm() {
           
           {/* Custom Features Selection */}
           {selectedPlan === "Custom" && (
-              <div className="bg-purple-50 p-6 rounded-xl border border-purple-100">
-                  <h3 className="text-lg font-semibold text-purple-900 mb-4">Select Add-on Features</h3>
+              <div className="bg-purple-50 dark:bg-purple-900/10 p-6 rounded-xl border border-purple-100 dark:border-purple-900/30">
+                  <h3 className="text-lg font-semibold text-purple-900 dark:text-purple-300 mb-4">Select Add-on Features</h3>
                   <div className="grid md:grid-cols-2 gap-4">
                       <div className="flex items-center space-x-2">
                           <Checkbox id="whatsapp" 
@@ -288,13 +287,13 @@ export function OnboardingForm() {
           )}
 
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold border-b pb-2">School Information</h3>
+            <h3 className="text-lg font-semibold border-b border-border pb-2">School Information</h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <label className="text-sm font-medium">School Name</label>
                 <Input placeholder="e.g. Modern Academy" {...form.register("schoolName")} />
-                {form.formState.errors.schoolName && <p className="text-red-500 text-xs">{form.formState.errors.schoolName.message}</p>}
+                {form.formState.errors.schoolName && <p className="text-destructive text-xs">{form.formState.errors.schoolName.message}</p>}
               </div>
 
               <div className="space-y-2">
@@ -306,11 +305,11 @@ export function OnboardingForm() {
             <div className="space-y-2">
               <label className="text-sm font-medium">School Logo</label>
               <div className="flex items-center gap-4">
-                <div className="relative w-20 h-20 border-2 border-dashed border-slate-300 rounded-lg flex items-center justify-center bg-slate-50 overflow-hidden">
+                <div className="relative w-20 h-20 border-2 border-dashed border-input rounded-lg flex items-center justify-center bg-muted overflow-hidden">
                   {previewUrl ? (
                     <Image src={previewUrl} alt="Logo Preview" fill className="object-contain" />
                   ) : (
-                    <Upload className="text-slate-400" />
+                    <Upload className="text-muted-foreground" />
                   )}
                 </div>
                 <div className="flex-1">
@@ -320,34 +319,34 @@ export function OnboardingForm() {
                     onChange={handleLogoUpload} 
                     className="cursor-pointer"
                   />
-                  <p className="text-xs text-slate-500 mt-1">Upload your school logo (PNG, JPG, JPEG).</p>
+                  <p className="text-xs text-muted-foreground mt-1">Upload your school logo (PNG, JPG, JPEG).</p>
                 </div>
               </div>
               <input type="hidden" {...form.register("schoolLogo")} />
-              {form.formState.errors.schoolLogo && <p className="text-red-500 text-xs">{form.formState.errors.schoolLogo.message}</p>}
+              {form.formState.errors.schoolLogo && <p className="text-destructive text-xs">{form.formState.errors.schoolLogo.message}</p>}
             </div>
 
             <div className="space-y-2">
               <label className="text-sm font-medium">Address</label>
               <Input placeholder="Full Address" {...form.register("schoolAddress")} />
-              {form.formState.errors.schoolAddress && <p className="text-red-500 text-xs">{form.formState.errors.schoolAddress.message}</p>}
+              {form.formState.errors.schoolAddress && <p className="text-destructive text-xs">{form.formState.errors.schoolAddress.message}</p>}
             </div>
           </div>
 
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold border-b pb-2">Admin Contact Details</h3>
+            <h3 className="text-lg font-semibold border-b border-border pb-2">Admin Contact Details</h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <label className="text-sm font-medium">Admin Name</label>
                 <Input placeholder="Full Name" {...form.register("adminName")} />
-                {form.formState.errors.adminName && <p className="text-red-500 text-xs">{form.formState.errors.adminName.message}</p>}
+                {form.formState.errors.adminName && <p className="text-destructive text-xs">{form.formState.errors.adminName.message}</p>}
               </div>
 
               <div className="space-y-2">
                 <label className="text-sm font-medium">Mobile Number</label>
                 <Input placeholder="10-digit mobile number" {...form.register("adminMobile")} />
-                {form.formState.errors.adminMobile && <p className="text-red-500 text-xs">{form.formState.errors.adminMobile.message}</p>}
+                {form.formState.errors.adminMobile && <p className="text-destructive text-xs">{form.formState.errors.adminMobile.message}</p>}
               </div>
             </div>
 
@@ -355,19 +354,19 @@ export function OnboardingForm() {
               <div className="space-y-2">
                 <label className="text-sm font-medium">Email (Optional)</label>
                 <Input type="email" placeholder="admin@school.com" {...form.register("adminEmail")} />
-                {form.formState.errors.adminEmail && <p className="text-red-500 text-xs">{form.formState.errors.adminEmail.message}</p>}
+                {form.formState.errors.adminEmail && <p className="text-destructive text-xs">{form.formState.errors.adminEmail.message}</p>}
               </div>
 
               <div className="space-y-2">
                 <label className="text-sm font-medium">Password</label>
                 <Input type="password" placeholder="******" {...form.register("adminPassword")} />
-                {form.formState.errors.adminPassword && <p className="text-red-500 text-xs">{form.formState.errors.adminPassword.message}</p>}
-                <p className="text-xs text-slate-500">This will be used for your school admin login.</p>
+                {form.formState.errors.adminPassword && <p className="text-destructive text-xs">{form.formState.errors.adminPassword.message}</p>}
+                <p className="text-xs text-muted-foreground">This will be used for your school admin login.</p>
               </div>
             </div>
           </div>
 
-          <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700" disabled={loading}>
+          <Button type="submit" className="w-full" disabled={loading}>
             {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
             Submit Registration
           </Button>

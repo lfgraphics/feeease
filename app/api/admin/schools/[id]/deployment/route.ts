@@ -7,8 +7,9 @@ import { encrypt } from "@/lib/crypto";
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   const session = await getServerSession(authOptions);
 
   if (!session || !session.user.role.includes("admin")) {
@@ -17,7 +18,7 @@ export async function POST(
 
   try {
     await dbConnect();
-    const school = await School.findById(params.id);
+    const school = await School.findById(id);
 
     if (!school) {
       return NextResponse.json({ error: "School not found" }, { status: 404 });
@@ -38,7 +39,8 @@ export async function POST(
         aiSensy,
         triggerDev,
         publicAppUrl,
-        whatsappTemplates
+        whatsappTemplates,
+        licenseCookieSecret
     } = body;
 
     // Encrypt sensitive fields if they are provided
@@ -57,6 +59,7 @@ export async function POST(
     if (gmailAccount) updateData.gmailAccount = encrypt(JSON.stringify(gmailAccount));
     if (nextAuth) updateData.nextAuth = encrypt(JSON.stringify(nextAuth));
     if (encryptionKey) updateData.encryptionKey = encrypt(encryptionKey);
+    if (licenseCookieSecret) updateData.licenseCookieSecret = encrypt(licenseCookieSecret);
     if (aiSensy) updateData.aiSensy = encrypt(JSON.stringify(aiSensy));
     if (triggerDev) updateData.triggerDev = encrypt(JSON.stringify(triggerDev));
     if (whatsappTemplates) updateData.whatsappTemplates = encrypt(JSON.stringify(whatsappTemplates));

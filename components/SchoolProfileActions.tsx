@@ -28,7 +28,7 @@ export function CopyButton({ text }: { text: string }) {
 
   return (
     <Button variant="outline" size="icon" onClick={handleCopy} className="h-8 w-8 ml-2">
-      {copied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
+      {copied ? <Check className="h-4 w-4 text-green-600 dark:text-green-400" /> : <Copy className="h-4 w-4" />}
     </Button>
   );
 }

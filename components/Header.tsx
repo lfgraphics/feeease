@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { Menu, X, User } from "lucide-react";
 import { useSession, signOut } from "next-auth/react";
 import { Button } from "./ui/button";
+import { ThemeToggle } from "@/components/theme-toggle";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -28,12 +29,12 @@ export function Header() {
 
   const navLinks = [
     { name: "Home", href: "/" },
-    { name: "Features", href: "/#features" },
+    // Features link removed as requested
     { name: "Contact", href: "/contactus" },
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-white/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
@@ -45,28 +46,30 @@ export function Header() {
               className="object-contain rounded-md"
             />
           </div>
-          <span className="text-xl font-bold text-slate-900">FeeEase</span>
+          <span className="text-xl font-bold text-foreground">FeeEase</span>
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden md:flex items-center gap-6">
           {navLinks.map((link) => (
             <Link
               key={link.name}
               href={link.href}
-              className={`text-sm font-medium transition-colors hover:text-blue-600 ${
-                pathname === link.href ? "text-blue-600" : "text-slate-600"
+              className={`text-sm font-medium transition-colors hover:text-primary ${
+                pathname === link.href ? "text-primary" : "text-muted-foreground"
               }`}
             >
               {link.name}
             </Link>
           ))}
+          
+          <ThemeToggle />
 
           {session ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                  <div className="flex h-full w-full items-center justify-center rounded-full bg-slate-100">
+                  <div className="flex h-full w-full items-center justify-center rounded-full bg-muted">
                      <User className="h-4 w-4" />
                   </div>
                 </Button>
@@ -93,13 +96,13 @@ export function Header() {
             <div className="flex items-center gap-3 ml-4">
               <Link
                 href="/login"
-                className="text-slate-700 hover:text-blue-600 font-medium px-4 py-2 transition-colors border border-slate-200 rounded-full hover:border-blue-600"
+                className="text-muted-foreground hover:text-primary font-medium px-4 py-2 transition-colors border border-input rounded-full hover:border-primary"
               >
                 Login
               </Link>
               <Link
                 href="/get-started"
-                className="bg-blue-600 text-white px-5 py-2 rounded-full font-medium hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200"
+                className="bg-primary text-primary-foreground px-5 py-2 rounded-full font-medium hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20"
               >
                 Get Started
               </Link>
@@ -108,39 +111,42 @@ export function Header() {
         </nav>
 
         {/* Mobile Menu Button */}
-        <button
-          className="md:hidden p-2 text-slate-600"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        <div className="md:hidden flex items-center gap-4">
+          <ThemeToggle />
+          <button
+            className="p-2 text-muted-foreground"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Nav */}
       {isOpen && (
-        <div className="md:hidden border-t bg-white absolute w-full left-0 p-4 shadow-lg flex flex-col gap-4">
+        <div className="md:hidden border-t bg-background absolute w-full left-0 p-4 shadow-lg flex flex-col gap-4">
           {navLinks.map((link) => (
             <Link
               key={link.name}
               href={link.href}
               className={`text-lg font-medium ${
-                pathname === link.href ? "text-blue-600" : "text-slate-600"
+                pathname === link.href ? "text-primary" : "text-muted-foreground"
               }`}
             >
               {link.name}
             </Link>
           ))}
-          <hr />
+          <hr className="border-border" />
           {session ? (
              <div className="flex flex-col gap-2">
                 <div className="px-2 py-1">
-                    <p className="font-medium">{session.user?.name}</p>
-                    <p className="text-xs text-slate-500">{session.user?.email}</p>
+                    <p className="font-medium text-foreground">{session.user?.name}</p>
+                    <p className="text-xs text-muted-foreground">{session.user?.email}</p>
                 </div>
-                <Link href="/portal" className="text-lg font-medium text-slate-600">Dashboard</Link>
+                <Link href="/portal" className="text-lg font-medium text-muted-foreground">Dashboard</Link>
                 <button 
                     onClick={() => signOut({ callbackUrl: "/" })}
-                    className="text-lg font-medium text-red-500 text-left"
+                    className="text-lg font-medium text-destructive text-left"
                 >
                     Log out
                 </button>
@@ -149,13 +155,13 @@ export function Header() {
             <div className="flex flex-col gap-3">
                 <Link
                 href="/login"
-                className="text-center text-slate-700 font-medium px-4 py-2 border border-slate-200 rounded-lg"
+                className="text-center text-muted-foreground font-medium px-4 py-2 border border-input rounded-lg"
                 >
                 Login
                 </Link>
                 <Link
                 href="/get-started"
-                className="text-center bg-blue-600 text-white px-4 py-2 rounded-lg font-medium"
+                className="text-center bg-primary text-primary-foreground px-4 py-2 rounded-lg font-medium"
                 >
                 Get Started
                 </Link>

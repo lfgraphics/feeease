@@ -47,7 +47,7 @@ function LoginForm() {
   return (
     <Card className="w-full max-w-md shadow-xl">
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl font-bold text-blue-600">Welcome Back</CardTitle>
+        <CardTitle className="text-2xl font-bold text-primary">Welcome Back</CardTitle>
         <CardDescription>Login to your FeeEase account</CardDescription>
       </CardHeader>
       <CardContent>
@@ -75,21 +75,21 @@ function LoginForm() {
               <Button
                 type="button"
                 variant="ghost"
-                size="sm"
-                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                size="icon"
+                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent text-muted-foreground"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </Button>
             </div>
           </div>
-          <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700" disabled={loading}>
+          <Button type="submit" className="w-full" disabled={loading}>
             {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : "Login"}
           </Button>
         </form>
-        <div className="mt-4 text-center text-sm text-slate-500">
+        <div className="mt-4 text-center text-sm text-muted-foreground">
           Don&apos;t have an account?{" "}
-          <Link href="/get-started" className="text-blue-600 hover:underline">
+          <Link href="/get-started" className="text-primary hover:underline">
             Register your school
           </Link>
         </div>
@@ -100,7 +100,7 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-background p-4">
       <Suspense fallback={<Loader2 className="animate-spin" />}>
         <LoginForm />
       </Suspense>

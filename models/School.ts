@@ -47,6 +47,7 @@ export interface ISchool extends Document {
     encryptionKey?: string; // Encrypted string
     aiSensy?: string; // Encrypted JSON string { apiKey }
     triggerDev?: string; // Encrypted JSON string { apiKey, projectId }
+    licenseCookieSecret?: string; // Encrypted string
     publicAppUrl?: string; // Plain text (publicly available anyway)
     whatsappTemplates?: string; // Encrypted JSON string { receipt, reminderHindi, reminderEnglish, reminderUrdu }
     notes?: string;
@@ -103,6 +104,7 @@ const SchoolSchema: Schema = new Schema({
     encryptionKey: { type: String }, // Encrypted string
     aiSensy: { type: String }, // Encrypted JSON string { apiKey }
     triggerDev: { type: String }, // Encrypted JSON string { apiKey, projectId }
+    licenseCookieSecret: { type: String }, // Encrypted string
     publicAppUrl: { type: String }, // Plain text
     whatsappTemplates: { type: String }, // Should be stored encrypted
     notes: { type: String },

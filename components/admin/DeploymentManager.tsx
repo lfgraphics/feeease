@@ -34,6 +34,7 @@ export function DeploymentManager({ schoolId, initialDeployment }: DeploymentMan
     const [cloudinary, setCloudinary] = useState(initialDeployment.cloudinaryConfig || { cloudName: "", apiKey: "", apiSecret: "" });
     const [nextAuth, setNextAuth] = useState(initialDeployment.nextAuth || { secret: "", url: "" });
     const [encryptionKey, setEncryptionKey] = useState(initialDeployment.encryptionKey || "");
+    const [licenseCookieSecret, setLicenseCookieSecret] = useState(initialDeployment.licenseCookieSecret || "");
     const [aiSensy, setAiSensy] = useState(initialDeployment.aiSensy || { apiKey: "" });
     const [triggerDev, setTriggerDev] = useState(initialDeployment.triggerDev || { apiKey: "", projectId: "" });
 
@@ -70,6 +71,7 @@ export function DeploymentManager({ schoolId, initialDeployment }: DeploymentMan
                 cloudinaryConfig: cloudinary,
                 nextAuth,
                 encryptionKey,
+                licenseCookieSecret,
                 aiSensy,
                 triggerDev,
                 whatsappTemplates: waTemplates
@@ -105,6 +107,7 @@ export function DeploymentManager({ schoolId, initialDeployment }: DeploymentMan
 
         const secret = nextAuth.secret || generateRandomString(32); // 64 hex chars
         const encKey = encryptionKey || generateRandomString(32); // 64 hex chars
+        const cookieSecret = licenseCookieSecret || generateRandomString(32);
 
         // Update state if new values generated
         let needsSave = false;
@@ -114,6 +117,10 @@ export function DeploymentManager({ schoolId, initialDeployment }: DeploymentMan
         }
         if (!encryptionKey) {
             setEncryptionKey(encKey);
+            needsSave = true;
+        }
+        if (!licenseCookieSecret) {
+            setLicenseCookieSecret(cookieSecret);
             needsSave = true;
         }
 
@@ -130,6 +137,7 @@ export function DeploymentManager({ schoolId, initialDeployment }: DeploymentMan
                     cloudinaryConfig: cloudinary,
                     nextAuth: { ...nextAuth, secret },
                     encryptionKey: encKey,
+                    licenseCookieSecret: cookieSecret,
                     aiSensy,
                     triggerDev,
                     whatsappTemplates: waTemplates
@@ -165,6 +173,7 @@ NEXT_PUBLIC_SCHOOL_ADDRESS="${initialDeployment.schoolAddress || '123 School Lan
 FEEEASE_URL=${initialDeployment.feeeaseUrl}
 LICENSE_PUBLIC_KEY="${initialDeployment.licensePublicKey.replace(/\n/g, '\\n')}"
 ENCRYPTION_KEY=${encKey}
+LICENSE_COOKIE_SECRET=${cookieSecret}
 
 # Database
 MONGODB_URI=${mongoUri}
@@ -345,6 +354,26 @@ WHATSAPP_TEMPLATE_REMINDER_URDU=${waTemplates.reminderUrdu}
                                     </Button>
                                 </div>
                             </div>
+                            <div className="space-y-2">
+                                <Label>License Cookie Secret</Label>
+                                <div className="relative">
+                                    <Input
+                                        type={showSecrets['cookieSecret'] ? "text" : "password"}
+                                        value={licenseCookieSecret}
+                                        onChange={(e) => setLicenseCookieSecret(e.target.value)}
+                                        placeholder="Generated automatically if empty"
+                                    />
+                                    <Button
+                                        type="button"
+                                        variant="ghost"
+                                        size="sm"
+                                        className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                                        onClick={() => toggleVisibility('cookieSecret')}
+                                    >
+                                        {showSecrets['cookieSecret'] ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                                    </Button>
+                                </div>
+                            </div>
                         </AccordionContent>
                     </AccordionItem>
 
@@ -482,13 +511,13 @@ WHATSAPP_TEMPLATE_REMINDER_URDU=${waTemplates.reminderUrdu}
                             </DialogDescription>
                         </DialogHeader>
                         <div className="relative mt-4">
-                            <div className="bg-slate-950 rounded-lg border border-slate-800">
-                                <div className="flex justify-between items-center p-2 border-b border-slate-800 bg-slate-900/50 rounded-t-lg">
-                                    <span className="text-xs text-slate-400 font-mono px-2">.env</span>
+                            <div className="bg-card rounded-lg border border-border">
+                                <div className="flex justify-between items-center p-2 border-b border-border bg-muted/50 rounded-t-lg">
+                                    <span className="text-xs text-muted-foreground font-mono px-2">.env</span>
                                     <Button
                                         size="sm"
                                         variant="ghost"
-                                        className="h-8 text-slate-400 hover:text-slate-100 hover:bg-slate-800"
+                                        className="h-8 text-muted-foreground hover:text-foreground hover:bg-muted"
                                         onClick={copyToClipboard}
                                     >
                                         {copied ? (
@@ -504,7 +533,7 @@ WHATSAPP_TEMPLATE_REMINDER_URDU=${waTemplates.reminderUrdu}
                                         )}
                                     </Button>
                                 </div>
-                                <pre className="p-4 overflow-x-auto max-h-[400px] text-xs font-mono text-slate-50 whitespace-pre-wrap break-all scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-transparent">
+                                <pre className="p-4 overflow-x-auto max-h-[400px] text-xs font-mono text-foreground whitespace-pre-wrap break-all scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
                                     {generatedEnv}
                                 </pre>
                             </div>

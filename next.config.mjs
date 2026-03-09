@@ -1,13 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ['v5.airtableusercontent.com', 'source.unsplash.com', 'unsplash.com', 'images.unsplash.com', 'blogger.googleusercontent.com'],
         remotePatterns: [
             {
                 protocol: 'https',
-                hostname: 'jahannuma.vercel.app',
-                port: '',
-                pathname: '/metaimages/**',
+                hostname: 'source.unsplash.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'unsplash.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'images.unsplash.com',
             },
         ],
     },

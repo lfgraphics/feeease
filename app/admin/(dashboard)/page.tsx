@@ -58,7 +58,7 @@ export default async function AdminDashboard() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Active Subscriptions</CardTitle>
-            <CheckCircle className="h-4 w-4 text-muted-foreground text-green-500" />
+            <CheckCircle className="h-4 w-4 text-muted-foreground text-green-600 dark:text-green-400" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{activeSchools}</div>
@@ -68,7 +68,7 @@ export default async function AdminDashboard() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Trial Schools</CardTitle>
-            <Clock className="h-4 w-4 text-muted-foreground text-yellow-500" />
+            <Clock className="h-4 w-4 text-muted-foreground text-yellow-600 dark:text-yellow-400" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{trialSchools}</div>
@@ -78,7 +78,7 @@ export default async function AdminDashboard() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Pending Deployments</CardTitle>
-            <AlertCircle className="h-4 w-4 text-muted-foreground text-red-500" />
+            <AlertCircle className="h-4 w-4 text-muted-foreground text-destructive" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{pendingDeployments}</div>
@@ -91,19 +91,19 @@ export default async function AdminDashboard() {
             schools={expiringTomorrow} 
             title="Expiring Soon (48h)" 
             icon={AlertCircle} 
-            color="text-red-600" 
+            color="text-destructive" 
         />
         <ExpiryList 
             schools={expiringWeek} 
             title="Expiring this Week" 
             icon={CalendarDays} 
-            color="text-orange-500" 
+            color="text-orange-600 dark:text-orange-400" 
         />
         <ExpiryList 
             schools={expiringMonth} 
             title="Expiring this Month" 
             icon={CalendarDays} 
-            color="text-yellow-500" 
+            color="text-yellow-600 dark:text-yellow-400" 
         />
       </div>
     </div>

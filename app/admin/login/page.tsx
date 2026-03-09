@@ -41,10 +41,10 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-100">
+    <div className="min-h-screen flex items-center justify-center bg-background">
       <Card className="w-full max-w-md shadow-xl">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold text-slate-900">FeeEase Admin</CardTitle>
+          <CardTitle className="text-2xl font-bold text-foreground">FeeEase Admin</CardTitle>
           <CardDescription>Login to manage the platform</CardDescription>
         </CardHeader>
         <CardContent>
