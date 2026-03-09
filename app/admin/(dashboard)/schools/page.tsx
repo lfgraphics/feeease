@@ -1,72 +1,21 @@
-import dbConnect from "@/lib/db";
-import School from "@/models/School";
 import Link from "next/link";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Eye, Search, ChevronLeft, ChevronRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { isAfter } from "date-fns";
 import { StatusFilter } from "@/components/admin/StatusFilter";
+import { getSchools } from "@/actions/schools";
 
 export default async function SchoolsPage({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  await dbConnect();
-
-  const page = typeof searchParams.page === 'string' ? parseInt(searchParams.page) : 1;
-  const limit = 10;
-  const skip = (page - 1) * limit;
+  const { schools, totalPages, currentPage, totalSchools } = await getSchools(searchParams);
 
   const query = typeof searchParams.query === 'string' ? searchParams.query : '';
   const statusFilter = typeof searchParams.status === 'string' ? searchParams.status : 'all';
-
-  const filter: any = {};
-
-  if (query) {
-    filter.$or = [
-      { name: { $regex: query, $options: 'i' } },
-      { adminName: { $regex: query, $options: 'i' } },
-      { adminMobile: { $regex: query, $options: 'i' } },
-    ];
-  }
-
-  if (statusFilter !== 'all') {
-    if (statusFilter === 'active') {
-        filter['subscription.status'] = 'active';
-    } else if (statusFilter === 'expired') {
-        // Complex logic: status is expired OR expiry date is past
-        filter.$or = [
-            { 'subscription.status': 'expired' },
-            { 'license.expiresAt': { $lt: new Date() } }
-        ];
-    } else {
-        filter['subscription.status'] = statusFilter;
-    }
-  }
-
-  const totalSchools = await School.countDocuments(filter);
-  const totalPages = Math.ceil(totalSchools / limit);
-
-  const schools = await School.find(filter)
-    .sort({ createdAt: -1 })
-    .skip(skip)
-    .limit(limit);
-
-  // Helper to determine license status display
-  const getLicenseStatus = (school: any) => {
-    const isExpired = school.license?.expiresAt ? isAfter(new Date(), new Date(school.license.expiresAt)) : false;
-    
-    if (isExpired || school.subscription.status === 'expired') {
-        return <Badge variant="destructive">Expired</Badge>;
-    }
-    if (school.subscription.status === 'active') {
-        return <Badge variant="default">Active</Badge>;
-    }
-    return <Badge variant="secondary">{school.subscription.status}</Badge>;
-  };
 
   return (
     <div className="space-y-6">
@@ -113,7 +62,7 @@ export default async function SchoolsPage({
                 </TableRow>
             ) : (
                 schools.map((school) => (
-                <TableRow key={school._id.toString()}>
+                <TableRow key={school._id}>
                     <TableCell className="font-medium">{school.name}</TableCell>
                     <TableCell>
                     <div className="flex flex-col">
@@ -123,7 +72,9 @@ export default async function SchoolsPage({
                     </TableCell>
                     <TableCell>{school.subscription.plan}</TableCell>
                     <TableCell>
-                        {getLicenseStatus(school)}
+                        {school.displayStatus === 'destructive' && <Badge variant="destructive">Expired</Badge>}
+                        {school.displayStatus === 'default' && <Badge variant="default">Active</Badge>}
+                        {school.displayStatus === 'secondary' && <Badge variant="secondary">{school.subscription.status}</Badge>}
                     </TableCell>
                     <TableCell>
                     <Badge variant={school.deployment.status === 'deployed' ? 'outline' : 'destructive'}>
@@ -148,16 +99,16 @@ export default async function SchoolsPage({
       {/* Pagination */}
       <div className="flex items-center justify-end gap-2">
         <div className="text-sm text-muted-foreground mr-4">
-            Page {page} of {totalPages || 1}
+            Page {currentPage} of {totalPages || 1}
         </div>
-        <Link href={`?page=${Math.max(1, page - 1)}&query=${query}&status=${statusFilter}`}>
-            <Button variant="outline" size="sm" disabled={page <= 1}>
+        <Link href={`?page=${Math.max(1, currentPage - 1)}&query=${query}&status=${statusFilter}`}>
+            <Button variant="outline" size="sm" disabled={currentPage <= 1}>
                 <ChevronLeft className="h-4 w-4 mr-2" />
                 Previous
             </Button>
         </Link>
-        <Link href={`?page=${Math.min(totalPages, page + 1)}&query=${query}&status=${statusFilter}`}>
-            <Button variant="outline" size="sm" disabled={page >= totalPages}>
+        <Link href={`?page=${Math.min(totalPages, currentPage + 1)}&query=${query}&status=${statusFilter}`}>
+            <Button variant="outline" size="sm" disabled={currentPage >= totalPages}>
                 Next
                 <ChevronRight className="h-4 w-4 ml-2" />
             </Button>

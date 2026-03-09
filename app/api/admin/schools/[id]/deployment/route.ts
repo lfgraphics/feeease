@@ -36,6 +36,7 @@ export async function POST(
         nextAuth,
         encryptionKey,
         aiSensy,
+        triggerDev,
         publicAppUrl,
         whatsappTemplates
     } = body;
@@ -57,6 +58,7 @@ export async function POST(
     if (nextAuth) updateData.nextAuth = encrypt(JSON.stringify(nextAuth));
     if (encryptionKey) updateData.encryptionKey = encrypt(encryptionKey);
     if (aiSensy) updateData.aiSensy = encrypt(JSON.stringify(aiSensy));
+    if (triggerDev) updateData.triggerDev = encrypt(JSON.stringify(triggerDev));
     if (whatsappTemplates) updateData.whatsappTemplates = encrypt(JSON.stringify(whatsappTemplates));
 
     school.deployment = {

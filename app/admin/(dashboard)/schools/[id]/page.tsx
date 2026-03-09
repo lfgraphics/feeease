@@ -1,5 +1,3 @@
-import dbConnect from "@/lib/db";
-import School from "@/models/School";
 import { notFound } from "next/navigation";
 import { LicenseManager } from "@/components/admin/LicenseManager";
 import { DeploymentManager } from "@/components/admin/DeploymentManager";
@@ -7,59 +5,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { decrypt } from "@/lib/crypto";
+import { getSchoolById } from "@/actions/schools";
 
 export default async function SchoolDetailPage({ params }: { params: { id: string } }) {
-  await dbConnect();
-  const school = await School.findById(params.id);
+  const school = await getSchoolById(params.id);
 
   if (!school) {
     notFound();
   }
-
-  // Helper to safely decrypt fields
-  const safeDecrypt = (value?: string) => {
-    if (!value) return undefined;
-    try {
-      return decrypt(value);
-    } catch (e) {
-      console.error("Decryption failed:", e);
-      return value; // Return original if decryption fails (might be plain text or corrupted)
-    }
-  };
-
-  const safeDecryptJSON = (value?: string) => {
-      if (!value) return undefined;
-      try {
-          const decrypted = decrypt(value);
-          return JSON.parse(decrypted);
-      } catch (e) {
-          console.error("Decryption/Parse failed:", e);
-          return undefined;
-      }
-  }
-
-  // Prepare decrypted deployment object
-  const decryptedDeployment = {
-      ...JSON.parse(JSON.stringify(school.deployment || {})),
-      // Pass top-level school details needed for ENV generation
-      schoolName: school.name,
-      schoolShortName: school.shortName,
-      schoolAddress: school.address,
-      schoolLogo: school.logo,
-      features: JSON.parse(JSON.stringify(school.features || {})),
-      licensePublicKey: process.env.LICENSE_PUBLIC_KEY || "",
-      feeeaseUrl: process.env.NEXT_PUBLIC_APP_URL || "https://feeease.in",
-
-      mongoDbUri: safeDecrypt(school.deployment?.mongoDbUri),
-      gmailAccount: safeDecryptJSON(school.deployment?.gmailAccount),
-      cloudinaryConfig: safeDecryptJSON(school.deployment?.cloudinaryConfig),
-      nextAuth: safeDecryptJSON(school.deployment?.nextAuth),
-      encryptionKey: safeDecrypt(school.deployment?.encryptionKey),
-      aiSensy: safeDecryptJSON(school.deployment?.aiSensy),
-      whatsappTemplates: safeDecryptJSON(school.deployment?.whatsappTemplates),
-      // publicAppUrl is plain text, already in ...spread
-  };
 
   return (
     <div className="space-y-6">
@@ -147,7 +100,7 @@ export default async function SchoolDetailPage({ params }: { params: { id: strin
         <div className="md:col-span-2">
             <DeploymentManager 
                 schoolId={school._id.toString()}
-                initialDeployment={decryptedDeployment}
+                initialDeployment={school.decryptedDeployment}
             />
         </div>
 

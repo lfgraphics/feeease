@@ -1,5 +1,3 @@
-import dbConnect from "@/lib/db";
-import School from "@/models/School";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
@@ -9,6 +7,7 @@ import { ExternalLink } from "lucide-react";
 import Link from "next/link";
 
 import { CopyButton, LogoutButton, ChangePasswordButton } from "@/components/SchoolProfileActions";
+import { getSchoolByEmail } from "@/actions/schools";
 
 export default async function SchoolProfilePage() {
   const session = await getServerSession(authOptions);
@@ -26,8 +25,11 @@ export default async function SchoolProfilePage() {
     redirect("/");
   }
 
-  await dbConnect();
-  const school = await School.findOne({ adminEmail: session.user.email });
+  if (!session.user.email) {
+    return <div>User email not found</div>;
+  }
+
+  const school = await getSchoolByEmail(session.user.email);
 
   if (!school) {
     return <div>School not found</div>;

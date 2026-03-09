@@ -1,44 +1,11 @@
-import dbConnect from "@/lib/db";
-import School from "@/models/School";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { School as SchoolIcon, CheckCircle, AlertCircle, Clock, CalendarDays, ExternalLink } from "lucide-react";
 import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
-import { addDays, format, isBefore, startOfDay } from "date-fns";
+import { format } from "date-fns";
+import { getDashboardStats } from "@/actions/dashboard";
 
 export default async function AdminDashboard() {
-  await dbConnect();
-  
-  const today = startOfDay(new Date());
-  const next7Days = addDays(today, 7);
-  const next30Days = addDays(today, 30);
-
-  const totalSchools = await School.countDocuments();
-  const activeSchools = await School.countDocuments({ "subscription.status": "active" });
-  const trialSchools = await School.countDocuments({ "subscription.status": "trial" });
-  const pendingDeployments = await School.countDocuments({ "deployment.status": "pending" });
-
-  // Fetch expiring licenses
-  const expiringTomorrow = await School.find({
-    "license.expiresAt": { 
-      $gte: today, 
-      $lt: addDays(today, 2) // Within next 48 hours effectively covers "tomorrow"
-    }
-  }).select("name license.expiresAt _id");
-
-  const expiringWeek = await School.find({
-    "license.expiresAt": { 
-      $gte: today, 
-      $lt: next7Days 
-    }
-  }).select("name license.expiresAt _id");
-
-  const expiringMonth = await School.find({
-    "license.expiresAt": { 
-      $gte: today, 
-      $lt: next30Days 
-    }
-  }).select("name license.expiresAt _id");
+  const { totalSchools, activeSchools, trialSchools, pendingDeployments, expiringTomorrow, expiringWeek, expiringMonth } = await getDashboardStats();
 
   function ExpiryList({ schools, title, icon: Icon, color }: { schools: any[], title: string, icon: any, color: string }) {
     if (schools.length === 0) return null;

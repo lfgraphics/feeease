@@ -6,7 +6,11 @@ const IV_LENGTH = 16; // For AES, this is always 16
 
 if (!ENCRYPTION_KEY || ENCRYPTION_KEY.length !== 32) {
   // In production, throw error if key is missing or invalid length
-  console.warn('ENCRYPTION_KEY is missing or invalid length (must be 32 chars). Encryption will fail.');
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error('ENCRYPTION_KEY is missing or invalid length (must be 32 chars). Encryption will fail.');
+  } else {
+    console.warn('ENCRYPTION_KEY is missing or invalid length (must be 32 chars). Encryption will fail.');
+  }
 }
 
 export function encrypt(text: string): string {

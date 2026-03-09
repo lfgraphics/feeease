@@ -41,7 +41,7 @@ async function dbConnect() {
       bufferCommands: false,
     };
 
-    cached!.promise = mongoose.connect(MONGODB_URI || 'mongodb://localhost:27017/feeease', opts).then((mongoose) => {
+    cached!.promise = mongoose.connect(MONGODB_URI || (process.env.NODE_ENV === 'development' ? 'mongodb://localhost:27017/feeease' : ''), opts).then((mongoose) => {
       return mongoose;
     });
   }
