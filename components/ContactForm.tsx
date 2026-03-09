@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { submitContactForm } from "./ContactFormAction";
+import { toast } from "sonner";
 
 const ContactForm = () => {
   const [submitting, setSubmitting] = useState(false);
@@ -20,11 +21,11 @@ const ContactForm = () => {
         setSucceeded(true);
         form.reset();
       } else {
-        alert(result.error || "There was an error submitting the form.");
+        toast.error(result.error || "There was an error submitting the form.");
       }
     } catch (error) {
       console.error("Error submitting form", error);
-      alert("There was an error submitting the form. Please try again.");
+      toast.error("There was an error submitting the form. Please try again.");
     } finally {
       setSubmitting(false);
     }

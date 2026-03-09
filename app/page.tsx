@@ -54,11 +54,11 @@ export default function Home() {
               </span>
             </h1>
             <p className="text-xl mb-8 text-slate-600 leading-relaxed">
-              Simplify your educational institution's management. From <strong>Fee Collection</strong> and <strong>Expense Tracking</strong> to <strong>Attendance</strong> and <strong>Staff Salaries</strong>, FeeEase brings everything into one intuitive, modern dashboard.
+              Simplify your educational institution&apos;s management. From <strong>Fee Collection</strong> and <strong>Expense Tracking</strong> to <strong>Attendance</strong> and <strong>Staff Salaries</strong>, FeeEase brings everything into one intuitive, modern dashboard.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Link
-                href="/contactus"
+                href="/get-started"
                 className="bg-blue-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-blue-700 shadow-xl shadow-blue-200 transition-all hover:-translate-y-1"
               >
                 Get Started Now
@@ -244,7 +244,7 @@ export default function Home() {
             <div>
               <h3 className="text-3xl font-bold mb-6">Why Choose FeeEase?</h3>
               <p className="text-slate-400 mb-8 text-lg">
-                We understand the unique challenges of managing a school. Our platform is built to solve real-world problems with features you'll actually use.
+                We understand the unique challenges of managing a school. Our platform is built to solve real-world problems with features you&apos;ll actually use.
               </p>
               
               <div className="space-y-6">
@@ -263,7 +263,7 @@ export default function Home() {
                   </div>
                   <div>
                     <h5 className="font-bold text-lg mb-1">Affordable Pricing</h5>
-                    <p className="text-slate-400">Cost-effective subscription model that fits your school's budget.</p>
+                    <p className="text-slate-400">Cost-effective subscription model that fits your school&apos;s budget.</p>
                   </div>
                 </div>
                 <div className="flex gap-4">
@@ -320,7 +320,7 @@ export default function Home() {
               <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-6 shadow-lg shadow-blue-200 border-4 border-white">1</div>
               <h4 className="text-xl font-bold mb-3 text-slate-900">Connect with Sales</h4>
               <p className="text-slate-600">
-                Contact our team to discuss your school's specific needs. We'll tailor a package just for you.
+                Contact our team to discuss your school&apos;s specific needs. We&apos;ll tailor a package just for you.
               </p>
             </div>
 
@@ -356,7 +356,7 @@ export default function Home() {
                   <Star key={i} size={18} className="fill-yellow-400 text-yellow-400" />
                 ))}
               </div>
-              <p className="text-slate-600 mb-6 italic">"FeeEase has completely transformed how we manage our finances. The expense tracking and fee collection modules work seamlessly together."</p>
+              <p className="text-slate-600 mb-6 italic">&quot;FeeEase has completely transformed how we manage our finances. The expense tracking and fee collection modules work seamlessly together.&quot;</p>
               <div className="flex items-center gap-4">
                 <div className="relative w-12 h-12 rounded-full overflow-hidden">
                    <Image
@@ -368,7 +368,7 @@ export default function Home() {
                 </div>
                 <div>
                   <p className="font-bold text-slate-900">John Doe</p>
-                  <p className="text-sm text-slate-500">Principal, St. Xavier's</p>
+                  <p className="text-sm text-slate-500">Principal, St. Xavier&apos;s</p>
                 </div>
               </div>
             </div>
@@ -379,7 +379,7 @@ export default function Home() {
                   <Star key={i} size={18} className="fill-yellow-400 text-yellow-400" />
                 ))}
               </div>
-              <p className="text-slate-600 mb-6 italic">"The attendance and salary management features save us hours of manual work every month. It's truly an all-in-one solution."</p>
+              <p className="text-slate-600 mb-6 italic">&quot;The attendance and salary management features save us hours of manual work every month. It&apos;s truly an all-in-one solution.&quot;</p>
               <div className="flex items-center gap-4">
                 <div className="relative w-12 h-12 rounded-full overflow-hidden">
                    <Image
@@ -402,7 +402,7 @@ export default function Home() {
                   <Star key={i} size={18} className="fill-yellow-400 text-yellow-400" />
                 ))}
               </div>
-              <p className="text-slate-600 mb-6 italic">"Finally, a system that looks modern and is easy to use. No more clunky spreadsheets. The parents love the digital receipts!"</p>
+              <p className="text-slate-600 mb-6 italic">&quot;Finally, a system that looks modern and is easy to use. No more clunky spreadsheets. The parents love the digital receipts!&quot;</p>
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-lg">
                   R

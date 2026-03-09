@@ -12,7 +12,7 @@ const ContactUs = () => {
         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-blue-500 rounded-full blur-3xl opacity-50"></div>
         <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 bg-purple-500 rounded-full blur-3xl opacity-50"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">Get in Touch</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6">We&apos;re here to help!</h1>
           <p className="text-xl text-blue-100 max-w-2xl mx-auto">
             Have questions about FeeEase? Our team is here to help you modernize your school management.
           </p>
@@ -26,7 +26,7 @@ const ContactUs = () => {
             <div className="bg-white rounded-2xl shadow-xl p-8 border border-slate-100 h-full">
               <div className="mb-8">
                 <h2 className="text-2xl font-bold text-slate-900 mb-2">Send us a Message</h2>
-                <p className="text-slate-500">Fill out the form below and we'll get back to you within 18 working hours.</p>
+                <p className="text-slate-500">Fill out the form below and we&apos;ll get back to you within 18 working hours.</p>
               </div>
               <ContactForm />
             </div>

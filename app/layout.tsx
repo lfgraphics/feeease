@@ -1,9 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Suspense } from "react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-
+import PublicLayout from "@/components/PublicLayout";
+import Providers from "@/components/Providers";
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://fee-ease.vercel.app'),
@@ -31,11 +30,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-sans">
-        <Suspense fallback="loading.....">
-          <Header />
-          {children}
-          <Footer />
-        </Suspense>
+        <Providers>
+          <Suspense fallback="loading.....">
+            <PublicLayout>
+              {children}
+            </PublicLayout>
+          </Suspense>
+        </Providers>
       </body>
     </html>
   );
