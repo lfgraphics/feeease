@@ -3,11 +3,13 @@ import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Check, X } from "lucide-react";
 import Link from "next/link";
 
-import { CopyButton, LogoutButton, ChangePasswordButton } from "@/components/SchoolProfileActions";
+import { CopyButton, ChangePasswordButton } from "@/components/SchoolProfileActions";
 import { getSchoolByEmail } from "@/actions/schools";
+import { SchoolBilling } from "@/components/school/SchoolBilling";
+import { SCHOOL_FEATURES } from "@/lib/features";
 
 export default async function SchoolProfilePage() {
   const session = await getServerSession(authOptions);
@@ -102,6 +104,29 @@ export default async function SchoolProfilePage() {
                     </div>
                 )}
             </div>
+
+            <div className="space-y-3 pt-4 border-t">
+                <h3 className="text-sm font-semibold text-foreground">Active Features</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {SCHOOL_FEATURES.map((feature) => {
+                        const isEnabled = school.features?.[feature.id];
+                        return (
+                            <div key={feature.id} className="flex items-center justify-between p-2 rounded-md bg-muted/30 border">
+                                <span className="text-sm font-medium text-muted-foreground">{feature.label}</span>
+                                {isEnabled ? (
+                                    <Badge variant="default" className="bg-green-100 text-green-700 hover:bg-green-100 border-green-200 dark:bg-green-900/30 dark:text-green-400 dark:border-green-800">
+                                        <Check className="h-3 w-3 mr-1" /> Active
+                                    </Badge>
+                                ) : (
+                                    <Badge variant="outline" className="text-muted-foreground bg-muted/50">
+                                        <X className="h-3 w-3 mr-1" /> Inactive
+                                    </Badge>
+                                )}
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
           </CardContent>
         </Card>
 
@@ -171,6 +196,15 @@ export default async function SchoolProfilePage() {
                 </div>
             </CardContent>
         </Card>
+      </div>
+
+      <div className="mt-8">
+          <h2 className="text-2xl font-bold tracking-tight text-foreground mb-4">Financials & Billing</h2>
+          <SchoolBilling 
+            schoolId={school._id.toString()}
+            financials={JSON.parse(JSON.stringify(school.financials || {}))}
+            initialSubscription={JSON.parse(JSON.stringify(school.subscription || {}))}
+          />
       </div>
     </div>
   );

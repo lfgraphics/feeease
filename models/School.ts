@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
 
-// Add a method or pre-save hook if needed, but for now just interface
+import { SCHOOL_FEATURES, SchoolFeatureId } from "@/lib/features";
+
 export interface ISchool extends Document {
   name: string;
   logo: string;
@@ -9,20 +10,14 @@ export interface ISchool extends Document {
   adminName: string;
   adminEmail?: string;
   adminMobile: string;
-  adminPasswordHash: string; // Store hashed password for admin login
-  adminPasswordEncrypted?: string; // Encrypted for retrieval during activation
-  
-  features: {
-    whatsapp: boolean;
-    teachersLogin: boolean;
-    parentsLogin: boolean;
-    attendance: boolean;
-    payroll: boolean;
-  };
-  
+  adminPasswordHash: string;
+  adminPasswordEncrypted?: string;
+
+  features: Record<SchoolFeatureId, boolean>;
+
   subscription: {
     plan: string;
-    status: 'active' | 'expired' | 'trial' | 'suspended';
+    status: 'active' | 'expired' | 'trial' | 'suspended' | 'revoked';
     startDate: Date;
     expiryDate: Date;
     paymentMethod?: string;
@@ -35,28 +30,48 @@ export interface ISchool extends Document {
     expiresAt?: Date;
     status: 'active' | 'expired' | 'suspended' | 'revoked';
   };
-  
+
   deployment: {
     status: 'pending' | 'deployed' | 'failed';
     githubRepo?: string;
     vercelProject?: string;
-    mongoDbUri?: string; // Encrypted
-    cloudinaryConfig?: string; // Encrypted JSON string
-    gmailAccount?: string; // Encrypted JSON string {email, password}
-    nextAuth?: string; // Encrypted JSON string { secret, url }
-    encryptionKey?: string; // Encrypted string
-    aiSensy?: string; // Encrypted JSON string { apiKey }
-    triggerDev?: string; // Encrypted JSON string { apiKey, projectId }
-    licenseCookieSecret?: string; // Encrypted string
-    publicAppUrl?: string; // Plain text (publicly available anyway)
-    whatsappTemplates?: string; // Encrypted JSON string { receipt, reminderHindi, reminderEnglish, reminderUrdu }
+    mongoDbUri?: string;
+    cloudinaryConfig?: string;
+    gmailAccount?: string;
+    nextAuth?: string;
+    encryptionKey?: string;
+    aiSensy?: string;
+    triggerDev?: string;
+    licenseCookieSecret?: string;
+    publicAppUrl?: string;
+    whatsappTemplates?: string;
     notes?: string;
   };
-  
+
+  referral: {
+    code?: string;
+    referredBy?: mongoose.Types.ObjectId;
+  };
+
+  financials: {
+    installationCost: number;
+    recurringCosts: Array<{
+      amount: number;
+      effectiveDate: Date;
+    }>;
+    planType: 'monthly' | 'quarterly' | 'yearly';
+  };
+
   activationStatus: 'not_activated' | 'license_entered' | 'app_initialized' | 'active';
   createdAt: Date;
   updatedAt: Date;
 }
+
+// Generate features schema dynamically
+const featuresSchemaDefinition = SCHOOL_FEATURES.reduce((acc, feature) => {
+  acc[feature.id] = { type: Boolean, default: false };
+  return acc;
+}, {} as Record<string, { type: BooleanConstructor, default: boolean }>);
 
 const SchoolSchema: Schema = new Schema({
   name: { type: String, required: true },
@@ -67,27 +82,21 @@ const SchoolSchema: Schema = new Schema({
   adminEmail: { type: String },
   adminMobile: { type: String, required: true },
   adminPasswordHash: { type: String, required: true },
-  adminPasswordEncrypted: { type: String }, // Encrypted for retrieval during activation
+  adminPasswordEncrypted: { type: String },
 
-  features: {
-    whatsapp: { type: Boolean, default: false },
-    teachersLogin: { type: Boolean, default: false },
-    parentsLogin: { type: Boolean, default: false },
-    attendance: { type: Boolean, default: false },
-    payroll: { type: Boolean, default: false },
-  },
-  
+  features: featuresSchemaDefinition,
+
   subscription: {
     plan: { type: String, default: 'Basic' },
-    status: { type: String, enum: ['active', 'expired', 'trial', 'suspended'], default: 'trial' },
+    status: { type: String, enum: ['active', 'expired', 'trial', 'suspended', 'revoked'], default: 'trial' },
     startDate: { type: Date, default: Date.now },
-    expiryDate: { type: Date }, // Default could be set in logic
+    expiryDate: { type: Date },
     paymentMethod: { type: String },
   },
 
   license: {
-    licenseKey: { type: String, unique: true }, // Immutable public key
-    token: { type: String }, // The signed JWT
+    licenseKey: { type: String, unique: true },
+    token: { type: String },
     issuedAt: { type: Date },
     expiresAt: { type: Date },
     status: { type: String, enum: ['active', 'expired', 'suspended', 'revoked'], default: 'active' },
@@ -97,23 +106,36 @@ const SchoolSchema: Schema = new Schema({
     status: { type: String, enum: ['pending', 'deployed', 'failed'], default: 'pending' },
     githubRepo: { type: String },
     vercelProject: { type: String },
-    mongoDbUri: { type: String }, // Should be stored encrypted
-    cloudinaryConfig: { type: String }, // Should be stored encrypted
-    gmailAccount: { type: String }, // Should be stored encrypted
-    nextAuth: { type: String }, // Encrypted JSON string { secret, url }
-    encryptionKey: { type: String }, // Encrypted string
-    aiSensy: { type: String }, // Encrypted JSON string { apiKey }
-    triggerDev: { type: String }, // Encrypted JSON string { apiKey, projectId }
-    licenseCookieSecret: { type: String }, // Encrypted string
-    publicAppUrl: { type: String }, // Plain text
-    whatsappTemplates: { type: String }, // Should be stored encrypted
+    mongoDbUri: { type: String },
+    cloudinaryConfig: { type: String },
+    gmailAccount: { type: String },
+    nextAuth: { type: String },
+    encryptionKey: { type: String },
+    aiSensy: { type: String },
+    triggerDev: { type: String },
+    licenseCookieSecret: { type: String },
+    publicAppUrl: { type: String },
+    whatsappTemplates: { type: String },
     notes: { type: String },
+  },
+
+  referral: {
+    code: { type: String },
+    referredBy: { type: mongoose.Schema.Types.ObjectId, ref: 'AdminUser' },
+  },
+
+  financials: {
+    installationCost: { type: Number, default: 0 },
+    recurringCosts: [{
+      amount: { type: Number },
+      effectiveDate: { type: Date, default: Date.now }
+    }],
+    planType: { type: String, enum: ['monthly', 'quarterly', 'yearly'], default: 'monthly' },
   },
 
   activationStatus: { type: String, enum: ['not_activated', 'license_entered', 'app_initialized', 'active'], default: 'not_activated' },
 }, { timestamps: true });
 
-// Prevent overwrite if model already exists (important for hot reload in Next.js)
 const School: Model<ISchool> = mongoose.models.School || mongoose.model<ISchool>('School', SchoolSchema);
 
 export default School;

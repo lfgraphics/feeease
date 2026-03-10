@@ -18,7 +18,9 @@ export default function PortalPage() {
     }
 
     if (session?.user) {
-      if (session.user.role.includes("admin")) {
+      if (session.user.role === "marketing") {
+        router.push("/admin/marketing/dashboard");
+      } else if (session.user.role.includes("admin")) {
         router.push("/admin");
       } else if (session.user.role === "school_owner") {
         router.push("/school/profile");

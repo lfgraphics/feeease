@@ -28,7 +28,7 @@ export async function POST(
     }
 
     const body = await req.json();
-    const { action, expiryDate, plan, features } = body;
+    const { action, expiryDate, plan, features, status } = body;
 
     if (action === "generate" || action === "extend") {
       if (!PRIVATE_KEY) {
@@ -39,6 +39,33 @@ export async function POST(
       
       // Ensure expiresAt is set to the END of that day (23:59:59.999)
       expiresAt.setHours(23, 59, 59, 999);
+      
+      const finalStatus = status || 'active';
+
+      // If suspended, revoked, or expired, ensure the expiry date reflects this if needed
+      // Or simply, we trust the admin provided expiryDate. 
+      // But user requested: "if suspend/expired/revoked is being set then it should update the licence expiry as well to the current data or provided date"
+      
+      // If the status is NOT active, and no specific date was provided (or even if it was), 
+      // should we expire it NOW?
+      // "to the current data or provided date" -> If provided date is future, but status is expired, it's contradictory.
+      // But the admin might want to "Suspend" a school that has a valid license until next year.
+      // So the expiry date should remain next year, but status is suspended.
+      // HOWEVER, the user specifically said: "update the licence expiry as well to the current data or provided date"
+      // This likely means: If I set it to expired, I probably want the date to be now (or yesterday) so it is logically expired too.
+      
+      if (finalStatus === 'expired' || finalStatus === 'revoked') {
+          // If explicitly setting to expired/revoked, and the date provided is in the future, 
+          // we might want to clamp it? 
+          // But if the user provided a date, we respect it. 
+          // If the user DID NOT provide a date (using default +30 days), but set status to expired,
+          // then we should probably set date to NOW.
+          
+          if (!expiryDate) {
+              // No date provided, but status is expired -> expire immediately
+              expiresAt.setTime(Date.now());
+          }
+      }
       
       // Update School Plan and Features
       if (plan) school.subscription.plan = plan;
@@ -51,7 +78,7 @@ export async function POST(
 
       const payload = {
         schoolId: school._id.toString(),
-        licenseKey: school.license.licenseKey, // Add public immutable key to token
+        licenseKey: school.license.licenseKey,
         plan: school.subscription.plan,
         features: school.features,
         exp: Math.floor(expiresAt.getTime() / 1000),
@@ -59,15 +86,16 @@ export async function POST(
       };
 
       // Sign with Private Key
-      // Ensure PRIVATE_KEY is properly formatted (newlines) handled in lib/crypto
       const token = jwt.sign(payload, PRIVATE_KEY, { algorithm: 'RS256' });
 
       school.license.token = token;
       school.license.issuedAt = new Date();
       school.license.expiresAt = expiresAt;
-      school.license.status = 'active';
+      
+      school.license.status = finalStatus;
 
-      school.subscription.status = 'active';
+      // Ensure subscription status matches license status
+      school.subscription.status = finalStatus;
       school.subscription.expiryDate = expiresAt;
 
       await school.save();

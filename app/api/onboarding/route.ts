@@ -6,16 +6,33 @@ import { encrypt } from "@/lib/crypto";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
 
+const APP_SCRIPT_URL = process.env.GOOGLE_APPS_SCRIPT_URL;
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
 
     // Basic Validation
-    if (!body.schoolName || !body.schoolLogo || !body.adminName || !body.adminMobile || !body.adminPassword) {
+    if (!body.schoolName || !body.schoolLogo || !body.adminName || !body.adminMobile || !body.adminPassword || !body.adminEmail) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
     await dbConnect();
+
+    // Validate Referral Code
+    let referredBy = undefined;
+    let referralCode = undefined;
+    let referralStaffEmail = undefined;
+
+    if (body.referralCode) {
+      const marketingUser = await AdminUser.findOne({ referralCode: body.referralCode, role: 'marketing' });
+      if (!marketingUser) {
+        return NextResponse.json({ error: "Invalid referral code" }, { status: 400 });
+      }
+      referredBy = marketingUser._id;
+      referralCode = body.referralCode;
+      referralStaffEmail = marketingUser.email;
+    }
 
     // Check if school already exists (by name or admin email if provided)
     // For now, let's just check mobile number uniqueness for admin
@@ -53,10 +70,34 @@ export async function POST(req: NextRequest) {
           status: 'active',
           issuedAt: new Date(),
           expiresAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000) 
+      },
+      referral: {
+        code: referralCode,
+        referredBy: referredBy
       }
     });
 
-    // TODO: Trigger App Script for Email Notification
+    // Trigger App Script for Email Notification
+    try {
+      const profileUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'https://feeease.com'}/admin/schools/${newSchool._id}`;
+      const formData = new FormData();
+      formData.append('adminEmail', body.adminEmail);
+      if (referralStaffEmail) {
+        formData.append('staffEmail', referralStaffEmail);
+      }
+      formData.append('school', body.schoolName);
+      formData.append('adminName', body.adminName);
+      formData.append('adminMobile', body.adminMobile);
+      formData.append('profileUrl', profileUrl);
+
+      await fetch(APP_SCRIPT_URL!, {
+        method: 'POST',
+        body: formData
+      });
+    } catch (err) {
+      console.error("Failed to post to App Script", err);
+      // Don't fail the request if notification fails
+    }
 
     return NextResponse.json({ success: true, schoolId: newSchool._id });
 

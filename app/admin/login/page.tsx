@@ -29,6 +29,9 @@ export default function AdminLoginPage() {
       if (result?.error) {
         toast.error(result.error);
       } else {
+        // Redirect to /admin which will then handle role-based navigation or redirection
+        // But for better UX, we can check role here? No, client-side doesn't know role yet without session update
+        // Just push to /admin and let middleware/layout handle it
         router.push("/admin");
         router.refresh();
       }

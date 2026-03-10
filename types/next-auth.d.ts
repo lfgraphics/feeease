@@ -5,6 +5,7 @@ declare module "next-auth" {
     user: {
       id: string;
       role: string;
+      referralCode?: string;
       requiresPasswordChange?: boolean;
     } & DefaultSession["user"];
   }
@@ -12,6 +13,7 @@ declare module "next-auth" {
   interface User {
     id: string;
     role: string;
+    referralCode?: string;
     requiresPasswordChange?: boolean;
   }
 }
@@ -20,6 +22,7 @@ declare module "next-auth/jwt" {
   interface JWT {
     id: string;
     role: string;
+    referralCode?: string;
     requiresPasswordChange?: boolean;
   }
 }

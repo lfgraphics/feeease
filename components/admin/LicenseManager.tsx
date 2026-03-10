@@ -1,17 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Loader2, RefreshCw, Copy, Check } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { DatePicker } from "@/components/ui/date-picker";
+import { SCHOOL_FEATURES } from "@/lib/features";
+
 import { toast } from "sonner";
 
 interface LicenseManagerProps {
@@ -27,10 +25,36 @@ export function LicenseManager({ schoolId, initialLicense, initialSubscription, 
   const [subscription, setSubscription] = useState(initialSubscription);
   const [features, setFeatures] = useState(initialFeatures || {});
   const [plan, setPlan] = useState(subscription.plan || "Basic");
-  const [expiryDate, setExpiryDate] = useState<Date | undefined>(
-    license?.expiresAt ? new Date(license.expiresAt) : new Date(new Date().setDate(new Date().getDate() + 30))
-  );
+  const [mounted, setMounted] = useState(false);
+  const [expiryDate, setExpiryDate] = useState<Date | undefined>(undefined);
   const [copied, setCopied] = useState(false);
+
+  const [status, setStatus] = useState(initialLicense?.status || "active");
+
+  useEffect(() => {
+    setMounted(true);
+    // Only set the date on the client side after mounting
+    const initialDate = license?.expiresAt ? new Date(license.expiresAt) : new Date(new Date().setDate(new Date().getDate() + 30));
+    setExpiryDate(initialDate);
+    if (initialLicense?.status) {
+        setStatus(initialLicense.status);
+    }
+  }, [license?.expiresAt, initialLicense?.status]);
+
+  if (!mounted) {
+    return (
+        <Card>
+            <CardHeader>
+                <CardTitle>License & Plan Management</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+                <div className="flex justify-center p-8">
+                    <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+                </div>
+            </CardContent>
+        </Card>
+    );
+  }
 
   async function updateLicense() {
     if (!expiryDate) {
@@ -47,7 +71,8 @@ export function LicenseManager({ schoolId, initialLicense, initialSubscription, 
             action: "generate", 
             expiryDate: expiryDate.toISOString(),
             plan,
-            features
+            features,
+            status // Include status in the update
         }),
       });
       const data = await res.json();
@@ -87,7 +112,7 @@ export function LicenseManager({ schoolId, initialLicense, initialSubscription, 
       <CardContent className="space-y-6">
         
         {/* Plan Selection */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-2">
                 <Label>Plan</Label>
                 <Select value={plan} onValueChange={setPlan}>
@@ -103,55 +128,39 @@ export function LicenseManager({ schoolId, initialLicense, initialSubscription, 
 
             <div className="space-y-2">
                 <Label>License Expiry Date</Label>
-                <Popover>
-                    <PopoverTrigger asChild>
-                        <Button
-                            variant={"outline"}
-                            className={cn(
-                                "w-full justify-start text-left font-normal",
-                                !expiryDate && "text-muted-foreground"
-                            )}
-                        >
-                            <CalendarIcon className="mr-2 h-4 w-4" />
-                            {expiryDate ? format(expiryDate, "PPP") : <span>Pick a date</span>}
-                        </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0">
-                        <Calendar
-                            mode="single"
-                            selected={expiryDate}
-                            onSelect={setExpiryDate}
-                            initialFocus
-                        />
-                    </PopoverContent>
-                </Popover>
+                <DatePicker date={expiryDate} setDate={setExpiryDate} />
+            </div>
+
+            <div className="space-y-2">
+                <Label>Status</Label>
+                <Select value={status} onValueChange={setStatus}>
+                    <SelectTrigger>
+                        <SelectValue placeholder="Select Status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="active">Active</SelectItem>
+                        <SelectItem value="expired">Expired</SelectItem>
+                        <SelectItem value="suspended">Suspended</SelectItem>
+                        <SelectItem value="revoked">Revoked</SelectItem>
+                    </SelectContent>
+                </Select>
             </div>
         </div>
 
         {/* Features Selection */}
         <div className="space-y-2">
             <Label>Features</Label>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 border p-4 rounded-md bg-muted/20">
-                <div className="flex items-center space-x-2">
-                    <Checkbox id="whatsapp" checked={features.whatsapp} onCheckedChange={(c) => handleFeatureChange("whatsapp", c as boolean)} />
-                    <Label htmlFor="whatsapp" className="cursor-pointer">WhatsApp</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                    <Checkbox id="teachers" checked={features.teachersLogin} onCheckedChange={(c) => handleFeatureChange("teachersLogin", c as boolean)} />
-                    <Label htmlFor="teachers" className="cursor-pointer">Teachers Login</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                    <Checkbox id="parents" checked={features.parentsLogin} onCheckedChange={(c) => handleFeatureChange("parentsLogin", c as boolean)} />
-                    <Label htmlFor="parents" className="cursor-pointer">Parents Login</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                    <Checkbox id="attendance" checked={features.attendance} onCheckedChange={(c) => handleFeatureChange("attendance", c as boolean)} />
-                    <Label htmlFor="attendance" className="cursor-pointer">Attendance</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                    <Checkbox id="payroll" checked={features.payroll} onCheckedChange={(c) => handleFeatureChange("payroll", c as boolean)} />
-                    <Label htmlFor="payroll" className="cursor-pointer">Payroll</Label>
-                </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 border p-4 rounded-md bg-muted/20">
+                {SCHOOL_FEATURES.map((feature) => (
+                    <div key={feature.id} className="flex items-center space-x-2">
+                        <Checkbox 
+                            id={feature.id}
+                            checked={features[feature.id]}
+                            onCheckedChange={(c) => handleFeatureChange(feature.id, c as boolean)}
+                        />
+                        <Label htmlFor={feature.id} className="cursor-pointer">{feature.label}</Label>
+                    </div>
+                ))}
             </div>
         </div>
 
@@ -165,10 +174,9 @@ export function LicenseManager({ schoolId, initialLicense, initialSubscription, 
         {license?.licenseKey && (
           <div className="bg-muted p-4 rounded-md border mt-4 space-y-4">
             <div className="flex items-center justify-between">
-                <p className="font-bold text-muted-foreground text-sm uppercase tracking-wider">School License Key (Immutable)</p>
-                <Button variant="ghost" size="sm" onClick={handleCopy} className="h-8">
+                <p className="font-bold text-muted-foreground text-sm uppercase tracking-wider">School License Key</p>
+                <Button variant="outline" size="sm" onClick={handleCopy} className="h-8">
                     {copied ? <Check className="h-4 w-4 text-green-600 dark:text-green-400" /> : <Copy className="h-4 w-4" />}
-                    <span className="ml-2">{copied ? "Copied" : "Copy"}</span>
                 </Button>
             </div>
             <div className="font-mono text-sm sm:text-lg font-bold tracking-widest bg-background p-3 rounded border text-center text-foreground break-all">

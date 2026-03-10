@@ -85,8 +85,8 @@ export function CreateUserDialog() {
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="fullName" className="text-right">
+            <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-center gap-4">
+              <Label htmlFor="fullName" className="sm:text-right">
                 Name
               </Label>
               <Input
@@ -94,12 +94,12 @@ export function CreateUserDialog() {
                 name="fullName"
                 value={formData.fullName}
                 onChange={handleChange}
-                className="col-span-3"
+                className="col-span-1 sm:col-span-3"
                 required
               />
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="email" className="text-right">
+            <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-center gap-4">
+              <Label htmlFor="email" className="sm:text-right">
                 Email
               </Label>
               <Input
@@ -108,12 +108,12 @@ export function CreateUserDialog() {
                 type="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="col-span-3"
+                className="col-span-1 sm:col-span-3"
                 required
               />
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="mobileNumber" className="text-right">
+            <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-center gap-4">
+              <Label htmlFor="mobileNumber" className="sm:text-right">
                 Mobile
               </Label>
               <Input
@@ -121,12 +121,12 @@ export function CreateUserDialog() {
                 name="mobileNumber"
                 value={formData.mobileNumber}
                 onChange={handleChange}
-                className="col-span-3"
+                className="col-span-1 sm:col-span-3"
                 required
               />
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="password" className="text-right">
+            <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-center gap-4">
+              <Label htmlFor="password" className="sm:text-right">
                 Password
               </Label>
               <Input
@@ -134,23 +134,24 @@ export function CreateUserDialog() {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                className="col-span-3"
+                className="col-span-1 sm:col-span-3"
                 required
                 minLength={6}
               />
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="role" className="text-right">
+            <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-center gap-4">
+              <Label htmlFor="role" className="sm:text-right">
                 Role
               </Label>
               <Select value={formData.role} onValueChange={handleRoleChange}>
-                <SelectTrigger className="col-span-3">
+                <SelectTrigger className="col-span-1 sm:col-span-3">
                   <SelectValue placeholder="Select a role" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="super_admin">Super Admin</SelectItem>
                   <SelectItem value="operations_admin">Operations Admin</SelectItem>
                   <SelectItem value="support_admin">Support Admin</SelectItem>
+                  <SelectItem value="marketing">Marketing</SelectItem>
                 </SelectContent>
               </Select>
             </div>

@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { LayoutDashboard, Users, School as SchoolIcon, Key, Settings, LogOut, Menu } from "lucide-react";
+import { LayoutDashboard, Users, School as SchoolIcon, Key, Settings, LogOut, Menu, BarChart3 } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetHeader } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 
@@ -18,42 +18,65 @@ export default async function AdminLayout({
   }
 
   // Strict Role Check
-  if (!session.user.role?.includes("admin")) {
+  // Allow 'marketing' role as well
+  if (!session.user.role?.includes("admin") && session.user.role !== "marketing") {
     redirect("/portal"); // Redirect unauthorized users (like school_owners) to their portal
   }
 
+  const isMarketing = session.user.role === "marketing";
+
+  // If marketing user tries to access root /admin (dashboard), redirect them to their dashboard
+  // But wait, the Sidebar is rendered here. 
+  // If they are on /admin, the `page.tsx` for /admin will render.
+  // We need to check if they are on /admin root path? No, this is a layout.
+  // The layout wraps everything.
+  // The logic inside page.tsx should probably redirect marketing users too.
+  
   const SidebarContent = () => (
     <div className="flex flex-col h-full bg-card text-foreground">
       <div className="p-6 border-b border-border">
         <h1 className="text-xl font-bold">FeeEase Admin</h1>
-        <p className="text-xs text-muted-foreground mt-1">Central Control Panel</p>
+        <p className="text-xs text-muted-foreground mt-1">
+          {isMarketing ? "Marketing Panel" : "Central Control Panel"}
+        </p>
       </div>
       
       <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
-        <Link href="/admin" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
-          <LayoutDashboard size={20} />
-          <span>Dashboard</span>
-        </Link>
-        
-        <Link href="/admin/schools" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
-          <SchoolIcon size={20} />
-          <span>Schools</span>
-        </Link>
-        
-        <Link href="/admin/licenses" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
-          <Key size={20} />
-          <span>Licenses</span>
-        </Link>
+        {isMarketing ? (
+          <>
+            <Link href="/admin/marketing/dashboard" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
+              <BarChart3 size={20} />
+              <span>Dashboard</span>
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link href="/admin" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
+              <LayoutDashboard size={20} />
+              <span>Dashboard</span>
+            </Link>
+            
+            <Link href="/admin/schools" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
+              <SchoolIcon size={20} />
+              <span>Schools</span>
+            </Link>
+            
+            <Link href="/admin/licenses" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
+              <Key size={20} />
+              <span>Licenses</span>
+            </Link>
 
-        <Link href="/admin/users" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
-          <Users size={20} />
-          <span>Users</span>
-        </Link>
+            <Link href="/admin/users" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
+              <Users size={20} />
+              <span>Users</span>
+            </Link>
 
-        <Link href="/admin/settings" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
-          <Settings size={20} />
-          <span>Settings</span>
-        </Link>
+            <Link href="/admin/settings" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
+              <Settings size={20} />
+              <span>Settings</span>
+            </Link>
+          </>
+        )}
       </nav>
 
       <div className="p-4 border-t border-border">

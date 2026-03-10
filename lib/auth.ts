@@ -4,7 +4,6 @@ import dbConnect from "@/lib/db";
 import AdminUser from "@/models/AdminUser";
 import School from "@/models/School";
 import bcrypt from "bcryptjs";
-import { decrypt } from "@/lib/crypto";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -25,6 +24,7 @@ export const authOptions: NextAuthOptions = {
         let user: any = await AdminUser.findOne({ email: credentials.email });
         let role = user?.role;
         let requiresPasswordChange = user?.requiresPasswordChange;
+        let referralCode = user?.referralCode;
 
         // 2. If not found, try to find in School (School Owner)
         if (!user) {
@@ -39,6 +39,7 @@ export const authOptions: NextAuthOptions = {
             };
             role = "school_owner";
             requiresPasswordChange = false; // Schools manage pwd differently usually
+            referralCode = undefined;
           }
         }
 
@@ -62,6 +63,7 @@ export const authOptions: NextAuthOptions = {
           email: user.email,
           role: role,
           requiresPasswordChange: requiresPasswordChange,
+          referralCode: referralCode,
         };
       }
     })
@@ -72,6 +74,7 @@ export const authOptions: NextAuthOptions = {
         token.role = user.role;
         token.id = user.id;
         token.requiresPasswordChange = user.requiresPasswordChange;
+        token.referralCode = user.referralCode;
       }
       return token;
     },
@@ -80,6 +83,7 @@ export const authOptions: NextAuthOptions = {
         session.user.role = token.role;
         session.user.id = token.id;
         session.user.requiresPasswordChange = token.requiresPasswordChange;
+        session.user.referralCode = token.referralCode;
       }
       return session;
     }

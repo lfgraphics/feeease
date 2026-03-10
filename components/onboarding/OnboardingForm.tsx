@@ -15,6 +15,15 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { signIn } from "next-auth/react";
+import { SCHOOL_FEATURES, DEFAULT_FEATURES } from "@/lib/features";
+
+// Dynamically generate the features schema
+const featuresSchema = z.object(
+  SCHOOL_FEATURES.reduce((acc, feature) => {
+    acc[feature.id] = z.boolean();
+    return acc;
+  }, {} as Record<string, z.ZodBoolean>)
+);
 
 const formSchema = z.object({
   schoolName: z.string().min(2, "School name must be at least 2 characters"),
@@ -23,16 +32,11 @@ const formSchema = z.object({
   schoolAddress: z.string().min(5, "Address must be at least 5 characters"),
   adminName: z.string().min(2, "Admin name must be at least 2 characters"),
   adminMobile: z.string().min(10, "Mobile number must be at least 10 digits"),
-  adminEmail: z.string().email("Invalid email address").optional().or(z.literal("")),
+  adminEmail: z.string().email("Invalid email address"),
   adminPassword: z.string().min(6, "Password must be at least 6 characters"),
+  referralCode: z.string().length(6, "Referral code must be 6 digits").optional().or(z.literal("")),
   plan: z.string(),
-  features: z.object({
-    whatsapp: z.boolean(),
-    teachersLogin: z.boolean(),
-    parentsLogin: z.boolean(),
-    attendance: z.boolean(),
-    payroll: z.boolean(),
-  }),
+  features: featuresSchema,
 });
 
 export function OnboardingForm() {
@@ -52,14 +56,9 @@ export function OnboardingForm() {
       adminMobile: "",
       adminEmail: "",
       adminPassword: "",
+      referralCode: "",
       plan: "",
-      features: {
-        whatsapp: false,
-        teachersLogin: false,
-        parentsLogin: false,
-        attendance: false,
-        payroll: false,
-      },
+      features: DEFAULT_FEATURES,
     },
   });
 
@@ -81,13 +80,7 @@ export function OnboardingForm() {
     form.setValue("plan", plan);
     if (plan === "Basic") {
         // Reset features for Basic plan
-        form.setValue("features", {
-            whatsapp: false,
-            teachersLogin: false,
-            parentsLogin: false,
-            attendance: false,
-            payroll: false,
-        });
+        form.setValue("features", DEFAULT_FEATURES);
     }
   };
 
@@ -144,7 +137,7 @@ export function OnboardingForm() {
                   </div>
                   <div className="p-6 space-y-4 flex-1">
                       <div className="flex items-center gap-2 text-foreground">
-                          <CheckCircle2 className="text-green-500 w-5 h-5 flex-shrink-0" />
+                          <CheckCircle2 className="text-green-500 w-5 h-5 shrink-0" />
                           <span>1N Thermal Printer Support</span>
                       </div>
                       
@@ -191,23 +184,23 @@ export function OnboardingForm() {
                           <div className="font-semibold border-b border-border pb-2">Add-on Features:</div>
                           <ul className="space-y-2">
                               <li className="flex items-start gap-2">
-                                  <CheckCircle2 className="text-purple-500 w-4 h-4 mt-1 flex-shrink-0" />
+                                  <CheckCircle2 className="text-purple-500 w-4 h-4 mt-1 shrink-0" />
                                   <span className="text-sm">WhatsApp Automation (Notices, Reminders)</span>
                               </li>
                               <li className="flex items-start gap-2">
-                                  <CheckCircle2 className="text-purple-500 w-4 h-4 mt-1 flex-shrink-0" />
+                                  <CheckCircle2 className="text-purple-500 w-4 h-4 mt-1 shrink-0" />
                                   <span className="text-sm">Teachers Login Portal</span>
                               </li>
                               <li className="flex items-start gap-2">
-                                  <CheckCircle2 className="text-purple-500 w-4 h-4 mt-1 flex-shrink-0" />
+                                  <CheckCircle2 className="text-purple-500 w-4 h-4 mt-1 shrink-0" />
                                   <span className="text-sm">Parents Login Portal</span>
                               </li>
                               <li className="flex items-start gap-2">
-                                  <CheckCircle2 className="text-purple-500 w-4 h-4 mt-1 flex-shrink-0" />
+                                  <CheckCircle2 className="text-purple-500 w-4 h-4 mt-1 shrink-0" />
                                   <span className="text-sm">Advanced Attendance System</span>
                               </li>
                               <li className="flex items-start gap-2">
-                                  <CheckCircle2 className="text-purple-500 w-4 h-4 mt-1 flex-shrink-0" />
+                                  <CheckCircle2 className="text-purple-500 w-4 h-4 mt-1 shrink-0" />
                                   <span className="text-sm">Payroll Management</span>
                               </li>
                           </ul>
@@ -247,41 +240,16 @@ export function OnboardingForm() {
               <div className="bg-purple-50 dark:bg-purple-900/10 p-6 rounded-xl border border-purple-100 dark:border-purple-900/30">
                   <h3 className="text-lg font-semibold text-purple-900 dark:text-purple-300 mb-4">Select Add-on Features</h3>
                   <div className="grid md:grid-cols-2 gap-4">
-                      <div className="flex items-center space-x-2">
-                          <Checkbox id="whatsapp" 
-                              checked={form.watch("features.whatsapp")}
-                              onCheckedChange={(checked) => form.setValue("features.whatsapp", checked as boolean)}
-                          />
-                          <Label htmlFor="whatsapp">WhatsApp Automation</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                          <Checkbox id="teachers" 
-                              checked={form.watch("features.teachersLogin")}
-                              onCheckedChange={(checked) => form.setValue("features.teachersLogin", checked as boolean)}
-                          />
-                          <Label htmlFor="teachers">Teachers Login</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                          <Checkbox id="parents" 
-                              checked={form.watch("features.parentsLogin")}
-                              onCheckedChange={(checked) => form.setValue("features.parentsLogin", checked as boolean)}
-                          />
-                          <Label htmlFor="parents">Parents Login</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                          <Checkbox id="attendance" 
-                              checked={form.watch("features.attendance")}
-                              onCheckedChange={(checked) => form.setValue("features.attendance", checked as boolean)}
-                          />
-                          <Label htmlFor="attendance">Advanced Attendance</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                          <Checkbox id="payroll" 
-                              checked={form.watch("features.payroll")}
-                              onCheckedChange={(checked) => form.setValue("features.payroll", checked as boolean)}
-                          />
-                          <Label htmlFor="payroll">Payroll System</Label>
-                      </div>
+                      {SCHOOL_FEATURES.map((feature) => (
+                          <div key={feature.id} className="flex items-center space-x-2">
+                              <Checkbox 
+                                  id={feature.id}
+                                  checked={form.watch(`features.${feature.id}` as any)}
+                                  onCheckedChange={(checked) => form.setValue(`features.${feature.id}` as any, checked as boolean)}
+                              />
+                              <Label htmlFor={feature.id}>{feature.label}</Label>
+                          </div>
+                      ))}
                   </div>
               </div>
           )}
@@ -352,7 +320,7 @@ export function OnboardingForm() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <label className="text-sm font-medium">Email (Optional)</label>
+                <label className="text-sm font-medium">Email (Required)</label>
                 <Input type="email" placeholder="admin@school.com" {...form.register("adminEmail")} />
                 {form.formState.errors.adminEmail && <p className="text-destructive text-xs">{form.formState.errors.adminEmail.message}</p>}
               </div>
@@ -363,6 +331,12 @@ export function OnboardingForm() {
                 {form.formState.errors.adminPassword && <p className="text-destructive text-xs">{form.formState.errors.adminPassword.message}</p>}
                 <p className="text-xs text-muted-foreground">This will be used for your school admin login.</p>
               </div>
+            </div>
+
+            <div className="space-y-2">
+                <label className="text-sm font-medium">Referral Code (Optional)</label>
+                <Input placeholder="6-digit code" {...form.register("referralCode")} />
+                {form.formState.errors.referralCode && <p className="text-destructive text-xs">{form.formState.errors.referralCode.message}</p>}
             </div>
           </div>
 

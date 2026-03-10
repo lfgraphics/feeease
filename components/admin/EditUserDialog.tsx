@@ -124,8 +124,8 @@ export function EditUserDialog({ user }: EditUserDialogProps) {
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="fullName" className="text-right">
+            <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-center gap-4">
+              <Label htmlFor="fullName" className="sm:text-right">
                 Name
               </Label>
               <Input
@@ -133,12 +133,12 @@ export function EditUserDialog({ user }: EditUserDialogProps) {
                 name="fullName"
                 value={formData.fullName}
                 onChange={handleChange}
-                className="col-span-3"
+                className="col-span-1 sm:col-span-3"
                 required
               />
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="email" className="text-right">
+            <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-center gap-4">
+              <Label htmlFor="email" className="sm:text-right">
                 Email
               </Label>
               <Input
@@ -147,12 +147,12 @@ export function EditUserDialog({ user }: EditUserDialogProps) {
                 type="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="col-span-3"
+                className="col-span-1 sm:col-span-3"
                 required
               />
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="mobileNumber" className="text-right">
+            <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-center gap-4">
+              <Label htmlFor="mobileNumber" className="sm:text-right">
                 Mobile
               </Label>
               <Input
@@ -160,16 +160,16 @@ export function EditUserDialog({ user }: EditUserDialogProps) {
                 name="mobileNumber"
                 value={formData.mobileNumber}
                 onChange={handleChange}
-                className="col-span-3"
+                className="col-span-1 sm:col-span-3"
                 required
               />
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="role" className="text-right">
+            <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-center gap-4">
+              <Label htmlFor="role" className="sm:text-right">
                 Role
               </Label>
               <Select value={formData.role} onValueChange={(val) => handleSelectChange("role", val)}>
-                <SelectTrigger className="col-span-3">
+                <SelectTrigger className="col-span-1 sm:col-span-3">
                   <SelectValue placeholder="Select a role" />
                 </SelectTrigger>
                 <SelectContent>
@@ -179,12 +179,12 @@ export function EditUserDialog({ user }: EditUserDialogProps) {
                 </SelectContent>
               </Select>
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="isActive" className="text-right">
+            <div className="grid grid-cols-1 sm:grid-cols-4 items-start sm:items-center gap-4">
+              <Label htmlFor="isActive" className="sm:text-right">
                 Status
               </Label>
               <Select value={formData.isActive} onValueChange={(val) => handleSelectChange("isActive", val)}>
-                <SelectTrigger className="col-span-3">
+                <SelectTrigger className="col-span-1 sm:col-span-3">
                   <SelectValue placeholder="Select status" />
                 </SelectTrigger>
                 <SelectContent>

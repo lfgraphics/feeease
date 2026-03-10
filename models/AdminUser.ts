@@ -5,9 +5,11 @@ export interface IAdminUser extends Document {
   email: string;
   mobileNumber: string;
   passwordHash: string;
-  role: 'super_admin' | 'operations_admin' | 'support_admin';
+  role: 'super_admin' | 'operations_admin' | 'support_admin' | 'marketing';
   isActive: boolean;
   requiresPasswordChange: boolean;
+  referralCode?: string;
+  totalEarnings?: number;
   lastLogin: Date;
   createdAt: Date;
   updatedAt: Date;
@@ -18,9 +20,11 @@ const AdminUserSchema: Schema = new Schema({
   email: { type: String, required: true, unique: true },
   mobileNumber: { type: String, required: true },
   passwordHash: { type: String, required: true },
-  role: { type: String, enum: ['super_admin', 'operations_admin', 'support_admin'], default: 'support_admin' },
+  role: { type: String, enum: ['super_admin', 'operations_admin', 'support_admin', 'marketing'], default: 'support_admin' },
   isActive: { type: Boolean, default: true },
   requiresPasswordChange: { type: Boolean, default: false },
+  referralCode: { type: String, unique: true, sparse: true },
+  totalEarnings: { type: Number, default: 0 },
   lastLogin: { type: Date },
 }, { timestamps: true });
 

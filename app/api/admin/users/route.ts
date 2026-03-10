@@ -5,6 +5,10 @@ import dbConnect from "@/lib/db";
 import AdminUser from "@/models/AdminUser";
 import bcrypt from "bcryptjs";
 
+function generateReferralCode() {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+}
+
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions);
 
@@ -27,6 +31,16 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "User with this email already exists" }, { status: 400 });
     }
 
+    let referralCode = undefined;
+    if (role === 'marketing') {
+      let isUnique = false;
+      while (!isUnique) {
+        referralCode = generateReferralCode();
+        const existing = await AdminUser.findOne({ referralCode });
+        if (!existing) isUnique = true;
+      }
+    }
+
     // Default password '123' if not provided
     const passwordHash = await bcrypt.hash(password || "123", 10);
 
@@ -36,6 +50,7 @@ export async function POST(req: NextRequest) {
       mobileNumber,
       role,
       passwordHash,
+      referralCode,
       isActive: true,
       requiresPasswordChange: true, // Force change on first login
     });
