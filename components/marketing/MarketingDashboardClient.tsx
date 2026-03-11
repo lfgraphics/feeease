@@ -1,16 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { getReferredSchools } from "@/actions/marketing-dashboard";
-import { Loader2, Copy, Check, Calendar as CalendarIcon } from "lucide-react";
+import { Loader2, Copy, Check, Search, Calendar as CalendarIcon } from "lucide-react";
 import { toast } from "sonner";
 import { DatePickerWithRange } from "@/components/ui/date-range-picker";
-
 import { DateRange } from "react-day-picker";
 
 interface MarketingDashboardClientProps {
@@ -19,8 +20,8 @@ interface MarketingDashboardClientProps {
   userId: string;
   stats: {
     totalSchools: number;
-    totalInstallation: number;
-    totalRecurring: number;
+    clearedSchools: number;
+    unclearSchools: number;
     totalEarnings: number;
   };
   referralCode?: string;
@@ -32,20 +33,53 @@ export function MarketingDashboardClient({ initialSchools, initialCursor, userId
   const [loading, setLoading] = useState(false);
   const [dateRange, setDateRange] = useState<DateRange | undefined>();
   const [copied, setCopied] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
 
-  const loadMore = async () => {
-    if (!cursor || loading) return;
+  // Debounce search
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      fetchSchools(true);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [searchQuery, statusFilter, dateRange]);
+
+  const fetchSchools = async (reset: boolean = false) => {
     setLoading(true);
     try {
-      const filters = dateRange?.from && dateRange?.to ? { startDate: dateRange.from, endDate: dateRange.to } : undefined;
-      const result = await getReferredSchools(userId, cursor, 10, filters);
-      setSchools((prev) => [...prev, ...result.schools]);
-      setCursor(result.nextCursor);
+      const filters = {
+        search: searchQuery,
+        paymentStatus: statusFilter,
+        startDate: dateRange?.from,
+        endDate: dateRange?.to
+      };
+      
+      const currentCursor = reset ? undefined : cursor;
+      // If reset is true, we fetch from beginning (undefined cursor)
+      // If reset is false, we fetch next page (current cursor)
+
+      // However, the useEffect triggers on filter change which should RESET the list.
+      // loadMore triggers next page.
+      
+      if (reset) {
+          const result = await getReferredSchools(userId, undefined, 10, filters);
+          setSchools(result.schools);
+          setCursor(result.nextCursor);
+      } else {
+          if (!cursor) return;
+          const result = await getReferredSchools(userId, cursor, 10, filters);
+          setSchools((prev) => [...prev, ...result.schools]);
+          setCursor(result.nextCursor);
+      }
     } catch (error) {
-      toast.error("Failed to load more schools");
+      toast.error("Failed to fetch schools");
     } finally {
       setLoading(false);
     }
+  };
+
+  const loadMore = () => {
+    fetchSchools(false);
   };
 
   const handleCopyCode = () => {
@@ -55,36 +89,6 @@ export function MarketingDashboardClient({ initialSchools, initialCursor, userId
       setTimeout(() => setCopied(false), 2000);
       toast.success("Referral code copied!");
     }
-  };
-
-  const handleDateSelect = async (range: DateRange | undefined) => {
-      setDateRange(range);
-      if (range?.from && range?.to) {
-          // Reset and fetch with new filters
-          setLoading(true);
-          try {
-              const filters = { startDate: range.from, endDate: range.to };
-              const result = await getReferredSchools(userId, undefined, 10, filters);
-              setSchools(result.schools);
-              setCursor(result.nextCursor);
-          } catch (error) {
-              toast.error("Failed to filter schools");
-          } finally {
-              setLoading(false);
-          }
-      } else if (!range) {
-          // Reset filter
-          setLoading(true);
-          try {
-              const result = await getReferredSchools(userId, undefined, 10);
-              setSchools(result.schools);
-              setCursor(result.nextCursor);
-          } catch (error) {
-              toast.error("Failed to reset filters");
-          } finally {
-              setLoading(false);
-          }
-      }
   };
 
   return (
@@ -120,18 +124,18 @@ export function MarketingDashboardClient({ initialSchools, initialCursor, userId
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-xs sm:text-sm font-medium">Total Installation</CardTitle>
+            <CardTitle className="text-xs sm:text-sm font-medium">Schools with Clear Due</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-xl sm:text-2xl font-bold">₹{stats.totalInstallation.toLocaleString()}</div>
+            <div className="text-xl sm:text-2xl font-bold text-green-600">{stats.clearedSchools}</div>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-xs sm:text-sm font-medium">Total Recurring</CardTitle>
+            <CardTitle className="text-xs sm:text-sm font-medium">Schools with Unclear Due</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-xl sm:text-2xl font-bold">₹{stats.totalRecurring.toLocaleString()}</div>
+            <div className="text-xl sm:text-2xl font-bold text-orange-600">{stats.unclearSchools}</div>
           </CardContent>
         </Card>
         <Card>
@@ -145,10 +149,34 @@ export function MarketingDashboardClient({ initialSchools, initialCursor, userId
       </div>
 
       <div className="space-y-3 sm:space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-          <h3 className="text-lg sm:text-xl font-semibold">Referred Schools</h3>
-          <div className="w-full sm:w-auto">
-            <DatePickerWithRange date={dateRange} setDate={handleDateSelect} />
+        <div className="flex flex-col gap-3">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <h3 className="text-lg sm:text-xl font-semibold">Referred Schools</h3>
+          </div>
+          
+          <div className="flex flex-col sm:flex-row gap-3">
+             <div className="relative flex-1">
+                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="Search schools..."
+                  className="pl-8"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+             </div>
+             <Select value={statusFilter} onValueChange={setStatusFilter}>
+                <SelectTrigger className="w-full sm:w-[180px]">
+                  <SelectValue placeholder="Filter by status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Status</SelectItem>
+                  <SelectItem value="cleared">Cleared Due</SelectItem>
+                  <SelectItem value="due">Unclear Due</SelectItem>
+                </SelectContent>
+             </Select>
+             <div className="w-full sm:w-auto">
+               <DatePickerWithRange date={dateRange} setDate={setDateRange} />
+             </div>
           </div>
         </div>
 
@@ -156,40 +184,60 @@ export function MarketingDashboardClient({ initialSchools, initialCursor, userId
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="text-xs sm:text-sm">School Name</TableHead>
+                <TableHead className="text-xs sm:text-sm">School</TableHead>
                 <TableHead className="text-xs sm:text-sm hidden sm:table-cell">Date Added</TableHead>
                 <TableHead className="text-xs sm:text-sm">Plan</TableHead>
-                <TableHead className="text-xs sm:text-sm hidden md:table-cell">Status</TableHead>
+                <TableHead className="text-xs sm:text-sm">Status</TableHead>
+                <TableHead className="text-xs sm:text-sm">Plan Type</TableHead>
                 <TableHead className="text-xs sm:text-sm text-right">Installation</TableHead>
                 <TableHead className="text-xs sm:text-sm text-right hidden lg:table-cell">Recurring</TableHead>
-                <TableHead className="text-xs sm:text-sm text-right">Total Paid</TableHead>
+                <TableHead className="text-xs sm:text-sm text-right">Payment Status</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {schools.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={7} className="text-center py-6 sm:py-8 text-xs sm:text-sm text-muted-foreground">
+                  <TableCell colSpan={8} className="text-center py-6 sm:py-8 text-xs sm:text-sm text-muted-foreground">
                     No schools found.
                   </TableCell>
                 </TableRow>
               ) : (
                 schools.map((school: any) => {
-                  const totalPaid = school.financials?.payments?.reduce((acc: number, curr: any) => 
-                    curr.status === 'completed' ? acc + curr.amount : acc, 0) || 0;
-                  
+                  const recurringCost = school.financials?.recurringCosts?.length > 0 
+                      ? school.financials.recurringCosts[school.financials.recurringCosts.length - 1].amount 
+                      : 0;
+
                   return (
                     <TableRow key={school._id}>
-                      <TableCell className="font-medium text-xs sm:text-sm">{school.name}</TableCell>
+                      <TableCell className="font-medium text-xs sm:text-sm">
+                        <div className="flex items-center gap-2">
+                           {school.logo ? (
+                               <div className="relative w-8 h-8 rounded-full overflow-hidden border">
+                                   <img src={school.logo} alt={school.name} className="w-full h-full object-cover" />
+                               </div>
+                           ) : (
+                               <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center">
+                                   <span className="text-xs font-bold">{school.name.substring(0, 2).toUpperCase()}</span>
+                               </div>
+                           )}
+                           <span className="truncate max-w-[150px]">{school.name}</span>
+                        </div>
+                      </TableCell>
                       <TableCell className="text-xs sm:text-sm hidden sm:table-cell">{format(new Date(school.createdAt), "MMM d, yyyy")}</TableCell>
                       <TableCell className="text-xs sm:text-sm">{school.subscription?.plan || "Basic"}</TableCell>
-                      <TableCell className="hidden md:table-cell">
+                      <TableCell>
                         <Badge variant={school.subscription?.status === 'active' ? 'default' : 'secondary'} className="text-xs">
                           {school.subscription?.status || "Unknown"}
                         </Badge>
                       </TableCell>
+                      <TableCell className="text-xs sm:text-sm capitalize">{school.financials?.planType || "Monthly"}</TableCell>
                       <TableCell className="text-right text-xs sm:text-sm font-medium">₹{school.financials?.installationCost?.toLocaleString() || 0}</TableCell>
-                      <TableCell className="text-right text-xs sm:text-sm font-medium hidden lg:table-cell">₹{school.financials?.recurringCost?.toLocaleString() || 0}</TableCell>
-                      <TableCell className="text-right text-xs sm:text-sm font-bold text-green-600">₹{totalPaid.toLocaleString()}</TableCell>
+                      <TableCell className="text-right text-xs sm:text-sm font-medium hidden lg:table-cell">₹{recurringCost.toLocaleString()}</TableCell>
+                      <TableCell className="text-right">
+                         <Badge variant={school.paymentStatus === 'cleared' ? 'default' : 'destructive'} className={school.paymentStatus === 'cleared' ? "bg-green-600 hover:bg-green-700" : ""}>
+                            {school.paymentStatus === 'cleared' ? 'Cleared' : 'Due'}
+                         </Badge>
+                      </TableCell>
                     </TableRow>
                   );
                 })

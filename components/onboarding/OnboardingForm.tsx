@@ -16,6 +16,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { signIn } from "next-auth/react";
 import { SCHOOL_FEATURES, DEFAULT_FEATURES } from "@/lib/features";
+import { Separator } from "@/components/ui/separator";
 
 // Dynamically generate the features schema
 const featuresSchema = z.object(
@@ -79,8 +80,8 @@ export function OnboardingForm() {
     setSelectedPlan(plan);
     form.setValue("plan", plan);
     if (plan === "Basic") {
-        // Reset features for Basic plan
-        form.setValue("features", DEFAULT_FEATURES);
+      // Reset features for Basic plan
+      form.setValue("features", DEFAULT_FEATURES);
     }
   };
 
@@ -102,7 +103,7 @@ export function OnboardingForm() {
       }
 
       toast.success("School registered successfully! Our team will contact you shortly.");
-      
+
       // Auto-login the user
       const loginResult = await signIn("credentials", {
         email: values.adminEmail,
@@ -125,228 +126,468 @@ export function OnboardingForm() {
   }
 
   if (!selectedPlan) {
-      return (
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto pb-10">
-              {/* Basic Plan */}
-              <div 
-                  className="bg-card rounded-lg shadow-md hover:shadow-xl transition-all duration-200 border-2 border-transparent hover:border-primary overflow-hidden flex flex-col" 
-              >
-                  <div className="p-6 border-b border-border">
-                      <h3 className="text-2xl font-bold text-center text-foreground">Basic Plan</h3>
-                      <p className="text-center text-muted-foreground mt-2">Essential tools for school management</p>
-                  </div>
-                  <div className="p-6 space-y-4 flex-1">
-                      <div className="flex items-center gap-2 text-foreground">
-                          <CheckCircle2 className="text-green-500 w-5 h-5 shrink-0" />
-                          <span>1N Thermal Printer Support</span>
-                      </div>
-                      
-                      <Accordion type="single" collapsible className="w-full">
-                          <AccordionItem value="admin">
-                              <AccordionTrigger>Admin Login</AccordionTrigger>
-                              <AccordionContent>
-                                  Complete control over school settings, fee structure, student data, and reports.
-                              </AccordionContent>
-                          </AccordionItem>
-                          <AccordionItem value="staff">
-                              <AccordionTrigger>Management Staff Login</AccordionTrigger>
-                              <AccordionContent>
-                                  Access to daily operations, fee collection, and student inquiries.
-                              </AccordionContent>
-                          </AccordionItem>
-                          <AccordionItem value="attendance">
-                              <AccordionTrigger>Attendance Staff Login</AccordionTrigger>
-                              <AccordionContent>
-                                  Dedicated login for marking and managing student attendance.
-                              </AccordionContent>
-                          </AccordionItem>
-                      </Accordion>
-                  </div>
-                  <div className="p-6 bg-muted border-t border-border">
-                      <Button className="w-full" onClick={() => handlePlanSelect("Basic")}>Select Basic</Button>
-                  </div>
+    return (
+      <div className="w-full bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900 pb-10">
+        {/* Header Section */}
+        <div className="max-w-6xl mx-auto px-4 py-8 sm:py-12">
+          <div className="text-center space-y-3 mb-4">
+            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white">
+              Simple, Transparent Pricing
+            </h2>
+            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+              No hidden fees. Everything you need to streamline school operations with professional data migration included.
+            </p>
+          </div>
+
+          {/* Key Highlights Banner */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-8 mb-12">
+            <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 text-center">
+              <p className="text-sm font-semibold text-blue-900 dark:text-blue-300">
+                ✓ Free Data Migration
+              </p>
+              <p className="text-xs text-blue-700 dark:text-blue-400 mt-1">
+                Our team assists you with all data transfer needs
+              </p>
+            </div>
+            <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4 text-center">
+              <p className="text-sm font-semibold text-green-900 dark:text-green-300">
+                ✓ No Hidden Costs
+              </p>
+              <p className="text-xs text-green-700 dark:text-green-400 mt-1">
+                Transparent pricing, nothing more
+              </p>
+            </div>
+            <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-4 text-center">
+              <p className="text-sm font-semibold text-purple-900 dark:text-purple-300">
+                ✓ Add Features Anytime
+              </p>
+              <p className="text-xs text-purple-700 dark:text-purple-400 mt-1">
+                Scale as your school grows
+              </p>
+            </div>
+          </div>
+
+          {/* Pricing Cards - Mobile First */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            {/* Standard Plan */}
+            <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-slate-200 dark:border-slate-700 overflow-hidden flex flex-col h-full">
+              {/* Card Header */}
+              <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-8 text-white">
+                <h3 className="text-2xl sm:text-3xl font-bold mb-2">Standard Plan</h3>
+                <p className="text-blue-100 text-sm">Perfect for most schools</p>
               </div>
 
-              {/* Custom Plan */}
-              <div 
-                  className="bg-card rounded-lg shadow-md hover:shadow-xl transition-all duration-200 border-2 border-transparent hover:border-purple-500 overflow-hidden flex flex-col" 
-              >
-                  <div className="p-6 border-b border-border">
-                      <h3 className="text-2xl font-bold text-center text-foreground">Custom Plan</h3>
-                      <p className="text-center text-muted-foreground mt-2">Tailored features for advanced needs</p>
+              {/* Pricing */}
+              <div className="px-6 py-8 border-b border-slate-200 dark:border-slate-700">
+                <div className="space-y-3">
+                  <div className="flex items-end justify-between">
+                    <span className="text-slate-600 dark:text-slate-400 font-medium">Installation</span>
+                    <div className="text-right">
+                      <span className="text-3xl font-bold text-slate-900 dark:text-white">₹8,500</span>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">One-time</p>
+                    </div>
                   </div>
-                  <div className="p-6 space-y-4 flex-1">
-                      <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg mb-4 text-purple-900 dark:text-purple-300">
-                          <p className="font-medium text-center">Includes everything in Basic +</p>
-                      </div>
-                      
-                      <div className="space-y-3 text-foreground">
-                          <div className="font-semibold border-b border-border pb-2">Add-on Features:</div>
-                          <ul className="space-y-2">
-                              <li className="flex items-start gap-2">
-                                  <CheckCircle2 className="text-purple-500 w-4 h-4 mt-1 shrink-0" />
-                                  <span className="text-sm">WhatsApp Automation (Notices, Reminders)</span>
-                              </li>
-                              <li className="flex items-start gap-2">
-                                  <CheckCircle2 className="text-purple-500 w-4 h-4 mt-1 shrink-0" />
-                                  <span className="text-sm">Teachers Login Portal</span>
-                              </li>
-                              <li className="flex items-start gap-2">
-                                  <CheckCircle2 className="text-purple-500 w-4 h-4 mt-1 shrink-0" />
-                                  <span className="text-sm">Parents Login Portal</span>
-                              </li>
-                              <li className="flex items-start gap-2">
-                                  <CheckCircle2 className="text-purple-500 w-4 h-4 mt-1 shrink-0" />
-                                  <span className="text-sm">Advanced Attendance System</span>
-                              </li>
-                              <li className="flex items-start gap-2">
-                                  <CheckCircle2 className="text-purple-500 w-4 h-4 mt-1 shrink-0" />
-                                  <span className="text-sm">Payroll Management</span>
-                              </li>
-                          </ul>
-                      </div>
-                      
-                      <p className="text-xs text-muted-foreground mt-4 italic text-center">
-                          * Select specific features in the next step. Billed per feature.
-                      </p>
+                  <Separator />
+                  <div className="flex items-end justify-between">
+                    <span className="text-slate-600 dark:text-slate-400 font-medium">Monthly Billing</span>
+                    <div className="text-right">
+                      <span className="text-3xl font-bold text-slate-900 dark:text-white">₹850</span>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">/month</p>
+                    </div>
                   </div>
-                  <div className="p-6 bg-muted border-t border-border">
-                      <Button variant="outline" className="w-full border-purple-200 hover:bg-purple-50 text-purple-700 dark:text-purple-300 dark:hover:bg-purple-900/20 dark:border-purple-800" onClick={() => handlePlanSelect("Custom")}>Select Custom</Button>
-                  </div>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 italic pt-2">
+                    Quarterly & Annual billing also available
+                  </p>
+                </div>
               </div>
+
+              {/* Includes */}
+              <div className="px-6 py-8 flex-1">
+                <h4 className="font-semibold text-slate-900 dark:text-white mb-4">What's Included:</h4>
+                <ul className="space-y-3">
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="text-green-500 w-5 h-5 shrink-0 mt-0.5" />
+                    <div>
+                      <p className="text-slate-900 dark:text-white font-medium text-sm">Free Thermal Printer</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">Complimentary with first installation</p>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="text-blue-500 w-5 h-5 shrink-0 mt-0.5" />
+                    <div>
+                      <p className="text-slate-900 dark:text-white font-medium text-sm">Free Data Migration</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">Professional team assists you with all data transfer needs</p>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="text-green-500 w-5 h-5 shrink-0 mt-0.5" />
+                    <span className="text-slate-700 dark:text-slate-300 text-sm">Student & Fee Management</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="text-green-500 w-5 h-5 shrink-0 mt-0.5" />
+                    <span className="text-slate-700 dark:text-slate-300 text-sm">Attendance Tracking</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="text-green-500 w-5 h-5 shrink-0 mt-0.5" />
+                    <span className="text-slate-700 dark:text-slate-300 text-sm">ID Card Generation</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="text-green-500 w-5 h-5 shrink-0 mt-0.5" />
+                    <span className="text-slate-700 dark:text-slate-300 text-sm">Financial Reports & Analytics</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="text-green-500 w-5 h-5 shrink-0 mt-0.5" />
+                    <span className="text-slate-700 dark:text-slate-300 text-sm">Admin Portal Access</span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* CTA Button */}
+              <div className="px-6 py-6">
+                <Button 
+                  onClick={() => handlePlanSelect("Basic")}
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-lg transition-colors"
+                >
+                  Get Started
+                </Button>
+              </div>
+            </div>
+
+            {/* Professional Plan */}
+            <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-purple-500 overflow-hidden flex flex-col h-full relative">
+              {/* Badge */}
+              <div className="absolute top-0 right-0 bg-purple-500 text-white px-4 py-1 rounded-bl-lg text-xs font-bold">
+                RECOMMENDED
+              </div>
+
+              {/* Card Header */}
+              <div className="bg-gradient-to-r from-purple-600 to-purple-700 px-6 py-8 text-white pt-12">
+                <h3 className="text-2xl sm:text-3xl font-bold mb-2">Professional Plan</h3>
+                <p className="text-purple-100 text-sm">Everything you need to grow</p>
+              </div>
+
+              {/* Pricing */}
+              <div className="px-6 py-8 border-b border-slate-200 dark:border-slate-700">
+                <div className="space-y-3">
+                  <div className="flex items-end justify-between">
+                    <span className="text-slate-600 dark:text-slate-400 font-medium">Installation</span>
+                    <div className="text-right">
+                      <span className="text-3xl font-bold text-slate-900 dark:text-white">₹8,500</span>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">One-time + Additional features</p>
+                    </div>
+                  </div>
+                  <Separator />
+                  <div className="flex items-end justify-between">
+                    <span className="text-slate-600 dark:text-slate-400 font-medium">Monthly Billing</span>
+                    <div className="text-right">
+                      <span className="text-3xl font-bold text-slate-900 dark:text-white">₹850</span>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">/month</p>
+                    </div>
+                  </div>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 italic pt-2">
+                    Choose your billing cycle & add custom features
+                  </p>
+                </div>
+              </div>
+
+              {/* Includes */}
+              <div className="px-6 py-8 flex-1">
+                <h4 className="font-semibold text-slate-900 dark:text-white mb-4">Everything in Standard +</h4>
+                <ul className="space-y-3">
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="text-purple-500 w-5 h-5 shrink-0 mt-0.5" />
+                    <span className="text-slate-700 dark:text-slate-300 text-sm">WhatsApp Automation (SMS & Receipts)</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="text-purple-500 w-5 h-5 shrink-0 mt-0.5" />
+                    <span className="text-slate-700 dark:text-slate-300 text-sm">Teachers Portal & Access Control</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="text-purple-500 w-5 h-5 shrink-0 mt-0.5" />
+                    <span className="text-slate-700 dark:text-slate-300 text-sm">Parent Portal & Notifications</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="text-purple-500 w-5 h-5 shrink-0 mt-0.5" />
+                    <span className="text-slate-700 dark:text-slate-300 text-sm">Exam sheet and result management System</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="text-purple-500 w-5 h-5 shrink-0 mt-0.5" />
+                    <span className="text-slate-700 dark:text-slate-300 text-sm">Staff Payroll Management</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="text-purple-500 w-5 h-5 shrink-0 mt-0.5" />
+                    <span className="text-slate-700 dark:text-slate-300 text-sm">Advanced Reporting & Dashboards</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="text-purple-500 w-5 h-5 shrink-0 mt-0.5" />
+                    <div>
+                      <p className="text-slate-900 dark:text-white font-medium text-sm">Custom Features</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">Tailored to your school's specific needs</p>
+                    </div>
+                  </li>
+                </ul>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+                  Request as many features as you want, features billing is made at installation time or whenever you choose to add them.
+                </p>
+              </div>
+
+              {/* CTA Button */}
+              <div className="px-6 py-6">
+                <Button 
+                  onClick={() => handlePlanSelect("Custom")}
+                  className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2.5 rounded-lg transition-colors"
+                >
+                  Choose Professional
+                </Button>
+              </div>
+            </div>
           </div>
-      )
+
+          {/* FAQ/Extra Info */}
+          <div className="max-w-3xl mx-auto mt-12 grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-6 border border-slate-200 dark:border-slate-700">
+              <h4 className="font-semibold text-slate-900 dark:text-white mb-2 flex items-center gap-2">
+                <span className="text-lg">🎯</span> Billing Flexibility
+              </h4>
+              <p className="text-sm text-slate-600 dark:text-slate-400">
+                Choose monthly, quarterly, or annual billing. Switch or upgrade your plan anytime without penalties.
+              </p>
+            </div>
+            <div className="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-6 border border-slate-200 dark:border-slate-700">
+              <h4 className="font-semibold text-slate-900 dark:text-white mb-2 flex items-center gap-2">
+                <span className="text-lg">📈</span> Scale Your School
+              </h4>
+              <p className="text-sm text-slate-600 dark:text-slate-400">
+                Add custom features whenever you need them. Our team will handle the installation and setup.
+              </p>
+            </div>
+            <div className="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-6 border border-slate-200 dark:border-slate-700">
+              <h4 className="font-semibold text-slate-900 dark:text-white mb-2 flex items-center gap-2">
+                <span className="text-lg">🔧</span> Implementation Support
+              </h4>
+              <p className="text-sm text-slate-600 dark:text-slate-400">
+                Our team migrates your data and sets everything up. You're live on day one, ready to go.
+              </p>
+            </div>
+            <div className="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-6 border border-slate-200 dark:border-slate-700">
+              <h4 className="font-semibold text-slate-900 dark:text-white mb-2 flex items-center gap-2">
+                <span className="text-lg">💬</span> Dedicated Support
+              </h4>
+              <p className="text-sm text-slate-600 dark:text-slate-400">
+                Our support team is here to help. Get answers to questions and assistance whenever you need it.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (
-    <Card className="w-full max-w-3xl mx-auto shadow-xl">
-      <CardHeader>
-        <div className="flex items-center justify-between">
-            <Button variant="ghost" onClick={() => setSelectedPlan(null)} className="text-muted-foreground">
-                &larr; Back to Plans
+    <div className="w-full bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900 min-h-screen py-8 px-4">
+      <Card className="w-full max-w-3xl mx-auto shadow-xl border-0">
+        <CardHeader className="bg-gradient-to-r from-slate-900 to-slate-800 dark:from-slate-800 dark:to-slate-900 text-white rounded-t-xl">
+          <div className="flex items-center justify-between mb-4">
+            <Button variant="ghost" onClick={() => setSelectedPlan(null)} className="text-white hover:bg-white/20 -ml-2">
+              ← Back to Plans
             </Button>
-            <div className="bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 px-3 py-1 rounded-full text-sm font-medium">
-                Selected: {selectedPlan} Plan
+            <div className="bg-white/20 backdrop-blur text-white px-3 py-1 rounded-full text-sm font-semibold">
+              {selectedPlan === "Basic" ? "📋 Standard" : "⭐ Professional"}
             </div>
-        </div>
-        <CardTitle className="text-2xl font-bold text-center text-primary mt-4">School Registration</CardTitle>
-        <CardDescription className="text-center">Enter your details to complete registration.</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          
-          {/* Custom Features Selection */}
-          {selectedPlan === "Custom" && (
-              <div className="bg-purple-50 dark:bg-purple-900/10 p-6 rounded-xl border border-purple-100 dark:border-purple-900/30">
-                  <h3 className="text-lg font-semibold text-purple-900 dark:text-purple-300 mb-4">Select Add-on Features</h3>
-                  <div className="grid md:grid-cols-2 gap-4">
-                      {SCHOOL_FEATURES.map((feature) => (
-                          <div key={feature.id} className="flex items-center space-x-2">
-                              <Checkbox 
-                                  id={feature.id}
-                                  checked={form.watch(`features.${feature.id}` as any)}
-                                  onCheckedChange={(checked) => form.setValue(`features.${feature.id}` as any, checked as boolean)}
-                              />
-                              <Label htmlFor={feature.id}>{feature.label}</Label>
-                          </div>
-                      ))}
+          </div>
+          <CardTitle className="text-2xl sm:text-3xl font-bold">Complete Your Registration</CardTitle>
+          <CardDescription className="text-slate-300 mt-2">
+            {selectedPlan === "Basic" 
+              ? "Get started with essential school management tools. Installation: ₹8,500 | Monthly: ₹850"
+              : "Unlock advanced features for your school. Installation: ₹8,500 | Monthly: ₹850 + custom features"}
+          </CardDescription>
+        </CardHeader>
+        
+        <CardContent className="pt-8">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            
+            {/* Billing Options for Professional Plan */}
+            {selectedPlan === "Custom" && (
+              <div className="bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-900/10 dark:to-blue-900/10 p-6 rounded-xl border border-purple-200 dark:border-purple-800/30">
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                  <span className="text-2xl">📅</span> Select Your Billing Cycle
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <label className="flex items-center p-3 border-2 border-purple-200 dark:border-purple-700 rounded-lg cursor-pointer hover:bg-purple-100 dark:hover:bg-purple-900/20 transition-colors">
+                    <input type="radio" name="billingCycle" value="monthly" className="mr-3" defaultChecked />
+                    <div>
+                      <p className="font-semibold text-slate-900 dark:text-white">Monthly</p>
+                      <p className="text-sm text-slate-600 dark:text-slate-400">₹850/month</p>
+                    </div>
+                  </label>
+                  <label className="flex items-center p-3 border-2 border-purple-200 dark:border-purple-700 rounded-lg cursor-pointer hover:bg-purple-100 dark:hover:bg-purple-900/20 transition-colors">
+                    <input type="radio" name="billingCycle" value="quarterly" className="mr-3" />
+                    <div>
+                      <p className="font-semibold text-slate-900 dark:text-white">Quarterly</p>
+                      <p className="text-sm text-slate-600 dark:text-slate-400">₹2,400 (save 6%)</p>
+                    </div>
+                  </label>
+                  <label className="flex items-center p-3 border-2 border-purple-200 dark:border-purple-700 rounded-lg cursor-pointer hover:bg-purple-100 dark:hover:bg-purple-900/20 transition-colors">
+                    <input type="radio" name="billingCycle" value="annual" className="mr-3" />
+                    <div>
+                      <p className="font-semibold text-slate-900 dark:text-white">Annual</p>
+                      <p className="text-sm text-slate-600 dark:text-slate-400">₹9,180 (save 12%)</p>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            )}
+
+            {/* Custom Features Selection */}
+            {selectedPlan === "Custom" && (
+              <div className="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-xl border border-slate-200 dark:border-slate-700">
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2 flex items-center gap-2">
+                  <span className="text-2xl">✨</span> Select Custom Features
+                </h3>
+                <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
+                  Add any features tailored to your school's needs. These are billed at your installation cost with custom pricing.
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {SCHOOL_FEATURES.map((feature) => (
+                    <label key={feature.id} className="flex items-start space-x-3 p-3 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700/50 cursor-pointer transition-colors">
+                      <Checkbox
+                        id={feature.id}
+                        checked={form.watch(`features.${feature.id}` as any)}
+                        onCheckedChange={(checked) => form.setValue(`features.${feature.id}` as any, checked as boolean)}
+                        className="mt-1"
+                      />
+                      <div className="flex-1">
+                        <p className="font-medium text-slate-900 dark:text-white text-sm">{feature.label}</p>
+                        <p className="text-xs text-slate-500 dark:text-slate-400">{feature.description}</p>
+                      </div>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* School Information Section */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-700 pb-2 flex items-center gap-2">
+                <span className="text-2xl">🏫</span> School Information
+              </h3>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">School Name *</label>
+                  <Input placeholder="e.g. Modern Academy" {...form.register("schoolName")} className="rounded-lg" />
+                  {form.formState.errors.schoolName && <p className="text-destructive text-xs">{form.formState.errors.schoolName.message}</p>}
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Short Name</label>
+                  <Input placeholder="e.g. MA (optional)" {...form.register("schoolShortName")} className="rounded-lg" />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">School Logo *</label>
+                <div className="flex flex-col sm:flex-row items-center gap-4">
+                  <div className="relative w-24 h-24 border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-lg flex items-center justify-center bg-slate-100 dark:bg-slate-700/30 overflow-hidden flex-shrink-0">
+                    {previewUrl ? (
+                      <Image src={previewUrl} alt="Logo Preview" fill className="object-contain p-1" />
+                    ) : (
+                      <Upload className="text-slate-400 w-8 h-8" />
+                    )}
                   </div>
-              </div>
-          )}
-
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold border-b border-border pb-2">School Information</h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label className="text-sm font-medium">School Name</label>
-                <Input placeholder="e.g. Modern Academy" {...form.register("schoolName")} />
-                {form.formState.errors.schoolName && <p className="text-destructive text-xs">{form.formState.errors.schoolName.message}</p>}
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Short Name (Optional)</label>
-                <Input placeholder="e.g. MA" {...form.register("schoolShortName")} />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium">School Logo</label>
-              <div className="flex items-center gap-4">
-                <div className="relative w-20 h-20 border-2 border-dashed border-input rounded-lg flex items-center justify-center bg-muted overflow-hidden">
-                  {previewUrl ? (
-                    <Image src={previewUrl} alt="Logo Preview" fill className="object-contain" />
-                  ) : (
-                    <Upload className="text-muted-foreground" />
-                  )}
+                  <div className="flex-1">
+                    <Input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleLogoUpload}
+                      className="cursor-pointer rounded-lg"
+                    />
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">PNG, JPG, or JPEG format. Recommended: 200x200px</p>
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <Input 
-                    type="file" 
-                    accept="image/*" 
-                    onChange={handleLogoUpload} 
-                    className="cursor-pointer"
-                  />
-                  <p className="text-xs text-muted-foreground mt-1">Upload your school logo (PNG, JPG, JPEG).</p>
+                <input type="hidden" {...form.register("schoolLogo")} />
+                {form.formState.errors.schoolLogo && <p className="text-destructive text-xs">{form.formState.errors.schoolLogo.message}</p>}
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">School Address *</label>
+                <Input placeholder="Complete address of your school" {...form.register("schoolAddress")} className="rounded-lg" />
+                {form.formState.errors.schoolAddress && <p className="text-destructive text-xs">{form.formState.errors.schoolAddress.message}</p>}
+              </div>
+            </div>
+
+            {/* Admin Contact Details Section */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-700 pb-2 flex items-center gap-2">
+                <span className="text-2xl">👤</span> Administrator Details
+              </h3>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Name *</label>
+                  <Input placeholder="Full name" {...form.register("adminName")} className="rounded-lg" />
+                  {form.formState.errors.adminName && <p className="text-destructive text-xs">{form.formState.errors.adminName.message}</p>}
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Mobile Number *</label>
+                  <Input placeholder="10-digit mobile" {...form.register("adminMobile")} className="rounded-lg" />
+                  {form.formState.errors.adminMobile && <p className="text-destructive text-xs">{form.formState.errors.adminMobile.message}</p>}
                 </div>
               </div>
-              <input type="hidden" {...form.register("schoolLogo")} />
-              {form.formState.errors.schoolLogo && <p className="text-destructive text-xs">{form.formState.errors.schoolLogo.message}</p>}
-            </div>
 
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Address</label>
-              <Input placeholder="Full Address" {...form.register("schoolAddress")} />
-              {form.formState.errors.schoolAddress && <p className="text-destructive text-xs">{form.formState.errors.schoolAddress.message}</p>}
-            </div>
-          </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Email *</label>
+                  <Input type="email" placeholder="admin@school.com" {...form.register("adminEmail")} className="rounded-lg" />
+                  {form.formState.errors.adminEmail && <p className="text-destructive text-xs">{form.formState.errors.adminEmail.message}</p>}
+                </div>
 
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold border-b border-border pb-2">Admin Contact Details</h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Admin Name</label>
-                <Input placeholder="Full Name" {...form.register("adminName")} />
-                {form.formState.errors.adminName && <p className="text-destructive text-xs">{form.formState.errors.adminName.message}</p>}
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Password *</label>
+                  <Input type="password" placeholder="Create a password" {...form.register("adminPassword")} className="rounded-lg" />
+                  {form.formState.errors.adminPassword && <p className="text-destructive text-xs">{form.formState.errors.adminPassword.message}</p>}
+                  <p className="text-xs text-slate-500 dark:text-slate-400">Minimum 6 characters. Store this safely.</p>
+                </div>
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium">Mobile Number</label>
-                <Input placeholder="10-digit mobile number" {...form.register("adminMobile")} />
-                {form.formState.errors.adminMobile && <p className="text-destructive text-xs">{form.formState.errors.adminMobile.message}</p>}
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Email (Required)</label>
-                <Input type="email" placeholder="admin@school.com" {...form.register("adminEmail")} />
-                {form.formState.errors.adminEmail && <p className="text-destructive text-xs">{form.formState.errors.adminEmail.message}</p>}
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Password</label>
-                <Input type="password" placeholder="******" {...form.register("adminPassword")} />
-                {form.formState.errors.adminPassword && <p className="text-destructive text-xs">{form.formState.errors.adminPassword.message}</p>}
-                <p className="text-xs text-muted-foreground">This will be used for your school admin login.</p>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-                <label className="text-sm font-medium">Referral Code (Optional)</label>
-                <Input placeholder="6-digit code" {...form.register("referralCode")} />
+                <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">Referral Code</label>
+                <Input placeholder="6-digit referral code (optional)" {...form.register("referralCode")} className="rounded-lg" />
                 {form.formState.errors.referralCode && <p className="text-destructive text-xs">{form.formState.errors.referralCode.message}</p>}
+              </div>
             </div>
-          </div>
 
-          <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-            Submit Registration
-          </Button>
+            {/* Terms & Conditions */}
+            <div className="bg-blue-50 dark:bg-blue-900/10 p-4 rounded-lg border border-blue-200 dark:border-blue-800/30">
+              <p className="text-xs text-slate-700 dark:text-slate-300">
+                ✓ By registering, you agree to our service terms. Our team will contact you within 24 hours to complete the setup and data migration process.
+              </p>
+            </div>
 
-        </form>
-      </CardContent>
-    </Card>
-  );
+            {/* Submit Button */}
+            <Button 
+              type="submit" 
+              disabled={loading}
+              className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 rounded-lg transition-all duration-200 text-base sm:text-lg"
+            >
+              {loading ? (
+                <div className="flex items-center gap-2">
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Processing...
+                </div>
+              ) : (
+                "Complete Registration"
+              )}
+            </Button>
+
+            {/* Bottom Info */}
+            <p className="text-center text-xs text-slate-500 dark:text-slate-400">
+              🔒 Your data is secure. We'll send you a confirmation email shortly.
+            </p>
+          </form>
+        </CardContent>
+      </Card>
+    </div>
+  )
 }

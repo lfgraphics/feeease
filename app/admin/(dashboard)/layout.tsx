@@ -120,7 +120,7 @@ export default async function AdminLayout({
       </div>
 
       {/* Desktop Sidebar */}
-      <aside className="hidden md:flex w-64 bg-card text-foreground flex-col flex-shrink-0 border-r border-border">
+      <aside className="hidden md:flex w-64 bg-card text-foreground flex-col shrink-0 border-r border-border">
         <SidebarContent />
       </aside>
 

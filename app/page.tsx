@@ -8,7 +8,7 @@ export const metadata = {
   description:
     "FeeEase is the ultimate school management platform. Streamline fees, expenses, attendance, staff salaries, and student records in one powerful, easy-to-use application.",
   keywords:
-    "School Management, Fee Collection, Expense Tracking, Attendance System, Salary Management, Staff Administration, Student Records",
+    "School Management, Fee Collection, Expense Tracking, Attendance System, Salary management, Staff Administration, Student Records",
   author: "FeeEase Team",
   robots: "index, follow",
   canonical: "https://fee-ease.vercel.app",
@@ -41,7 +41,7 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground font-sans">
       {/* Hero Section */}
-      <section className="w-full py-20 lg:py-32 bg-gradient-to-b from-blue-50 to-background dark:from-background dark:to-background relative overflow-hidden">
+      <section className="w-full py-20 bg-gradient-to-b from-blue-50 to-background dark:from-background dark:to-background relative overflow-hidden">
         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-primary/10 dark:bg-primary/20 rounded-full blur-3xl opacity-50"></div>
         <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 bg-secondary/20 dark:bg-secondary/20 rounded-full blur-3xl opacity-50"></div>
         
@@ -262,8 +262,8 @@ export default function Home() {
                     <Wallet size={20} />
                   </div>
                   <div>
-                    <h5 className="font-bold text-lg mb-1">Affordable Pricing</h5>
-                    <p className="text-muted-foreground">Cost-effective subscription model that fits your school&apos;s budget.</p>
+                    <h5 className="font-bold text-lg mb-1">Transparent Pricing</h5>
+                    <p className="text-muted-foreground">₹8,500 installation + ₹850/month. Free data migration included. No hidden costs.</p>
                   </div>
                 </div>
                 <div className="flex gap-4">
@@ -298,6 +298,132 @@ export default function Home() {
                   </li>
                 ))}
               </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section className="w-full py-20 bg-gradient-to-b from-white to-slate-50 dark:from-slate-900 dark:to-slate-950 border-t border-border">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-primary font-semibold tracking-wide uppercase text-sm mb-3">Flexible Pricing</h2>
+            <h3 className="text-4xl font-bold text-foreground mb-4">Plans That Grow With Your School</h3>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Transparent pricing with no hidden fees. Choose the plan that fits your school's needs.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {/* Standard Plan Card */}
+            <div className="bg-card rounded-2xl shadow-lg border border-border overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col">
+              <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-6 text-white">
+                <h3 className="text-2xl font-bold mb-2">Standard</h3>
+                <p className="text-blue-100 text-sm">Essential school management</p>
+              </div>
+              <div className="px-8 py-8 flex-1 flex flex-col">
+                <div className="mb-8">
+                  <div className="text-4xl font-bold text-foreground mb-2">
+                    ₹8,500 <span className="text-lg text-muted-foreground font-semibold">+ ₹850/mo</span>
+                  </div>
+                  <p className="text-sm text-muted-foreground">Installation one-time, then monthly billing</p>
+                </div>
+
+                <ul className="space-y-3 mb-8 flex-1">
+                  <li className="flex items-start gap-3 text-sm">
+                    <span className="text-green-500 font-bold">✓</span>
+                    <span>Free thermal printer included</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-sm">
+                    <span className="text-green-500 font-bold">✓</span>
+                    <span>Free data migration service</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-sm">
+                    <span className="text-green-500 font-bold">✓</span>
+                    <span>Student & fee management</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-sm">
+                    <span className="text-green-500 font-bold">✓</span>
+                    <span>Attendance tracking</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-sm">
+                    <span className="text-green-500 font-bold">✓</span>
+                    <span>ID card generation</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-sm">
+                    <span className="text-green-500 font-bold">✓</span>
+                    <span>Financial reports & analytics</span>
+                  </li>
+                </ul>
+
+                <a href="/get-started" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-lg transition-colors text-center">
+                  Get Started
+                </a>
+              </div>
+            </div>
+
+            {/* Professional Plan Card */}
+            <div className="bg-card rounded-2xl shadow-xl border-2 border-purple-500 overflow-hidden hover:shadow-2xl transition-all duration-300 flex flex-col relative">
+              <div className="absolute top-0 right-0 bg-purple-500 text-white px-4 py-1 text-xs font-bold rounded-bl-lg">RECOMMENDED</div>
+              <div className="bg-gradient-to-r from-purple-600 to-purple-700 px-8 py-6 text-white pt-12">
+                <h3 className="text-2xl font-bold mb-2">Professional</h3>
+                <p className="text-purple-100 text-sm">Advanced features for growth</p>
+              </div>
+              <div className="px-8 py-8 flex-1 flex flex-col">
+                <div className="mb-8">
+                  <div className="text-4xl font-bold text-foreground mb-2">
+                    ₹8,500 <span className="text-lg text-muted-foreground font-semibold">+ ₹850/mo</span>
+                  </div>
+                  <p className="text-sm text-muted-foreground">Plus custom features based on your needs</p>
+                </div>
+
+                <ul className="space-y-3 mb-8 flex-1">
+                  <li className="flex items-start gap-3 text-sm">
+                    <span className="text-purple-500 font-bold">✓</span>
+                    <span>Everything in Standard</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-sm">
+                    <span className="text-purple-500 font-bold">✓</span>
+                    <span>WhatsApp automation & reminders</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-sm">
+                    <span className="text-purple-500 font-bold">✓</span>
+                    <span>Teachers & parents portals</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-sm">
+                    <span className="text-purple-500 font-bold">✓</span>
+                    <span>Exam sheet and result management system</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-sm">
+                    <span className="text-purple-500 font-bold">✓</span>
+                    <span>Staff payroll management</span>
+                  </li>
+                  <li className="flex items-start gap-3 text-sm">
+                    <span className="text-purple-500 font-bold">✓</span>
+                    <span>Custom features tailored for you</span>
+                  </li>
+                </ul>
+
+                <a href="/get-started" className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2.5 rounded-lg transition-colors text-center">
+                  Choose Professional
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Pricing FAQ */}
+          <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            <div className="text-center p-6 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700">
+              <h4 className="font-semibold text-foreground mb-2">Billing Flexibility</h4>
+              <p className="text-sm text-muted-foreground">Monthly, quarterly, or annual options available</p>
+            </div>
+            <div className="text-center p-6 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700">
+              <h4 className="font-semibold text-foreground mb-2">No Hidden Costs</h4>
+              <p className="text-sm text-muted-foreground">Everything is transparent from the start</p>
+            </div>
+            <div className="text-center p-6 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700">
+              <h4 className="font-semibold text-foreground mb-2">Scale Anytime</h4>
+              <p className="text-sm text-muted-foreground">Add features as your school grows</p>
             </div>
           </div>
         </div>

@@ -105,9 +105,9 @@ export default async function MarketingLayout({
         </DropdownMenu>
       </div>
 
-      <div className="flex flex-1 overflow-hidden gap-0 md:gap-4 md:p-4">
+      <div className="flex flex-1 overflow-hidden">
         {/* Desktop Sidebar */}
-        <aside className="hidden md:flex w-64 bg-card text-foreground flex-col flex-shrink-0 border border-border rounded-lg">
+        <aside className="hidden md:flex w-64 bg-card text-foreground flex-col flex-shrink-0 border-r border-border">
           <NavContent />
         </aside>
 
