@@ -120,7 +120,7 @@ export async function getMarketingStats(userId: string) {
 
 export async function getReferredSchools(userId: string, cursor?: string, limit: number = 10, filters?: any) {
   return unstable_cache(
-    async (uid: string, c?: string, l: number, f?: any) => {
+    async (uid: string, c: string | undefined, l: number, f?: any) => {
       await dbConnect();
 
       const userObjectId = new mongoose.Types.ObjectId(uid);
