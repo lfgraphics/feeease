@@ -1,4 +1,4 @@
-import { Star, Banknote, CalendarCheck, Users, GraduationCap, Wallet, BarChart3, Printer, ShieldCheck } from "lucide-react";
+import { Star, Banknote, CalendarCheck, Users, GraduationCap, Wallet, BarChart3, Printer, ShieldCheck, Zap, CreditCard, Wrench, Settings, RefreshCw, TrendingUp, Smartphone, Lock, HardDrive, Target } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -149,7 +149,7 @@ export default function Home() {
               <div className="w-14 h-14 bg-orange-100 dark:bg-orange-900/30 rounded-xl flex items-center justify-center text-orange-600 dark:text-orange-400 mb-6 group-hover:scale-110 transition-transform">
                 <Users size={28} />
               </div>
-              <h4 className="text-xl font-bold mb-3 text-foreground">Staff & Salary Manager</h4>
+              <h4 className="text-xl font-bold mb-3 text-foreground">Staff & Salary Management</h4>
               <p className="text-muted-foreground leading-relaxed">
                 Manage teacher profiles, and automate salary calculations. Generate payslips and maintain staff records securely.
               </p>
@@ -181,7 +181,7 @@ export default function Home() {
       </section>
 
       {/* Live Demo Section */}
-      <section className="w-full py-24 bg-gradient-to-b from-card to-secondary/30">
+      <section className="w-full py-12 bg-gradient-to-b from-card to-secondary/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="max-w-3xl mx-auto mb-12">
             <h2 className="text-primary font-semibold tracking-wide uppercase text-sm mb-3">Experience It Yourself</h2>
@@ -215,7 +215,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="relative mx-auto max-w-5xl rounded-xl shadow-2xl overflow-hidden border border-border bg-card transform transition-transform hover:scale-[1.01] duration-500">
+          <div className="relative mx-auto max-w-5xl rounded-xl shadow-2xl overflow-hidden border border-border bg-card transform transition-transform duration-500">
             <div className="absolute top-0 left-0 w-full h-8 bg-muted border-b border-border flex items-center px-4 gap-2">
               <div className="w-3 h-3 rounded-full bg-red-400"></div>
               <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
@@ -242,188 +242,249 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
-              <h3 className="text-3xl font-bold mb-6">Why Choose FeeEase?</h3>
-              <p className="text-muted-foreground mb-8 text-lg">
-                We understand the unique challenges of managing a school. Our platform is built to solve real-world problems with features you&apos;ll actually use.
+              <div className="mb-4">
+                <span className="inline-block bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-3 py-1 rounded-full text-sm font-semibold mb-6">Why Schools Love FeeEase</span>
+              </div>
+              <h3 className="text-4xl font-bold mb-6 leading-tight">Managing your school shouldn't be complicated.</h3>
+              <p className="text-muted-foreground mb-10 text-lg leading-relaxed">
+                <strong>FeeEase is a modern, technology-powered platform</strong> built to automate fee collection, simplify administration, and give schools complete control over their finances. Say goodbye to spreadsheets and manual work.
               </p>
               
               <div className="space-y-6">
                 <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
-                    <Printer size={20} />
+                  <div className="shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-600 dark:text-blue-400">
+                    <Printer size={22} />
                   </div>
                   <div>
-                    <h5 className="font-bold text-lg mb-1">Thermal Printer Integration</h5>
-                    <p className="text-muted-foreground">Print professional receipts instantly. We provide the hardware you need.</p>
+                    <h5 className="font-semibold text-lg mb-2 text-foreground">Seamless Receipt Printing</h5>
+                    <p className="text-muted-foreground leading-relaxed">Instantly generate and print professional receipts with integrated thermal printer support — fast, reliable, and hassle-free.</p>
                   </div>
                 </div>
                 <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400">
-                    <Wallet size={20} />
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-600 dark:text-purple-400">
+                    <Wallet size={22} />
                   </div>
                   <div>
-                    <h5 className="font-bold text-lg mb-1">Transparent Pricing</h5>
-                    <p className="text-muted-foreground">₹8,500 installation + ₹850/month. Free data migration included. No hidden costs.</p>
+                    <h5 className="font-semibold text-lg mb-2 text-foreground">Smart & Flexible Pricing</h5>
+                    <p className="text-muted-foreground leading-relaxed">A scalable subscription model designed to fit schools of all sizes, keeping your costs predictable and affordable.</p>
                   </div>
                 </div>
                 <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center text-green-400">
-                    <Users size={20} />
+                  <div className="shrink-0 w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center text-green-600 dark:text-green-400">
+                    <Users size={22} />
                   </div>
                   <div>
-                    <h5 className="font-bold text-lg mb-1">Dedicated Support</h5>
-                    <p className="text-muted-foreground">On-demand 1-on-1 training and priority customer support whenever you need it.</p>
+                    <h5 className="font-semibold text-lg mb-2 text-foreground">Dedicated Onboarding & Support</h5>
+                    <p className="text-muted-foreground leading-relaxed">Get personalized onboarding, hands-on training, and priority support from our team whenever you need assistance.</p>
                   </div>
                 </div>
               </div>
             </div>
             
-            <div className="bg-card p-8 rounded-3xl border border-border">
-              <h4 className="text-xl font-bold mb-6">The FeeEase Advantage</h4>
-              <ul className="space-y-4">
+            <div className="bg-gradient-to-br from-card via-card to-secondary/30 p-10 rounded-3xl border border-border/50 shadow-xl">
+              <h4 className="text-2xl font-bold mb-8 text-foreground">Complete Feature Suite</h4>
+              <div className="grid grid-cols-1 gap-1">
                 {[
-                  "Complete School Management Suite",
-                  "Modern, Mobile-First Interface",
-                  "Real-time Data Sync",
-                  "Customizable Reports & Analytics",
-                  "Branded Receipts with Thermal Printer",
-                  "Dedicated 1-on-1 Support",
-                  "Secure Cloud Storage (addition feature)",
-                  "Automated WhatsApp Reminders (addition feature)",
-                  "And any customization you need (addition feature)"
+                  { icon: BarChart3, title: "Fee Management Suite", desc: "Automated collections, digital receipts, payment tracking" },
+                  { icon: Settings, title: "Modern, Mobile-First Design", desc: "Beautiful interface on phones, tablets, and desktops" },
+                  { icon: RefreshCw, title: "Real-time Sync & Updates", desc: "Live data across all users and departments" },
+                  { icon: TrendingUp, title: "Advanced Analytics", desc: "Custom reports, financial dashboards, insights" },
+                  { icon: Printer, title: "Professional Receipts", desc: "Branded thermal receipts with school logo" },
+                  { icon: Users, title: "Team Support", desc: "Personalized training and priority assistance" },
+                  { icon: Lock, title: "Enterprise Security", desc: "Bank-grade encryption and data protection" },
+                  { icon: Smartphone, title: "WhatsApp Integration", desc: "Auto-send reminders, receipts, and alerts" }
                 ].map((item, index) => (
-                  <li key={index} className="flex items-center gap-3">
-                    <div className="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs">✓</div>
-                    <span className="text-muted-foreground font-medium">{item}</span>
-                  </li>
+                  <div key={index} className="flex items-start gap-4 p-3 rounded-lg hover:bg-secondary/30 transition-colors">
+                    <div className="text-2xl flex-shrink-0 mt-0.5 text-blue-600 dark:text-blue-400"><item.icon size={20} /></div>
+                    <div className="flex-1">
+                      <p className="font-semibold text-foreground text-sm">{item.title}</p>
+                      <p className="text-xs text-muted-foreground mt-0.5">{item.desc}</p>
+                    </div>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Pricing Section */}
-      <section className="w-full py-20 bg-gradient-to-b from-white to-slate-50 dark:from-slate-900 dark:to-slate-950 border-t border-border">
+      <section className="w-full py-24 bg-gradient-to-b from-background to-secondary/20 border-t border-border">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-primary font-semibold tracking-wide uppercase text-sm mb-3">Flexible Pricing</h2>
-            <h3 className="text-4xl font-bold text-foreground mb-4">Plans That Grow With Your School</h3>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Transparent pricing with no hidden fees. Choose the plan that fits your school's needs.
+            <span className="inline-block bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-3 py-1 rounded-full text-sm font-semibold mb-4">Simple, Transparent Pricing</span>
+            <h3 className="text-5xl font-bold text-foreground mb-6">Plans built for schools of every size</h3>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              No surprises. No hidden fees. Just clear, honest pricing that scales with your school.
             </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {/* Standard Plan Card */}
-            <div className="bg-card rounded-2xl shadow-lg border border-border overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col">
-              <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-6 text-white">
-                <h3 className="text-2xl font-bold mb-2">Standard</h3>
-                <p className="text-blue-100 text-sm">Essential school management</p>
+            <div className="bg-card rounded-2xl shadow-lg border border-border overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col group">
+              <div className="bg-gradient-to-r from-slate-100 to-slate-50 dark:from-slate-800 dark:to-slate-900 px-8 py-6 border-b border-border">
+                <h3 className="text-2xl font-bold text-foreground mb-2">Standard Plan</h3>
+                <p className="text-muted-foreground text-sm">Perfect for most schools</p>
               </div>
               <div className="px-8 py-8 flex-1 flex flex-col">
                 <div className="mb-8">
-                  <div className="text-4xl font-bold text-foreground mb-2">
-                    ₹8,500 <span className="text-lg text-muted-foreground font-semibold">+ ₹850/mo</span>
+                  <div className="text-5xl font-bold text-foreground mb-2">
+                    ₹8,500
                   </div>
-                  <p className="text-sm text-muted-foreground">Installation one-time, then monthly billing</p>
+                  <p className="text-muted-foreground mb-4 text-sm">Installation (one-time)</p>
+                  <div className="flex items-baseline gap-2 pb-4 border-b border-border">
+                    <span className="text-4xl font-bold text-foreground">₹850</span>
+                    <span className="text-muted-foreground">/month</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-4">Quarterly & annual billing available — save up to 12%</p>
                 </div>
 
-                <ul className="space-y-3 mb-8 flex-1">
-                  <li className="flex items-start gap-3 text-sm">
-                    <span className="text-green-500 font-bold">✓</span>
-                    <span>Free thermal printer included</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-sm">
-                    <span className="text-green-500 font-bold">✓</span>
-                    <span>Free data migration service</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-sm">
-                    <span className="text-green-500 font-bold">✓</span>
-                    <span>Student & fee management</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-sm">
-                    <span className="text-green-500 font-bold">✓</span>
-                    <span>Attendance tracking</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-sm">
-                    <span className="text-green-500 font-bold">✓</span>
-                    <span>ID card generation</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-sm">
-                    <span className="text-green-500 font-bold">✓</span>
-                    <span>Financial reports & analytics</span>
-                  </li>
-                </ul>
+                <div className="mb-8">
+                  <h4 className="font-semibold text-foreground mb-4">Everything you need:</h4>
+                  <ul className="space-y-3">
+                    <li className="flex items-start gap-3 text-sm">
+                      <span className="text-green-500 font-bold text-lg">✓</span>
+                      <span className="text-foreground"><strong>Free thermal printer</strong> included</span>
+                    </li>
+                    <li className="flex items-start gap-3 text-sm">
+                      <span className="text-green-500 font-bold text-lg">✓</span>
+                      <span className="text-foreground"><strong>Free data migration</strong> from your existing system</span>
+                    </li>
+                    <li className="flex items-start gap-3 text-sm">
+                      <span className="text-green-500 font-bold">✓</span>
+                      <span>Student & fee management</span>
+                    </li>
+                    <li className="flex items-start gap-3 text-sm">
+                      <span className="text-green-500 font-bold">✓</span>
+                      <span>Attendance tracking & reports</span>
+                    </li>
+                    <li className="flex items-start gap-3 text-sm">
+                      <span className="text-green-500 font-bold">✓</span>
+                      <span>ID card generation</span>
+                    </li>
+                    <li className="flex items-start gap-3 text-sm">
+                      <span className="text-green-500 font-bold">✓</span>
+                      <span>Financial dashboards</span>
+                    </li>
+                    <li className="flex items-start gap-3 text-sm">
+                      <span className="text-green-500 font-bold">✓</span>
+                      <span>Email & phone support</span>
+                    </li>
+                  </ul>
+                </div>
 
-                <a href="/get-started" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-lg transition-colors text-center">
-                  Get Started
+                <a href="/get-started" className="w-full bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 font-semibold py-3 px-6 rounded-lg transition-all duration-200 text-center">
+                  Get Started Free
                 </a>
               </div>
             </div>
 
             {/* Professional Plan Card */}
-            <div className="bg-card rounded-2xl shadow-xl border-2 border-purple-500 overflow-hidden hover:shadow-2xl transition-all duration-300 flex flex-col relative">
-              <div className="absolute top-0 right-0 bg-purple-500 text-white px-4 py-1 text-xs font-bold rounded-bl-lg">RECOMMENDED</div>
-              <div className="bg-gradient-to-r from-purple-600 to-purple-700 px-8 py-6 text-white pt-12">
-                <h3 className="text-2xl font-bold mb-2">Professional</h3>
-                <p className="text-purple-100 text-sm">Advanced features for growth</p>
+            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950 dark:to-indigo-950 rounded-2xl shadow-2xl border-2 border-blue-300 dark:border-blue-700 overflow-hidden hover:shadow-2xl transition-all duration-300 flex flex-col relative ring-2 ring-blue-200 dark:ring-blue-800">
+              <div className="absolute top-0 right-0 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-1 text-xs font-bold rounded-bl-lg shadow-lg">
+                MOST POPULAR ✨
               </div>
-              <div className="px-8 py-8 flex-1 flex flex-col">
+              <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-8 text-white pt-14">
+                <h3 className="text-2xl font-bold mb-2">Professional Plan</h3>
+                <p className="text-blue-100 text-sm">All Standard features + Advanced capabilities</p>
+              </div>
+              <div className="px-8 py-8 flex-1 flex flex-col bg-white dark:bg-slate-950">
                 <div className="mb-8">
-                  <div className="text-4xl font-bold text-foreground mb-2">
-                    ₹8,500 <span className="text-lg text-muted-foreground font-semibold">+ ₹850/mo</span>
+                  <div className="text-5xl font-bold text-foreground mb-2">
+                    ₹8,500
                   </div>
-                  <p className="text-sm text-muted-foreground">Plus custom features based on your needs</p>
+                  <p className="text-muted-foreground mb-4 text-sm">Installation (one-time)</p>
+                  <div className="flex items-baseline gap-2 pb-4 border-b border-blue-200 dark:border-blue-800">
+                    <span className="text-4xl font-bold text-foreground">₹850</span>
+                    <span className="text-muted-foreground">/month</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-4">Plus custom features based on your needs</p>
                 </div>
 
-                <ul className="space-y-3 mb-8 flex-1">
-                  <li className="flex items-start gap-3 text-sm">
-                    <span className="text-purple-500 font-bold">✓</span>
-                    <span>Everything in Standard</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-sm">
-                    <span className="text-purple-500 font-bold">✓</span>
-                    <span>WhatsApp automation & reminders</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-sm">
-                    <span className="text-purple-500 font-bold">✓</span>
-                    <span>Teachers & parents portals</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-sm">
-                    <span className="text-purple-500 font-bold">✓</span>
-                    <span>Exam sheet and result management system</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-sm">
-                    <span className="text-purple-500 font-bold">✓</span>
-                    <span>Staff payroll management</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-sm">
-                    <span className="text-purple-500 font-bold">✓</span>
-                    <span>Custom features tailored for you</span>
-                  </li>
-                </ul>
+                <div className="mb-8">
+                  <h4 className="font-semibold text-foreground mb-4">Everything in Standard +</h4>
+                  <ul className="space-y-3">
+                    <li className="flex items-start gap-3 text-sm">
+                      <span className="text-blue-600 dark:text-blue-400 font-bold text-lg">⭐</span>
+                      <span className="text-foreground"><strong>WhatsApp automation</strong> for reminders & receipts</span>
+                    </li>
+                    <li className="flex items-start gap-3 text-sm">
+                      <span className="text-blue-600 dark:text-blue-400 font-bold text-lg">⭐</span>
+                      <span className="text-foreground"><strong>Teachers & parents portals</strong> with real-time updates</span>
+                    </li>
+                    <li className="flex items-start gap-3 text-sm">
+                      <span className="text-blue-600 dark:text-blue-400 font-bold">⭐</span>
+                      <span>Exam management & result publishing</span>
+                    </li>
+                    <li className="flex items-start gap-3 text-sm">
+                      <span className="text-blue-600 dark:text-blue-400 font-bold">⭐</span>
+                      <span>Staff payroll calculations</span>
+                    </li>
+                    <li className="flex items-start gap-3 text-sm">
+                      <span className="text-blue-600 dark:text-blue-400 font-bold">⭐</span>
+                      <span>Custom features & integrations</span>
+                    </li>
+                    <li className="flex items-start gap-3 text-sm">
+                      <span className="text-blue-600 dark:text-blue-400 font-bold">⭐</span>
+                      <span>Priority 1-on-1 support</span>
+                    </li>
+                  </ul>
+                </div>
 
-                <a href="/get-started" className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2.5 rounded-lg transition-colors text-center">
-                  Choose Professional
+                <a href="/get-started" className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 text-center shadow-lg hover:shadow-xl">
+                  Start Free Trial
                 </a>
               </div>
             </div>
           </div>
 
-          {/* Pricing FAQ */}
-          <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            <div className="text-center p-6 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700">
-              <h4 className="font-semibold text-foreground mb-2">Billing Flexibility</h4>
-              <p className="text-sm text-muted-foreground">Monthly, quarterly, or annual options available</p>
-            </div>
-            <div className="text-center p-6 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700">
-              <h4 className="font-semibold text-foreground mb-2">No Hidden Costs</h4>
-              <p className="text-sm text-muted-foreground">Everything is transparent from the start</p>
-            </div>
-            <div className="text-center p-6 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700">
-              <h4 className="font-semibold text-foreground mb-2">Scale Anytime</h4>
-              <p className="text-sm text-muted-foreground">Add features as your school grows</p>
+          {/* Pricing Features */}
+          <div className="mt-20 max-w-5xl mx-auto">
+            <h4 className="text-2xl font-bold text-center mb-12 text-foreground">What's Included in Both Plans</h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="flex gap-4 p-5 bg-card rounded-xl border border-border hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
+                <div className="text-3xl flex-shrink-0 text-orange-500"><Wrench size={24} /></div>
+                <div>
+                  <h5 className="font-semibold text-foreground mb-1">Setup & Migration</h5>
+                  <p className="text-sm text-muted-foreground">Our team handles all setup & assists in data migration</p>
+                </div>
+              </div>
+              <div className="flex gap-4 p-5 bg-card rounded-xl border border-border hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
+                <div className="text-3xl flex-shrink-0 text-blue-500"><Smartphone size={24} /></div>
+                <div>
+                  <h5 className="font-semibold text-foreground mb-1">Mobile & Web</h5>
+                  <p className="text-sm text-muted-foreground">Access anywhere, anytime on any device</p>
+                </div>
+              </div>
+              <div className="flex gap-4 p-5 bg-card rounded-xl border border-border hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
+                <div className="text-3xl flex-shrink-0 text-red-500"><Lock size={24} /></div>
+                <div>
+                  <h5 className="font-semibold text-foreground mb-1">Security</h5>
+                  <p className="text-sm text-muted-foreground">Bank-grade encryption & daily backups</p>
+                </div>
+              </div>
+              <div className="flex gap-4 p-5 bg-card rounded-xl border border-border hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
+                <div className="text-3xl flex-shrink-0 text-purple-500"><HardDrive size={24} /></div>
+                <div>
+                  <h5 className="font-semibold text-foreground mb-1">Unlimited Storage</h5>
+                  <p className="text-sm text-muted-foreground">Store all your school data safely in cloud</p>
+                  <p className="text-sm text-muted-foreground">Requires additional storage cost after using 512MB text data & 25Gb of media, Which is enough for almost all schools.</p>
+                </div>
+              </div>
+              <div className="flex gap-4 p-5 bg-card rounded-xl border border-border hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
+                <div className="text-3xl flex-shrink-0 text-green-500"><TrendingUp size={24} /></div>
+                <div>
+                  <h5 className="font-semibold text-foreground mb-1">No Hidden Fees</h5>
+                  <p className="text-sm text-muted-foreground">Transparent pricing, period. Nothing sneaky.</p>
+                </div>
+              </div>
+              <div className="flex gap-4 p-5 bg-card rounded-xl border border-border hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
+                <div className="text-3xl flex-shrink-0 text-indigo-500"><Target size={24} /></div>
+                <div>
+                  <h5 className="font-semibold text-foreground mb-1">Scale Anytime</h5>
+                  <p className="text-sm text-muted-foreground">Add features whenever your school grows</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -472,70 +533,68 @@ export default function Home() {
       </section>
 
       {/* Testimonials */}
-      <section id="testimonials" className="w-full py-24 bg-secondary/20">
+      <section id="testimonials" className="w-full py-24 bg-gradient-to-b from-white to-slate-50 dark:from-slate-900 dark:to-slate-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h3 className="text-3xl font-bold text-center mb-16 text-foreground">Trusted by Modern Schools</h3>
+          <div className="text-center mb-16">
+            <span className="inline-block bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 px-4 py-2 rounded-full text-sm font-semibold mb-4">TRUSTED BY SCHOOLS</span>
+            <h3 className="text-4xl font-bold mb-6 text-slate-900 dark:text-white">Loved by School Leaders Across India</h3>
+            <p className="text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">See how top schools are transforming their operations with FeeEase</p>
+          </div>
+          
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-card p-8 rounded-2xl shadow-lg shadow-muted/50">
-              <div className="flex gap-1 mb-4">
+            {/* Testimonial 1 */}
+            <div className="bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-lg transition-shadow">
+              <div className="flex gap-1 mb-6">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} size={18} className="fill-yellow-400 text-yellow-400" />
                 ))}
               </div>
-              <p className="text-muted-foreground mb-6 italic">&quot;FeeEase has completely transformed how we manage our finances. The expense tracking and fee collection modules work seamlessly together.&quot;</p>
+              <p className="text-slate-700 dark:text-slate-300 mb-8 text-base leading-relaxed">"FeeEase cut our fee management work in half. The thermal printer receipts are so professional, and parents get instant WhatsApp notifications. Game-changer for our school!"</p>
               <div className="flex items-center gap-4">
-                <div className="relative w-12 h-12 rounded-full overflow-hidden">
-                   <Image
-                    src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=1780&auto=format&fit=crop"
-                    alt="Principal"
-                    fill
-                    className="object-cover"
-                  />
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-bold text-lg">
+                  RP
                 </div>
                 <div>
-                  <p className="font-bold text-foreground">John Doe</p>
-                  <p className="text-sm text-muted-foreground">Principal, St. Xavier&apos;s</p>
+                  <p className="font-bold text-slate-900 dark:text-white">Rajesh Patel</p>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">Principal, Delhi Public School</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-card p-8 rounded-2xl shadow-lg shadow-muted/50">
-              <div className="flex gap-1 mb-4">
-                 {[...Array(5)].map((_, i) => (
+            {/* Testimonial 2 */}
+            <div className="bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-lg transition-shadow">
+              <div className="flex gap-1 mb-6">
+                {[...Array(5)].map((_, i) => (
                   <Star key={i} size={18} className="fill-yellow-400 text-yellow-400" />
                 ))}
               </div>
-              <p className="text-muted-foreground mb-6 italic">&quot;The attendance and salary management features save us hours of manual work every month. It&apos;s truly an all-in-one solution.&quot;</p>
+              <p className="text-slate-700 dark:text-slate-300 mb-8 text-base leading-relaxed">"No hidden charges, transparent everything. Our finance team loves the automated reports. Setup was quick, migration was painless, and support was phenomenal!"</p>
               <div className="flex items-center gap-4">
-                <div className="relative w-12 h-12 rounded-full overflow-hidden">
-                   <Image
-                    src="https://images.unsplash.com/photo-1639149888905-fb39731f2e6c?q=80&w=1964&auto=format&fit=crop"
-                    alt="Admin"
-                    fill
-                    className="object-cover"
-                  />
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center text-white font-bold text-lg">
+                  MS
                 </div>
                 <div>
-                  <p className="font-bold text-foreground">Jane Smith</p>
-                  <p className="text-sm text-muted-foreground">Admin, Greenway School</p>
+                  <p className="font-bold text-slate-900 dark:text-white">Meera Singh</p>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">Finance Manager, Sunrise Academy</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-card p-8 rounded-2xl shadow-lg shadow-muted/50">
-              <div className="flex gap-1 mb-4">
-                 {[...Array(5)].map((_, i) => (
+            {/* Testimonial 3 */}
+            <div className="bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-lg transition-shadow">
+              <div className="flex gap-1 mb-6">
+                {[...Array(5)].map((_, i) => (
                   <Star key={i} size={18} className="fill-yellow-400 text-yellow-400" />
                 ))}
               </div>
-              <p className="text-muted-foreground mb-6 italic">&quot;Finally, a system that looks modern and is easy to use. No more clunky spreadsheets. The parents love the digital receipts!&quot;</p>
+              <p className="text-slate-700 dark:text-slate-300 mb-8 text-base leading-relaxed">"Modern, sleek interface. Zero learning curve for our staff. The real-time sync and unlimited storage mean we never worry about data. Highly recommend FeeEase!"</p>
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-lg">
-                  R
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center text-white font-bold text-lg">
+                  AV
                 </div>
                 <div>
-                  <p className="font-bold text-foreground">Robert Brown</p>
-                  <p className="text-sm text-muted-foreground">Director, Modern Academy</p>
+                  <p className="font-bold text-slate-900 dark:text-white">Ananya Verma</p>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">Administrator, Lakshmi Narayan School</p>
                 </div>
               </div>
             </div>
@@ -544,21 +603,30 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="w-full py-20 bg-primary text-primary-foreground relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full bg-[url('/images/assets/pattern.png')] opacity-10"></div>
+      <section className="w-full py-24 bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 dark:from-slate-950 dark:via-blue-950 dark:to-slate-950 text-white relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full bg-[url('/images/assets/pattern.png')] opacity-5"></div>
         <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
-          <h2 className="text-4xl font-bold mb-6">Ready to Modernize Your School?</h2>
-          <p className="text-xl text-primary-foreground/90 mb-10">
-            Join hundreds of schools that trust FeeEase for their daily operations.
+          <h2 className="text-5xl font-bold mb-6 leading-tight">Ready to Transform Your School?</h2>
+          <p className="text-xl text-slate-300 mb-12 leading-relaxed max-w-2xl mx-auto">
+            Join hundreds of schools already using FeeEase to automate operations, reduce admin burden, and focus on what matters most — education.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
              <Link
+                href="/get-started"
+                className="inline-flex items-center justify-center bg-white hover:bg-slate-100 text-slate-900 font-bold px-10 py-4 rounded-lg shadow-xl transition-all hover:scale-105"
+              >
+                Get Started — Try Free
+              </Link>
+              <Link
                 href="/contactus"
-                className="bg-background text-primary px-8 py-4 rounded-full font-bold text-lg hover:bg-secondary shadow-xl transition-all hover:scale-105"
+                className="inline-flex items-center justify-center bg-slate-800 hover:bg-slate-700 text-white border-2 border-white font-bold px-10 py-4 rounded-lg transition-all hover:scale-105"
               >
                 Schedule a Demo
               </Link>
           </div>
+          <p className="text-slate-400 text-sm mt-8">
+            No credit card required. Set up takes less than 5 minutes.
+          </p>
         </div>
       </section>
     </div>
