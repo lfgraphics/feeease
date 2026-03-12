@@ -96,7 +96,7 @@ export default async function SchoolProfilePage() {
                     <div className="space-y-2">
                         <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">License Key</span>
                         <div className="flex items-center justify-between gap-2 p-3 rounded-md bg-muted border border-border">
-                            <code className="text-xs font-mono font-semibold text-foreground truncate flex-1">
+                            <code className="text-xs md:text-lg font-mono font-semibold text-foreground truncate flex-1">
                                 {school.license.licenseKey}
                             </code>
                             <CopyButton text={school.license.licenseKey} />

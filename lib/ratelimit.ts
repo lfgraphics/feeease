@@ -8,7 +8,7 @@ export const ratelimit = new Ratelimit({
     url: process.env.UPSTASH_REDIS_REST_KV_REST_API_URL!,
     token: process.env.UPSTASH_REDIS_REST_KV_REST_API_TOKEN!,
   }),
-  limiter: Ratelimit.slidingWindow(20, "10 s"),
+  limiter: Ratelimit.slidingWindow(30, "10 s"),
   ephemeralCache: new Map(),
   analytics: true,
   prefix: "@upstash/ratelimit",

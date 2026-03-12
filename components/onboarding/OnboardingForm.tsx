@@ -7,7 +7,7 @@ import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Loader2, Upload, CheckCircle2 } from "lucide-react";
+import { Loader2, Upload, CheckCircle2, Clipboard, Star, Calendar, Zap, Building2, User, Lock } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { toast } from "sonner";
@@ -88,7 +88,7 @@ export function OnboardingForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
     try {
-      const response = await fetch("/api/onboarding", {
+      const response = await fetch("/api/get-started", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -112,7 +112,7 @@ export function OnboardingForm() {
       });
 
       if (loginResult?.ok) {
-        router.push("/onboarding-success");
+        router.push("/get-started-success");
       } else {
         router.push("/");
       }
@@ -127,7 +127,7 @@ export function OnboardingForm() {
 
   if (!selectedPlan) {
     return (
-      <div className="w-full bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900 pb-10">
+      <div className="w-full pb-10">
         {/* Header Section */}
         <div className="max-w-6xl mx-auto px-4 py-8 sm:py-12">
           <div className="text-center space-y-3 mb-4">
@@ -142,24 +142,24 @@ export function OnboardingForm() {
           {/* Key Highlights Banner */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-8 mb-12">
             <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 text-center">
-              <p className="text-sm font-semibold text-blue-900 dark:text-blue-300">
-                ✓ Free Data Migration
+              <p className="text-sm font-semibold text-blue-900 dark:text-blue-300 flex items-center justify-center gap-2">
+                <CheckCircle2 className="w-4 h-4" /> Free Data Migration
               </p>
               <p className="text-xs text-blue-700 dark:text-blue-400 mt-1">
                 Our team assists you with all data transfer needs
               </p>
             </div>
             <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4 text-center">
-              <p className="text-sm font-semibold text-green-900 dark:text-green-300">
-                ✓ No Hidden Costs
+              <p className="text-sm font-semibold text-green-900 dark:text-green-300 flex items-center justify-center gap-2">
+                <CheckCircle2 className="w-4 h-4" /> No Hidden Costs
               </p>
               <p className="text-xs text-green-700 dark:text-green-400 mt-1">
                 Transparent pricing, nothing more
               </p>
             </div>
             <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-4 text-center">
-              <p className="text-sm font-semibold text-purple-900 dark:text-purple-300">
-                ✓ Add Features Anytime
+              <p className="text-sm font-semibold text-purple-900 dark:text-purple-300 flex items-center justify-center gap-2">
+                <CheckCircle2 className="w-4 h-4" /> Add Features Anytime
               </p>
               <p className="text-xs text-purple-700 dark:text-purple-400 mt-1">
                 Scale as your school grows
@@ -244,11 +244,11 @@ export function OnboardingForm() {
 
               {/* CTA Button */}
               <div className="px-6 py-6">
-                <Button 
+                <Button
                   onClick={() => handlePlanSelect("Basic")}
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-lg transition-colors"
                 >
-                  Get Started
+                  Continue with Standard
                 </Button>
               </div>
             </div>
@@ -281,7 +281,7 @@ export function OnboardingForm() {
                     <span className="text-slate-600 dark:text-slate-400 font-medium">Monthly Billing</span>
                     <div className="text-right">
                       <span className="text-3xl font-bold text-slate-900 dark:text-white">₹850</span>
-                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">/month</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">/month + any plan specific external charges (if any)</p>
                     </div>
                   </div>
                   <p className="text-xs text-slate-500 dark:text-slate-400 italic pt-2">
@@ -333,49 +333,13 @@ export function OnboardingForm() {
 
               {/* CTA Button */}
               <div className="px-6 py-6">
-                <Button 
+                <Button
                   onClick={() => handlePlanSelect("Custom")}
                   className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2.5 rounded-lg transition-colors"
                 >
                   Choose Professional
                 </Button>
               </div>
-            </div>
-          </div>
-
-          {/* FAQ/Extra Info */}
-          <div className="max-w-3xl mx-auto mt-12 grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div className="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-6 border border-slate-200 dark:border-slate-700">
-              <h4 className="font-semibold text-slate-900 dark:text-white mb-2 flex items-center gap-2">
-                <span className="text-lg">🎯</span> Billing Flexibility
-              </h4>
-              <p className="text-sm text-slate-600 dark:text-slate-400">
-                Choose monthly, quarterly, or annual billing. Switch or upgrade your plan anytime without penalties.
-              </p>
-            </div>
-            <div className="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-6 border border-slate-200 dark:border-slate-700">
-              <h4 className="font-semibold text-slate-900 dark:text-white mb-2 flex items-center gap-2">
-                <span className="text-lg">📈</span> Scale Your School
-              </h4>
-              <p className="text-sm text-slate-600 dark:text-slate-400">
-                Add custom features whenever you need them. Our team will handle the installation and setup.
-              </p>
-            </div>
-            <div className="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-6 border border-slate-200 dark:border-slate-700">
-              <h4 className="font-semibold text-slate-900 dark:text-white mb-2 flex items-center gap-2">
-                <span className="text-lg">🔧</span> Implementation Support
-              </h4>
-              <p className="text-sm text-slate-600 dark:text-slate-400">
-                Our team migrates your data and sets everything up. You're live on day one, ready to go.
-              </p>
-            </div>
-            <div className="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-6 border border-slate-200 dark:border-slate-700">
-              <h4 className="font-semibold text-slate-900 dark:text-white mb-2 flex items-center gap-2">
-                <span className="text-lg">💬</span> Dedicated Support
-              </h4>
-              <p className="text-sm text-slate-600 dark:text-slate-400">
-                Our support team is here to help. Get answers to questions and assistance whenever you need it.
-              </p>
             </div>
           </div>
         </div>
@@ -391,26 +355,34 @@ export function OnboardingForm() {
             <Button variant="ghost" onClick={() => setSelectedPlan(null)} className="text-white hover:bg-white/20 -ml-2">
               ← Back to Plans
             </Button>
-            <div className="bg-white/20 backdrop-blur text-white px-3 py-1 rounded-full text-sm font-semibold">
-              {selectedPlan === "Basic" ? "📋 Standard" : "⭐ Professional"}
+            <div className="bg-white/20 backdrop-blur text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-1">
+              {selectedPlan === "Basic" ? (
+                <>
+                  <Clipboard className="w-4 h-4" /> Standard
+                </>
+              ) : (
+                <>
+                  <Star className="w-4 h-4" /> Professional
+                </>
+              )}
             </div>
           </div>
           <CardTitle className="text-2xl sm:text-3xl font-bold">Complete Your Registration</CardTitle>
           <CardDescription className="text-slate-300 mt-2">
-            {selectedPlan === "Basic" 
+            {selectedPlan === "Basic"
               ? "Get started with essential school management tools. Installation: ₹8,500 | Monthly: ₹850"
               : "Unlock advanced features for your school. Installation: ₹8,500 | Monthly: ₹850 + custom features"}
           </CardDescription>
         </CardHeader>
-        
+
         <CardContent className="pt-8">
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            
+
             {/* Billing Options for Professional Plan */}
             {selectedPlan === "Custom" && (
               <div className="bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-900/10 dark:to-blue-900/10 p-6 rounded-xl border border-purple-200 dark:border-purple-800/30">
                 <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
-                  <span className="text-2xl">📅</span> Select Your Billing Cycle
+                  <Calendar className="w-5 h-5" /> Select Your Billing Cycle
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <label className="flex items-center p-3 border-2 border-purple-200 dark:border-purple-700 rounded-lg cursor-pointer hover:bg-purple-100 dark:hover:bg-purple-900/20 transition-colors">
@@ -442,7 +414,7 @@ export function OnboardingForm() {
             {selectedPlan === "Custom" && (
               <div className="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-xl border border-slate-200 dark:border-slate-700">
                 <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2 flex items-center gap-2">
-                  <span className="text-2xl">✨</span> Select Custom Features
+                  <Zap className="w-5 h-5" /> Select Custom Features
                 </h3>
                 <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
                   Add any features tailored to your school's needs. These are billed at your installation cost with custom pricing.
@@ -469,7 +441,7 @@ export function OnboardingForm() {
             {/* School Information Section */}
             <div className="space-y-4">
               <h3 className="text-lg font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-700 pb-2 flex items-center gap-2">
-                <span className="text-2xl">🏫</span> School Information
+                <Building2 className="w-5 h-5" /> School Information
               </h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -519,7 +491,7 @@ export function OnboardingForm() {
             {/* Admin Contact Details Section */}
             <div className="space-y-4">
               <h3 className="text-lg font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-700 pb-2 flex items-center gap-2">
-                <span className="text-2xl">👤</span> Administrator Details
+                <User className="w-5 h-5" /> Administrator Details
               </h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -560,14 +532,14 @@ export function OnboardingForm() {
 
             {/* Terms & Conditions */}
             <div className="bg-blue-50 dark:bg-blue-900/10 p-4 rounded-lg border border-blue-200 dark:border-blue-800/30">
-              <p className="text-xs text-slate-700 dark:text-slate-300">
-                ✓ By registering, you agree to our service terms. Our team will contact you within 24 hours to complete the setup and data migration process.
+              <p className="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2">
+                <CheckCircle2 className="w-4 h-4 mt-0.5 flex-shrink-0" /> By registering, you agree to our service terms. Our team will contact you within 24 hours to complete the setup and data migration process.
               </p>
             </div>
 
             {/* Submit Button */}
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               disabled={loading}
               className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 rounded-lg transition-all duration-200 text-base sm:text-lg"
             >
@@ -582,8 +554,8 @@ export function OnboardingForm() {
             </Button>
 
             {/* Bottom Info */}
-            <p className="text-center text-xs text-slate-500 dark:text-slate-400">
-              🔒 Your data is secure. We'll send you a confirmation email shortly.
+            <p className="text-center text-xs text-slate-500 dark:text-slate-400 flex items-center justify-center gap-1">
+              <Lock className="w-3.5 h-3.5" /> Your data is secure.
             </p>
           </form>
         </CardContent>

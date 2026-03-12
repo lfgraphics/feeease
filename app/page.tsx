@@ -1,4 +1,4 @@
-import { Star, Banknote, CalendarCheck, Users, GraduationCap, Wallet, BarChart3, Printer, ShieldCheck, Zap, CreditCard, Wrench, Settings, RefreshCw, TrendingUp, Smartphone, Lock, HardDrive, Target } from "lucide-react";
+import { Star, Banknote, CalendarCheck, Users, GraduationCap, Wallet, BarChart3, Printer, ShieldCheck, Zap, CreditCard, Wrench, Settings, RefreshCw, TrendingUp, Smartphone, Lock, HardDrive, Target, Sparkles } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -61,7 +61,7 @@ export default function Home() {
                 href="/get-started"
                 className="bg-primary text-primary-foreground px-8 py-4 rounded-full font-bold text-lg hover:bg-primary/90 shadow-xl shadow-blue-200 dark:shadow-blue-900/20 transition-all hover:-translate-y-1"
               >
-                Get Started Now
+                View Plans & Start
               </Link>
               <Link
                 href="#features"
@@ -374,15 +374,15 @@ export default function Home() {
                 </div>
 
                 <a href="/get-started" className="w-full bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 font-semibold py-3 px-6 rounded-lg transition-all duration-200 text-center">
-                  Get Started Free
+                  Choose This Plan
                 </a>
               </div>
             </div>
 
             {/* Professional Plan Card */}
             <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950 dark:to-indigo-950 rounded-2xl shadow-2xl border-2 border-blue-300 dark:border-blue-700 overflow-hidden hover:shadow-2xl transition-all duration-300 flex flex-col relative ring-2 ring-blue-200 dark:ring-blue-800">
-              <div className="absolute top-0 right-0 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-1 text-xs font-bold rounded-bl-lg shadow-lg">
-                MOST POPULAR ✨
+              <div className="absolute top-0 right-0 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-1 text-xs font-bold rounded-bl-lg shadow-lg flex gap-2">
+                MOST POPULAR <Sparkles color="yellow" size={12} />
               </div>
               <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-8 text-white pt-14">
                 <h3 className="text-2xl font-bold mb-2">Professional Plan</h3>
@@ -393,7 +393,7 @@ export default function Home() {
                   <div className="text-5xl font-bold text-foreground mb-2">
                     ₹8,500
                   </div>
-                  <p className="text-muted-foreground mb-4 text-sm">Installation (one-time)</p>
+                  <p className="text-muted-foreground mb-4 text-sm">Installation (one-time) + Additional Features one-time fee</p>
                   <div className="flex items-baseline gap-2 pb-4 border-b border-blue-200 dark:border-blue-800">
                     <span className="text-4xl font-bold text-foreground">₹850</span>
                     <span className="text-muted-foreground">/month</span>
@@ -405,34 +405,34 @@ export default function Home() {
                   <h4 className="font-semibold text-foreground mb-4">Everything in Standard +</h4>
                   <ul className="space-y-3">
                     <li className="flex items-start gap-3 text-sm">
-                      <span className="text-blue-600 dark:text-blue-400 font-bold text-lg">⭐</span>
+                      <span className="text-blue-600 dark:text-blue-400 font-bold text-lg"><Star /></span>
                       <span className="text-foreground"><strong>WhatsApp automation</strong> for reminders & receipts</span>
                     </li>
                     <li className="flex items-start gap-3 text-sm">
-                      <span className="text-blue-600 dark:text-blue-400 font-bold text-lg">⭐</span>
+                      <span className="text-blue-600 dark:text-blue-400 font-bold text-lg"><Star /></span>
                       <span className="text-foreground"><strong>Teachers & parents portals</strong> with real-time updates</span>
                     </li>
                     <li className="flex items-start gap-3 text-sm">
-                      <span className="text-blue-600 dark:text-blue-400 font-bold">⭐</span>
+                      <span className="text-blue-600 dark:text-blue-400 font-bold"><Star /></span>
                       <span>Exam management & result publishing</span>
                     </li>
                     <li className="flex items-start gap-3 text-sm">
-                      <span className="text-blue-600 dark:text-blue-400 font-bold">⭐</span>
+                      <span className="text-blue-600 dark:text-blue-400 font-bold"><Star /></span>
                       <span>Staff payroll calculations</span>
                     </li>
                     <li className="flex items-start gap-3 text-sm">
-                      <span className="text-blue-600 dark:text-blue-400 font-bold">⭐</span>
+                      <span className="text-blue-600 dark:text-blue-400 font-bold"><Star /></span>
                       <span>Custom features & integrations</span>
                     </li>
                     <li className="flex items-start gap-3 text-sm">
-                      <span className="text-blue-600 dark:text-blue-400 font-bold">⭐</span>
+                      <span className="text-blue-600 dark:text-blue-400 font-bold"><Star /></span>
                       <span>Priority 1-on-1 support</span>
                     </li>
                   </ul>
                 </div>
 
                 <a href="/get-started" className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 text-center shadow-lg hover:shadow-xl">
-                  Start Free Trial
+                  Get Onboarded Now
                 </a>
               </div>
             </div>
@@ -615,7 +615,7 @@ export default function Home() {
                 href="/get-started"
                 className="inline-flex items-center justify-center bg-white hover:bg-slate-100 text-slate-900 font-bold px-10 py-4 rounded-lg shadow-xl transition-all hover:scale-105"
               >
-                Get Started — Try Free
+                View Plans & Pricing
               </Link>
               <Link
                 href="/contactus"
@@ -624,9 +624,12 @@ export default function Home() {
                 Schedule a Demo
               </Link>
           </div>
-          <p className="text-slate-400 text-sm mt-8">
-            No credit card required. Set up takes less than 5 minutes.
-          </p>
+            <p className="text-slate-400 text-sm mt-8">
+              Want to explore the features first?{" "}
+              <a href="https://try-fee-ease.vercel.app" target="_blank" rel="noopener noreferrer" className="text-white font-semibold hover:underline">
+                Try our demo
+              </a>
+            </p>
         </div>
       </section>
     </div>
