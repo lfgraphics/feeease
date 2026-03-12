@@ -88,7 +88,7 @@ export function OnboardingForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
     try {
-      const response = await fetch("/api/get-started", {
+      const response = await fetch("/api/onboarding", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
