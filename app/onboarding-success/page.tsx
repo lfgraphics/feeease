@@ -26,7 +26,7 @@ export default function OnboardingSuccessPage() {
             </p>
             <ul className="text-left mt-4 space-y-2 text-muted-foreground text-sm list-disc list-inside">
               <li>Deploying your dedicated school application</li>
-              <li>Configuring your custom features</li>
+              <li>Configuring your custom features (if any)</li>
               <li>Setting up fee structures and student data</li>
             </ul>
           </div>
@@ -34,11 +34,11 @@ export default function OnboardingSuccessPage() {
           <div className="flex flex-col md:flex-row items-center justify-center gap-6 text-muted-foreground text-sm">
             <div className="flex items-center gap-2">
               <Phone className="h-4 w-4" />
-              <span>Support: +91 12345 67890</span>
+              <span>Support: +91 63934 40986</span>
             </div>
             <div className="flex items-center gap-2">
               <Mail className="h-4 w-4" />
-              <span>Email: support@feeease.in</span>
+              <span>Email: support@feeease.com</span>
             </div>
           </div>
 

@@ -112,7 +112,7 @@ export function OnboardingForm() {
       });
 
       if (loginResult?.ok) {
-        router.push("/get-started-success");
+        router.push("/onboarding-success");
       } else {
         router.push("/");
       }
