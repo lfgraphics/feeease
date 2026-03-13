@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { BarChart3, LogOut, Menu } from "lucide-react";
+import { BarChart3, LogOut, Menu, MessageSquare } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetHeader } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import {
@@ -37,6 +37,13 @@ export default async function MarketingLayout({
         >
           <BarChart3 size={20} />
           <span>Dashboard</span>
+        </Link>
+        <Link
+          href="/admin/marketing/schools-queries"
+          className="flex items-center gap-3 px-3 sm:px-4 py-2 sm:py-3 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground transition-colors text-sm sm:text-base"
+        >
+          <MessageSquare size={20} />
+          <span>School Queries</span>
         </Link>
       </nav>
 

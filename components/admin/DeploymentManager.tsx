@@ -170,7 +170,7 @@ NEXT_PUBLIC_SCHOOL_SHORT_NAME="${initialDeployment.schoolShortName || 'MN'}"
 NEXT_PUBLIC_SCHOOL_ADDRESS="${initialDeployment.schoolAddress || '123 School Lane'}"
 
 # FeeEase Configuration
-FEEEASE_URL=${initialDeployment.feeeaseUrl}
+NEXT_PUBLIC_FEEEASE_URL=${initialDeployment.feeeaseUrl}
 LICENSE_PUBLIC_KEY="${initialDeployment.licensePublicKey.replace(/\n/g, '\\n')}"
 ENCRYPTION_KEY=${encKey}
 LICENSE_COOKIE_SECRET=${cookieSecret}

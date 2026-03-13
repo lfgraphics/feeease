@@ -4,6 +4,7 @@ import { SessionProvider } from "next-auth/react";
 import { ConfirmProvider } from "@/context/ConfirmDialogContext";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/theme-provider";
+import { TooltipProvider } from "./ui/tooltip";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
@@ -14,10 +15,12 @@ export default function Providers({ children }: { children: React.ReactNode }) {
         enableSystem
         disableTransitionOnChange
       >
-        <ConfirmProvider>
-          {children}
-          <Toaster />
-        </ConfirmProvider>
+        <TooltipProvider>
+          <ConfirmProvider>
+            {children}
+            <Toaster />
+          </ConfirmProvider>
+        </TooltipProvider>
       </ThemeProvider>
     </SessionProvider>
   );

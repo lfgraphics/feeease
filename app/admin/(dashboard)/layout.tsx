@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { LayoutDashboard, Users, School as SchoolIcon, Key, Settings, LogOut, Menu, BarChart3 } from "lucide-react";
+import { LayoutDashboard, Users, School as SchoolIcon, Key, Settings, LogOut, Menu, BarChart3, MessageSquare } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetHeader } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 
@@ -59,6 +59,10 @@ export default async function AdminLayout({
             <Link href="/admin/schools" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
               <SchoolIcon size={20} />
               <span>Schools</span>
+            </Link>
+            <Link href="/admin/schools-queries" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
+              <MessageSquare size={20} />
+              <span>School Queries</span>
             </Link>
             
             <Link href="/admin/licenses" className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
