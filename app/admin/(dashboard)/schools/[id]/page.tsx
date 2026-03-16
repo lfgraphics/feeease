@@ -12,12 +12,15 @@ import { getSchoolPayments } from "@/actions/finances";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { SCHOOL_FEATURES } from "@/lib/features";
+import { WhatsAppUsageManager } from "@/components/admin/WhatsAppUsageManager";
+import { getWhatsAppUsage } from "@/actions/whatsapp-usage";
 
 export default async function SchoolDetailPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
     const school = await getSchoolById(id);
     const payments = await getSchoolPayments(id);
     const session = await getServerSession(authOptions);
+    const whatsappUsage = await getWhatsAppUsage(id);
 
     if (!school) {
         notFound();
@@ -175,6 +178,17 @@ export default async function SchoolDetailPage({ params }: { params: Promise<{ i
                             initialSubscription={JSON.parse(JSON.stringify(school.subscription || {}))}
                             initialPayments={payments}
                             canEdit={canEditFinancials}
+                        />
+                    </div>
+                )}
+
+                {/* WhatsApp Usage — visible to all admins (not marketing) */}
+                {!isMarketing && whatsappUsage && (
+                    <div className="col-span-1 sm:col-span-2 lg:col-span-3">
+                        <WhatsAppUsageManager
+                            schoolId={school._id.toString()}
+                            initialUsage={whatsappUsage}
+                            canEdit={canViewCredentials}
                         />
                     </div>
                 )}

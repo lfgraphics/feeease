@@ -36,8 +36,6 @@ export async function POST(
         gmailAccount,
         nextAuth,
         encryptionKey,
-        aiSensy,
-        triggerDev,
         publicAppUrl,
         whatsappTemplates,
         licenseCookieSecret
@@ -60,8 +58,6 @@ export async function POST(
     if (nextAuth) updateData.nextAuth = encrypt(JSON.stringify(nextAuth));
     if (encryptionKey) updateData.encryptionKey = encrypt(encryptionKey);
     if (licenseCookieSecret) updateData.licenseCookieSecret = encrypt(licenseCookieSecret);
-    if (aiSensy) updateData.aiSensy = encrypt(JSON.stringify(aiSensy));
-    if (triggerDev) updateData.triggerDev = encrypt(JSON.stringify(triggerDev));
     if (whatsappTemplates) updateData.whatsappTemplates = encrypt(JSON.stringify(whatsappTemplates));
 
     school.deployment = {

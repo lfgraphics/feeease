@@ -35,14 +35,13 @@ export function DeploymentManager({ schoolId, initialDeployment }: DeploymentMan
     const [nextAuth, setNextAuth] = useState(initialDeployment.nextAuth || { secret: "", url: "" });
     const [encryptionKey, setEncryptionKey] = useState(initialDeployment.encryptionKey || "");
     const [licenseCookieSecret, setLicenseCookieSecret] = useState(initialDeployment.licenseCookieSecret || "");
-    const [aiSensy, setAiSensy] = useState(initialDeployment.aiSensy || { apiKey: "" });
-    const [triggerDev, setTriggerDev] = useState(initialDeployment.triggerDev || { apiKey: "", projectId: "" });
-
     const [waTemplates, setWaTemplates] = useState(initialDeployment.whatsappTemplates || {
-        receipt: "receipt_pdf",
-        reminderHindi: "fee_reminder_hindi",
-        reminderEnglish: "fee_reminder_english",
-        reminderUrdu: "fee_reminder_urdu"
+        receipt: "fee_receipt_v1",
+        reminderHindi: "reminder_hindi",
+        reminderEnglish: "reminder_english",
+        reminderUrdu: "reminder_urdu",
+        universalText: "boradcast_text",
+        universalImage: "broadcast_image"
     });
 
     // Visibility Toggles
@@ -72,8 +71,6 @@ export function DeploymentManager({ schoolId, initialDeployment }: DeploymentMan
                 nextAuth,
                 encryptionKey,
                 licenseCookieSecret,
-                aiSensy,
-                triggerDev,
                 whatsappTemplates: waTemplates
             };
 
@@ -138,8 +135,6 @@ export function DeploymentManager({ schoolId, initialDeployment }: DeploymentMan
                     nextAuth: { ...nextAuth, secret },
                     encryptionKey: encKey,
                     licenseCookieSecret: cookieSecret,
-                    aiSensy,
-                    triggerDev,
                     whatsappTemplates: waTemplates
                 };
 
@@ -155,7 +150,8 @@ export function DeploymentManager({ schoolId, initialDeployment }: DeploymentMan
         }
 
         const whatsappEnabled = initialDeployment.features?.whatsapp ? "true" : "false";
-        const aisensyBaseUrl = "https://backend.aisensy.com/campaign/t1/api/v2";
+        const workerUrl = process.env.NEXT_PUBLIC_WORKER_URL || "https://feeease-worker.onrender.com";
+        const workerWebhookSecret = process.env.WORKER_WEBHOOK_SECRET || "replace_with_worker_webhook_secret";
 
         const env = `
 # Generated ENV for ${project || "modern-nursery"}
@@ -182,24 +178,23 @@ MONGODB_URI=${mongoUri}
 NEXTAUTH_SECRET=${secret}
 NEXTAUTH_URL=${nextAuth.url || publicAppUrl}
 
-# Trigger.dev (Background Jobs)
-TRIGGER_SECRET_KEY=${triggerDev.apiKey || ""}
-TRIGGER_PROJECT_ID=${triggerDev.projectId || ""}
 
-# WhatsApp TemplatesCloudinary (Image Uploads)
+# Cloudinary (Image Uploads)
 CLOUDINARY_CLOUD_NAME=${cloudinary.cloudName}
 CLOUDINARY_API_KEY=${cloudinary.apiKey}
 CLOUDINARY_API_SECRET=${cloudinary.apiSecret}
 
-# WhatsApp (AiSensy)
-AISENSY_API_KEY=${aiSensy.apiKey}
-AISENSY_BASE_URL=${aisensyBaseUrl}
+# WhatsApp Broadcaster (feeease-worker)
+FEEEASE_WORKER_URL=${workerUrl}
+WORKER_WEBHOOK_SECRET=${workerWebhookSecret}
 
 # WhatsApp Templates
 WHATSAPP_TEMPLATE_RECEIPT=${waTemplates.receipt}
 WHATSAPP_TEMPLATE_REMINDER_HINDI=${waTemplates.reminderHindi}
 WHATSAPP_TEMPLATE_REMINDER_ENGLISH=${waTemplates.reminderEnglish}
 WHATSAPP_TEMPLATE_REMINDER_URDU=${waTemplates.reminderUrdu}
+WHATSAPP_TEMPLATE_UNIVERSAL_TEXT=${waTemplates.universalText}
+WHATSAPP_TEMPLATE_UNIVERSAL_IMAGE=${waTemplates.universalImage}
     `.trim();
 
         setGeneratedEnv(env);
@@ -379,39 +374,9 @@ WHATSAPP_TEMPLATE_REMINDER_URDU=${waTemplates.reminderUrdu}
 
                     {/* External Services */}
                     <AccordionItem value="services">
-                        <AccordionTrigger>External Services (Cloudinary, Trigger.dev)</AccordionTrigger>
+                        <AccordionTrigger>External Services (Cloudinary)</AccordionTrigger>
                         <AccordionContent className="space-y-4 pt-4">
-                            <div className="space-y-2">
-                                <Label className="text-muted-foreground">Trigger.dev Configuration (Background Jobs)</Label>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div className="space-y-2">
-                                        <Label>Trigger Secret Key</Label>
-                                        <div className="relative">
-                                            <Input
-                                                type={showSecrets['triggerKey'] ? "text" : "password"}
-                                                value={triggerDev.apiKey}
-                                                onChange={(e) => setTriggerDev({ ...triggerDev, apiKey: e.target.value })}
-                                                placeholder="tr_prod_..."
-                                            />
-                                            <Button
-                                                type="button"
-                                                variant="ghost"
-                                                size="sm"
-                                                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                                                onClick={() => toggleVisibility('triggerKey')}
-                                            >
-                                                {showSecrets['triggerKey'] ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                                            </Button>
-                                        </div>
-                                    </div>
-                                    <div className="space-y-2">
-                                        <Label>Project ID</Label>
-                                        <Input value={triggerDev.projectId} onChange={(e) => setTriggerDev({ ...triggerDev, projectId: e.target.value })} placeholder="proj_..." />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="space-y-2 border-t pt-4">
+                            <div className="space-y-4 pt-4">
                                 <Label className="text-muted-foreground">Cloudinary Configuration</Label>
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                     <div className="space-y-2">
@@ -446,30 +411,10 @@ WHATSAPP_TEMPLATE_REMINDER_URDU=${waTemplates.reminderUrdu}
                         </AccordionContent>
                     </AccordionItem>
 
-                    {/* WhatsApp Integration */}
+                    {/* WhatsApp Templates */}
                     <AccordionItem value="whatsapp">
-                        <AccordionTrigger>WhatsApp Integration (AiSensy)</AccordionTrigger>
+                        <AccordionTrigger>WhatsApp Templates</AccordionTrigger>
                         <AccordionContent className="space-y-4 pt-4">
-                            <div className="space-y-2">
-                                <Label>AiSensy API Key</Label>
-                                <div className="relative">
-                                    <Input
-                                        type={showSecrets['aisensy'] ? "text" : "password"}
-                                        value={aiSensy.apiKey}
-                                        onChange={(e) => setAiSensy({ ...aiSensy, apiKey: e.target.value })}
-                                    />
-                                    <Button
-                                        type="button"
-                                        variant="ghost"
-                                        size="sm"
-                                        className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                                        onClick={() => toggleVisibility('aisensy')}
-                                    >
-                                        {showSecrets['aisensy'] ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                                    </Button>
-                                </div>
-                            </div>
-
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="space-y-2">
                                     <Label>Receipt Template</Label>
@@ -486,6 +431,14 @@ WHATSAPP_TEMPLATE_REMINDER_URDU=${waTemplates.reminderUrdu}
                                 <div className="space-y-2">
                                     <Label>Reminder Template (Urdu)</Label>
                                     <Input value={waTemplates.reminderUrdu} onChange={(e) => setWaTemplates({ ...waTemplates, reminderUrdu: e.target.value })} />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label>Universal Broadcast (Text)</Label>
+                                    <Input value={waTemplates.universalText} onChange={(e) => setWaTemplates({ ...waTemplates, universalText: e.target.value })} />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label>Universal Broadcast (Image)</Label>
+                                    <Input value={waTemplates.universalImage} onChange={(e) => setWaTemplates({ ...waTemplates, universalImage: e.target.value })} />
                                 </div>
                             </div>
                         </AccordionContent>

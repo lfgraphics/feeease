@@ -116,8 +116,6 @@ export async function getSchoolById(id: string) {
         nextAuth: safeDecryptJSON(school.deployment?.nextAuth),
         encryptionKey: safeDecrypt(school.deployment?.encryptionKey),
         licenseCookieSecret: safeDecrypt(school.deployment?.licenseCookieSecret),
-        aiSensy: safeDecryptJSON(school.deployment?.aiSensy),
-        triggerDev: safeDecryptJSON(school.deployment?.triggerDev),
         whatsappTemplates: safeDecryptJSON(school.deployment?.whatsappTemplates),
     };
 

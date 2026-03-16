@@ -40,8 +40,7 @@ export interface ISchool extends Document {
     gmailAccount?: string;
     nextAuth?: string;
     encryptionKey?: string;
-    aiSensy?: string;
-    triggerDev?: string;
+
     licenseCookieSecret?: string;
     publicAppUrl?: string;
     whatsappTemplates?: string;
@@ -60,6 +59,12 @@ export interface ISchool extends Document {
       effectiveDate: Date;
     }>;
     planType: 'monthly' | 'quarterly' | 'yearly';
+  };
+
+  whatsappUsage?: {
+    sentThisMonth: number;
+    softLimit: number;
+    monthYear: string;
   };
 
   activationStatus: 'not_activated' | 'license_entered' | 'app_initialized' | 'active';
@@ -111,8 +116,7 @@ const SchoolSchema: Schema = new Schema({
     gmailAccount: { type: String },
     nextAuth: { type: String },
     encryptionKey: { type: String },
-    aiSensy: { type: String },
-    triggerDev: { type: String },
+
     licenseCookieSecret: { type: String },
     publicAppUrl: { type: String },
     whatsappTemplates: { type: String },
@@ -133,8 +137,18 @@ const SchoolSchema: Schema = new Schema({
     planType: { type: String, enum: ['monthly', 'quarterly', 'yearly'], default: 'monthly' },
   },
 
+  whatsappUsage: {
+    sentThisMonth: { type: Number, default: 0 },
+    softLimit: { type: Number, default: 5000 },
+    monthYear: { type: String },
+  },
+
   activationStatus: { type: String, enum: ['not_activated', 'license_entered', 'app_initialized', 'active'], default: 'not_activated' },
 }, { timestamps: true });
+
+if (process.env.NODE_ENV === 'development') {
+  delete (mongoose.models as any).School;
+}
 
 const School: Model<ISchool> = mongoose.models.School || mongoose.model<ISchool>('School', SchoolSchema);
 
