@@ -11,6 +11,7 @@ import { MessageCircle, RefreshCw, Settings, TrendingUp, AlertTriangle, Wallet, 
 import { updateWhatsAppSoftLimit, resetWhatsAppUsage } from "@/actions/whatsapp-usage"
 import { syncWhatsAppPricing, addWhatsAppPayment, getWhatsAppBillingSummary } from "@/actions/whatsapp-management"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useEffect } from "react"
 import { cn } from "@/lib/utils"
 
@@ -46,6 +47,7 @@ export function WhatsAppUsageManager({
   const [loadingBilling, setLoadingBilling] = useState(false)
   const [paymentAmount, setPaymentAmount] = useState("")
   const [paymentDesc, setPaymentDesc] = useState("WhatsApp Credit")
+  const [paymentMethod, setPaymentMethod] = useState("Transfer")
   const [paymentStatus, setPaymentStatus] = useState(false)
   const [pricingAmount, setPricingAmount] = useState("0.5")
   const [pricingStatus, setPricingStatus] = useState(false)
@@ -116,7 +118,7 @@ export function WhatsAppUsageManager({
     const val = parseFloat(paymentAmount)
     if (isNaN(val) || val <= 0) return toast.error("Invalid amount")
     setPaymentStatus(true)
-    const res = await addWhatsAppPayment(schoolId, val, paymentDesc)
+    const res = await addWhatsAppPayment(schoolId, val, paymentDesc, undefined, paymentMethod)
     setPaymentStatus(false)
     if (res.success) {
       toast.success("WhatsApp credit added successfully")
@@ -253,10 +255,28 @@ export function WhatsAppUsageManager({
                         <DialogDescription>Record a payment for WhatsApp messaging credits.</DialogDescription>
                       </DialogHeader>
                       <div className="space-y-4 py-2">
-                        <div className="space-y-2">
-                          <Label>Amount (₹)</Label>
-                          <Input type="number" placeholder="500" value={paymentAmount} onChange={e => setPaymentAmount(e.target.value)} />
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <Label>Amount (₹)</Label>
+                                <Input type="number" placeholder="500" value={paymentAmount} onChange={e => setPaymentAmount(e.target.value)} />
+                            </div>
+                            <div className="space-y-2">
+                                <Label>Payment Method</Label>
+                                <Select value={paymentMethod} onValueChange={setPaymentMethod}>
+                                    <SelectTrigger>
+                                        <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="Transfer">Transfer</SelectItem>
+                                        <SelectItem value="Cash">Cash</SelectItem>
+                                        <SelectItem value="UPI">UPI</SelectItem>
+                                        <SelectItem value="Card">Card</SelectItem>
+                                        <SelectItem value="Check">Check</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
                         </div>
+
                         <div className="space-y-2">
                           <Label>Description</Label>
                           <Input placeholder="Recharge 1000 messages" value={paymentDesc} onChange={e => setPaymentDesc(e.target.value)} />
@@ -285,7 +305,7 @@ export function WhatsAppUsageManager({
                         <div className="space-y-2">
                           <Label>Price per Message (₹)</Label>
                           <Input type="number" step="0.01" value={pricingAmount} onChange={e => setPricingAmount(e.target.value)} />
-                          <p className="text-xs text-muted-foreground">Standard cost is ~0.50 including GST.</p>
+                          <p className="text-xs text-muted-foreground">Standard cost is ~0.18 including GST.</p>
                         </div>
                       </div>
                       <DialogFooter>

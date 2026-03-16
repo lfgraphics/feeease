@@ -212,6 +212,7 @@ export default async function SchoolDetailPage({ params }: { params: Promise<{ i
                         <DeploymentManager
                             schoolId={school._id.toString()}
                             initialDeployment={school.decryptedDeployment}
+                            features={JSON.parse(JSON.stringify(school.features || {}))}
                         />
                     </div>
                 )}

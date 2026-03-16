@@ -69,7 +69,15 @@ export async function POST(
       
       // Update School Plan and Features
       if (plan) school.subscription.plan = plan;
-      if (features) school.features = features;
+      // 1. Update Features if provided
+      if (features && typeof features === 'object') {
+
+        Object.keys(features).forEach(key => {
+          // @ts-ignore - Dynamic key access
+          school.features[key] = features[key];
+        });
+        school.markModified('features');
+      }
 
       // Ensure licenseKey exists (migration for old records)
       if (!school.license?.licenseKey) {

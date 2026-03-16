@@ -6,18 +6,22 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Loader2, Save, Eye, EyeOff, Terminal, Copy, Check } from "lucide-react";
+import { Loader2, Save, Eye, EyeOff, Terminal, Copy, Check, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 interface DeploymentManagerProps {
     schoolId: string;
     initialDeployment: any;
+    features: any;
 }
 
-export function DeploymentManager({ schoolId, initialDeployment }: DeploymentManagerProps) {
+export function DeploymentManager({ schoolId, initialDeployment, features }: DeploymentManagerProps) {
+    const router = useRouter();
     const [loading, setLoading] = useState(false);
 
     // Deployment Status
@@ -26,6 +30,12 @@ export function DeploymentManager({ schoolId, initialDeployment }: DeploymentMan
     const [project, setProject] = useState(initialDeployment.vercelProject || "");
     const [notes, setNotes] = useState(initialDeployment.notes || "");
     const [publicAppUrl, setPublicAppUrl] = useState(initialDeployment.publicAppUrl || "");
+    const [localFeatures, setLocalFeatures] = useState(features || {});
+
+    // Sync features from props
+    useEffect(() => {
+        setLocalFeatures(features || {});
+    }, [features]);
 
     // Credentials
     const [mongoUri, setMongoUri] = useState(initialDeployment.mongoDbUri || "");
@@ -41,7 +51,8 @@ export function DeploymentManager({ schoolId, initialDeployment }: DeploymentMan
         reminderEnglish: "reminder_english",
         reminderUrdu: "reminder_urdu",
         universalText: "boradcast_text",
-        universalImage: "broadcast_image"
+        universalImage: "broadcast_image",
+        otp: "login_otp"
     });
 
     // Visibility Toggles
@@ -69,9 +80,9 @@ export function DeploymentManager({ schoolId, initialDeployment }: DeploymentMan
                 gmailAccount: gmail,
                 cloudinaryConfig: cloudinary,
                 nextAuth,
-                encryptionKey,
                 licenseCookieSecret,
-                whatsappTemplates: waTemplates
+                whatsappTemplates: waTemplates,
+                features: localFeatures
             };
 
             const res = await fetch(`/api/admin/schools/${schoolId}/deployment`, {
@@ -82,7 +93,7 @@ export function DeploymentManager({ schoolId, initialDeployment }: DeploymentMan
 
             if (res.ok) {
                 toast.success("Deployment details updated!");
-                // window.location.reload(); // Optional: Reload to fetch fresh data if needed, but state is already updated
+                router.refresh();
             } else {
                 toast.error("Failed to update deployment details");
             }
@@ -135,7 +146,7 @@ export function DeploymentManager({ schoolId, initialDeployment }: DeploymentMan
                     nextAuth: { ...nextAuth, secret },
                     encryptionKey: encKey,
                     licenseCookieSecret: cookieSecret,
-                    whatsappTemplates: waTemplates
+                    whatsappTemplates: waTemplates,
                 };
 
                 await fetch(`/api/admin/schools/${schoolId}/deployment`, {
@@ -149,7 +160,7 @@ export function DeploymentManager({ schoolId, initialDeployment }: DeploymentMan
             }
         }
 
-        const whatsappEnabled = initialDeployment.features?.whatsapp ? "true" : "false";
+        const whatsappEnabled = localFeatures.whatsapp ? "true" : "false";
         const workerUrl = process.env.NEXT_PUBLIC_WORKER_URL || "https://feeease-worker.onrender.com";
         const workerWebhookSecret = process.env.WORKER_WEBHOOK_SECRET || "replace_with_worker_webhook_secret";
 
@@ -159,6 +170,8 @@ export function DeploymentManager({ schoolId, initialDeployment }: DeploymentMan
 # Deployment
 NEXT_PUBLIC_APP_URL=${publicAppUrl}
 NEXT_PUBLIC_ENABLE_WHATSAPP_INTEGRATION=${whatsappEnabled}
+NEXT_PUBLIC_ENABLE_PARENT_LOGIN=${localFeatures.parentsLogin ? "true" : "false"}
+NEXT_PUBLIC_ENABLE_TEACHER_LOGIN=${localFeatures.teachersLogin ? "true" : "false"}
 
 # School Identity (Required for multi-tenant apps)
 NEXT_PUBLIC_SCHOOL_NAME="${initialDeployment.schoolName || 'Modern Nursery'}"
@@ -195,6 +208,7 @@ WHATSAPP_TEMPLATE_REMINDER_ENGLISH=${waTemplates.reminderEnglish}
 WHATSAPP_TEMPLATE_REMINDER_URDU=${waTemplates.reminderUrdu}
 WHATSAPP_TEMPLATE_UNIVERSAL_TEXT=${waTemplates.universalText}
 WHATSAPP_TEMPLATE_UNIVERSAL_IMAGE=${waTemplates.universalImage}
+WHATSAPP_TEMPLATE_OTP=${waTemplates.otp || 'login_otp'}
     `.trim();
 
         setGeneratedEnv(env);
@@ -273,6 +287,8 @@ WHATSAPP_TEMPLATE_UNIVERSAL_IMAGE=${waTemplates.universalImage}
                         </div>
                     </div>
                 </div>
+
+
 
                 <Accordion type="single" collapsible className="w-full">
 
@@ -439,6 +455,10 @@ WHATSAPP_TEMPLATE_UNIVERSAL_IMAGE=${waTemplates.universalImage}
                                 <div className="space-y-2">
                                     <Label>Universal Broadcast (Image)</Label>
                                     <Input value={waTemplates.universalImage} onChange={(e) => setWaTemplates({ ...waTemplates, universalImage: e.target.value })} />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label>Login OTP Template</Label>
+                                    <Input value={waTemplates.otp} onChange={(e) => setWaTemplates({ ...waTemplates, otp: e.target.value })} />
                                 </div>
                             </div>
                         </AccordionContent>

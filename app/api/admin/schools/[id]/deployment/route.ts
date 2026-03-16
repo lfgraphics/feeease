@@ -38,19 +38,26 @@ export async function POST(
         encryptionKey,
         publicAppUrl,
         whatsappTemplates,
-        licenseCookieSecret
+        licenseCookieSecret,
+        features, // Support updating features directly from deployment manager
     } = body;
 
-    // Encrypt sensitive fields if they are provided
+    // 1. Update Features if provided
+    if (features && typeof features === 'object') {  
+      Object.keys(features).forEach(key => {
+        // @ts-ignore - Dynamic key access
+        school.features[key] = features[key];
+      });
+      school.markModified('features');
+    }
     // Note: We assume the body contains the RAW values (objects), so we JSON.stringify then encrypt
     
-    const updateData: any = {
-        status,
-        githubRepo,
-        vercelProject,
-        notes,
-        publicAppUrl
-    };
+    const updateData: any = {};
+    if (status !== undefined) updateData.status = status;
+    if (githubRepo !== undefined) updateData.githubRepo = githubRepo;
+    if (vercelProject !== undefined) updateData.vercelProject = vercelProject;
+    if (notes !== undefined) updateData.notes = notes;
+    if (publicAppUrl !== undefined) updateData.publicAppUrl = publicAppUrl;
 
     if (mongoDbUri) updateData.mongoDbUri = encrypt(mongoDbUri);
     if (cloudinaryConfig) updateData.cloudinaryConfig = encrypt(JSON.stringify(cloudinaryConfig));
