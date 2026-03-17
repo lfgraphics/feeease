@@ -44,7 +44,7 @@ export default function Home() {
       <section className="w-full py-20 bg-gradient-to-b from-blue-50 to-background dark:from-background dark:to-background relative overflow-hidden">
         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-primary/10 dark:bg-primary/20 rounded-full blur-3xl opacity-50"></div>
         <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 bg-secondary/20 dark:bg-secondary/20 rounded-full blur-3xl opacity-50"></div>
-        
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center relative z-10">
           <div className="lg:w-1/2 lg:pr-12 mb-12 lg:mb-0 text-center lg:text-left">
             <h1 className="text-5xl lg:text-6xl font-extrabold mb-6 leading-tight text-foreground">
@@ -73,8 +73,8 @@ export default function Home() {
           </div>
           <div className="lg:w-1/2 relative">
             <div className="relative rounded-2xl shadow-2xl overflow-hidden border border-border bg-card">
-               <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/10 to-purple-500/10 pointer-events-none"></div>
-               <Image
+              <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/10 to-purple-500/10 pointer-events-none"></div>
+              <Image
                 width={800}
                 height={600}
                 src="/images/home/dashboard.png"
@@ -149,9 +149,9 @@ export default function Home() {
               <div className="w-14 h-14 bg-orange-100 dark:bg-orange-900/30 rounded-xl flex items-center justify-center text-orange-600 dark:text-orange-400 mb-6 group-hover:scale-110 transition-transform">
                 <Users size={28} />
               </div>
-              <h4 className="text-xl font-bold mb-3 text-foreground">Staff & Salary Management</h4>
+              <h4 className="text-xl font-bold mb-3 text-foreground">Payment History & Reports</h4>
               <p className="text-muted-foreground leading-relaxed">
-                Manage teacher profiles, and automate salary calculations. Generate payslips and maintain staff records securely.
+                Manage payment history and generate reports. Keep track of all payments and generate reports.
               </p>
             </div>
 
@@ -166,14 +166,14 @@ export default function Home() {
               </p>
             </div>
 
-             {/* Feature 6: Modern UI */}
-             <div className="group bg-secondary/50 p-8 rounded-2xl hover:bg-card hover:shadow-xl hover:shadow-indigo-100 dark:hover:shadow-indigo-900/10 transition-all duration-300 border border-border hover:border-indigo-100 dark:hover:border-indigo-900/50">
+            {/* Feature 6: Modern UI */}
+            <div className="group bg-secondary/50 p-8 rounded-2xl hover:bg-card hover:shadow-xl hover:shadow-indigo-100 dark:hover:shadow-indigo-900/10 transition-all duration-300 border border-border hover:border-indigo-100 dark:hover:border-indigo-900/50">
               <div className="w-14 h-14 bg-indigo-100 dark:bg-indigo-900/30 rounded-xl flex items-center justify-center text-indigo-600 dark:text-indigo-400 mb-6 group-hover:scale-110 transition-transform">
                 <ShieldCheck size={28} />
               </div>
               <h4 className="text-xl font-bold mb-3 text-foreground">Secure & Modern</h4>
               <p className="text-muted-foreground leading-relaxed">
-                Bank-grade security meets modern design. No more clunky, excel-like interfaces. Experience a fluid, responsive app that works on any device.
+                Enterprise-grade security meets modern design. No more clunky, excel-like interfaces. Experience a fluid, responsive app that works on any device.
               </p>
             </div>
           </div>
@@ -189,10 +189,10 @@ export default function Home() {
               Try the FeeEase Live Demo
             </h3>
             <p className="text-lg text-muted-foreground mb-8">
-              Explore the full power of FeeEase with our interactive demo. No sign-up required. 
+              Explore the full power of FeeEase with our interactive demo. No sign-up required.
               Test drive the features, see the interface, and experience the simplicity firsthand.
             </p>
-            
+
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Link
                 href="https://try-fee-ease.vercel.app/"
@@ -209,7 +209,7 @@ export default function Home() {
                 </svg>
               </Link>
             </div>
-            
+
             <p className="mt-4 text-sm text-muted-foreground">
               * This is a read-only simulation. Data is stored locally in your browser.
             </p>
@@ -225,13 +225,13 @@ export default function Home() {
               </div>
             </div>
             <div className="mt-8 aspect-video w-full bg-muted relative group">
-                <iframe 
-                    src="https://try-fee-ease.vercel.app/" 
-                    className="w-full h-full border-0"
-                    title="FeeEase Live Demo"
-                    loading="lazy"
-                ></iframe>
-                <div className="absolute inset-0 bg-transparent pointer-events-none group-hover:bg-foreground/5 transition-colors duration-300"></div>
+              <iframe
+                src="https://try-fee-ease.vercel.app/"
+                className="w-full h-full border-0"
+                title="FeeEase Live Demo"
+                loading="lazy"
+              ></iframe>
+              <div className="absolute inset-0 bg-transparent pointer-events-none group-hover:bg-foreground/5 transition-colors duration-300"></div>
             </div>
           </div>
         </div>
@@ -249,7 +249,7 @@ export default function Home() {
               <p className="text-muted-foreground mb-10 text-lg leading-relaxed">
                 <strong>FeeEase is a modern, technology-powered platform</strong> built to automate fee collection, simplify administration, and give schools complete control over their finances. Say goodbye to spreadsheets and manual work.
               </p>
-              
+
               <div className="space-y-6">
                 <div className="flex gap-4">
                   <div className="shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-600 dark:text-blue-400">
@@ -280,19 +280,19 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            
+
             <div className="bg-gradient-to-br from-card via-card to-secondary/30 p-10 rounded-3xl border border-border/50 shadow-xl">
               <h4 className="text-2xl font-bold mb-8 text-foreground">Complete Feature Suite</h4>
               <div className="grid grid-cols-1 gap-1">
                 {[
+                  { icon: Smartphone, title: "WhatsApp Integration", desc: "Send reminders, receipts, and alerts" },
                   { icon: BarChart3, title: "Fee Management Suite", desc: "Automated collections, digital receipts, payment tracking" },
                   { icon: Settings, title: "Modern, Mobile-First Design", desc: "Beautiful interface on phones, tablets, and desktops" },
                   { icon: RefreshCw, title: "Real-time Sync & Updates", desc: "Live data across all users and departments" },
                   { icon: TrendingUp, title: "Advanced Analytics", desc: "Custom reports, financial dashboards, insights" },
-                  { icon: Printer, title: "Professional Receipts", desc: "Branded thermal receipts with school logo" },
-                  { icon: Users, title: "Team Support", desc: "Personalized training and priority assistance" },
+                  { icon: Printer, title: "Professional Receipts", desc: "Receipt with your own logo" },
                   { icon: Lock, title: "Enterprise Security", desc: "Bank-grade encryption and data protection" },
-                  { icon: Smartphone, title: "WhatsApp Integration", desc: "Auto-send reminders, receipts, and alerts" }
+                  { icon: Users, title: "Team Support", desc: "Personalized training and priority assistance" },
                 ].map((item, index) => (
                   <div key={index} className="flex items-start gap-4 p-3 rounded-lg hover:bg-secondary/30 transition-colors">
                     <div className="text-2xl flex-shrink-0 mt-0.5 text-blue-600 dark:text-blue-400"><item.icon size={20} /></div>
@@ -344,15 +344,15 @@ export default function Home() {
                   <ul className="space-y-3">
                     <li className="flex items-start gap-3 text-sm">
                       <span className="text-green-500 font-bold text-lg">✓</span>
-                      <span className="text-foreground"><strong>Free thermal printer</strong> included</span>
+                      <span className="text-foreground"><strong>Free printer setup</strong> included</span>
                     </li>
                     <li className="flex items-start gap-3 text-sm">
                       <span className="text-green-500 font-bold text-lg">✓</span>
-                      <span className="text-foreground"><strong>Free data migration</strong> from your existing system</span>
+                      <span className="text-foreground"><strong>Free data migration assistance</strong> from your existing system</span>
                     </li>
                     <li className="flex items-start gap-3 text-sm">
                       <span className="text-green-500 font-bold">✓</span>
-                      <span>Student & fee management</span>
+                      <span>Fee management</span>
                     </li>
                     <li className="flex items-start gap-3 text-sm">
                       <span className="text-green-500 font-bold">✓</span>
@@ -368,7 +368,7 @@ export default function Home() {
                     </li>
                     <li className="flex items-start gap-3 text-sm">
                       <span className="text-green-500 font-bold">✓</span>
-                      <span>Email & phone support</span>
+                      <span>Email & phone support - 10AM to 5PM</span>
                     </li>
                   </ul>
                 </div>
@@ -391,11 +391,11 @@ export default function Home() {
               <div className="px-8 py-8 flex-1 flex flex-col bg-white dark:bg-slate-950">
                 <div className="mb-8">
                   <div className="text-5xl font-bold text-foreground mb-2">
-                    ₹8,500
+                    ₹11,500
                   </div>
                   <p className="text-muted-foreground mb-4 text-sm">Installation (one-time) + Additional Features one-time fee</p>
                   <div className="flex items-baseline gap-2 pb-4 border-b border-blue-200 dark:border-blue-800">
-                    <span className="text-4xl font-bold text-foreground">₹850</span>
+                    <span className="text-4xl font-bold text-foreground">₹1,150</span>
                     <span className="text-muted-foreground">/month</span>
                   </div>
                   <p className="text-xs text-muted-foreground mt-4">Plus custom features based on your needs</p>
@@ -418,7 +418,7 @@ export default function Home() {
                     </li>
                     <li className="flex items-start gap-3 text-sm">
                       <span className="text-blue-600 dark:text-blue-400 font-bold"><Star /></span>
-                      <span>Staff payroll calculations</span>
+                      <span>Payroll management</span>
                     </li>
                     <li className="flex items-start gap-3 text-sm">
                       <span className="text-blue-600 dark:text-blue-400 font-bold"><Star /></span>
@@ -460,17 +460,17 @@ export default function Home() {
                 <div className="text-3xl flex-shrink-0 text-red-500"><Lock size={24} /></div>
                 <div>
                   <h5 className="font-semibold text-foreground mb-1">Security</h5>
-                  <p className="text-sm text-muted-foreground">Bank-grade encryption & daily backups</p>
+                  <p className="text-sm text-muted-foreground">Enterprise-grade encryption & daily backups</p>
                 </div>
               </div>
-              <div className="flex gap-4 p-5 bg-card rounded-xl border border-border hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
+              {/* <div className="flex gap-4 p-5 bg-card rounded-xl border border-border hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
                 <div className="text-3xl flex-shrink-0 text-purple-500"><HardDrive size={24} /></div>
                 <div>
                   <h5 className="font-semibold text-foreground mb-1">Unlimited Storage</h5>
                   <p className="text-sm text-muted-foreground">Store all your school data safely in cloud</p>
                   <p className="text-sm text-muted-foreground">Requires additional storage cost after using 512MB text data & 25Gb of media, Which is enough for almost all schools.</p>
                 </div>
-              </div>
+              </div> */}
               <div className="flex gap-4 p-5 bg-card rounded-xl border border-border hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
                 <div className="text-3xl flex-shrink-0 text-green-500"><TrendingUp size={24} /></div>
                 <div>
@@ -497,7 +497,7 @@ export default function Home() {
             <h2 className="text-primary font-semibold tracking-wide uppercase text-sm mb-3">Simple Process</h2>
             <h3 className="text-3xl md:text-4xl font-bold text-foreground">How to Get Started</h3>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
             {/* Connecting Line (Desktop) */}
             <div className="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-border -z-10 transform -translate-y-1/2"></div>
@@ -540,7 +540,7 @@ export default function Home() {
             <h3 className="text-4xl font-bold mb-6 text-slate-900 dark:text-white">Loved by School Leaders Across India</h3>
             <p className="text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">See how top schools are transforming their operations with FeeEase</p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Testimonial 1 */}
             <div className="bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-lg transition-shadow">
@@ -611,25 +611,25 @@ export default function Home() {
             Join hundreds of schools already using FeeEase to automate operations, reduce admin burden, and focus on what matters most — education.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-             <Link
-                href="/get-started"
-                className="inline-flex items-center justify-center bg-white hover:bg-slate-100 text-slate-900 font-bold px-10 py-4 rounded-lg shadow-xl transition-all hover:scale-105"
-              >
-                View Plans & Pricing
-              </Link>
-              <Link
-                href="/contactus"
-                className="inline-flex items-center justify-center bg-slate-800 hover:bg-slate-700 text-white border-2 border-white font-bold px-10 py-4 rounded-lg transition-all hover:scale-105"
-              >
-                Schedule a Demo
-              </Link>
+            <Link
+              href="/get-started"
+              className="inline-flex items-center justify-center bg-white hover:bg-slate-100 text-slate-900 font-bold px-10 py-4 rounded-lg shadow-xl transition-all hover:scale-105"
+            >
+              View Plans & Pricing
+            </Link>
+            <Link
+              href="/contactus"
+              className="inline-flex items-center justify-center bg-slate-800 hover:bg-slate-700 text-white border-2 border-white font-bold px-10 py-4 rounded-lg transition-all hover:scale-105"
+            >
+              Schedule a Demo
+            </Link>
           </div>
-            <p className="text-slate-400 text-sm mt-8">
-              Want to explore the features first?{" "}
-              <a href="https://try-fee-ease.vercel.app" target="_blank" rel="noopener noreferrer" className="text-white font-semibold hover:underline">
-                Try our demo
-              </a>
-            </p>
+          <p className="text-slate-400 text-sm mt-8">
+            Want to explore the features first?{" "}
+            <a href="https://try-fee-ease.vercel.app" target="_blank" rel="noopener noreferrer" className="text-white font-semibold hover:underline">
+              Try our demo
+            </a>
+          </p>
         </div>
       </section>
     </div>
