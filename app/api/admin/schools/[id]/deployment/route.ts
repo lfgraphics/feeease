@@ -37,7 +37,6 @@ export async function POST(
         nextAuth,
         encryptionKey,
         publicAppUrl,
-        whatsappTemplates,
         licenseCookieSecret,
         features, // Support updating features directly from deployment manager
     } = body;
@@ -65,7 +64,6 @@ export async function POST(
     if (nextAuth) updateData.nextAuth = encrypt(JSON.stringify(nextAuth));
     if (encryptionKey) updateData.encryptionKey = encrypt(encryptionKey);
     if (licenseCookieSecret) updateData.licenseCookieSecret = encrypt(licenseCookieSecret);
-    if (whatsappTemplates) updateData.whatsappTemplates = encrypt(JSON.stringify(whatsappTemplates));
 
     school.deployment = {
         ...school.deployment,

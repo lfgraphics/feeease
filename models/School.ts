@@ -43,7 +43,6 @@ export interface ISchool extends Document {
 
     licenseCookieSecret?: string;
     publicAppUrl?: string;
-    whatsappTemplates?: string;
     notes?: string;
   };
 
@@ -119,7 +118,6 @@ const SchoolSchema: Schema = new Schema({
 
     licenseCookieSecret: { type: String },
     publicAppUrl: { type: String },
-    whatsappTemplates: { type: String },
     notes: { type: String },
   },
 

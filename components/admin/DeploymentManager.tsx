@@ -45,15 +45,6 @@ export function DeploymentManager({ schoolId, initialDeployment, features }: Dep
     const [nextAuth, setNextAuth] = useState(initialDeployment.nextAuth || { secret: "", url: "" });
     const [encryptionKey, setEncryptionKey] = useState(initialDeployment.encryptionKey || "");
     const [licenseCookieSecret, setLicenseCookieSecret] = useState(initialDeployment.licenseCookieSecret || "");
-    const [waTemplates, setWaTemplates] = useState(initialDeployment.whatsappTemplates || {
-        receipt: "fee_receipt_v1",
-        reminderHindi: "reminder_hindi",
-        reminderEnglish: "reminder_english",
-        reminderUrdu: "reminder_urdu",
-        universalText: "boradcast_text",
-        universalImage: "broadcast_image",
-        otp: "login_otp"
-    });
 
     // Visibility Toggles
     const [showSecrets, setShowSecrets] = useState<Record<string, boolean>>({});
@@ -81,7 +72,6 @@ export function DeploymentManager({ schoolId, initialDeployment, features }: Dep
                 cloudinaryConfig: cloudinary,
                 nextAuth,
                 licenseCookieSecret,
-                whatsappTemplates: waTemplates,
                 features: localFeatures
             };
 
@@ -105,7 +95,7 @@ export function DeploymentManager({ schoolId, initialDeployment, features }: Dep
         }
     }
 
-    const generateEnv = async () => {
+    const generateEnvAction = async () => {
         // Generate secure random strings if missing
         const generateRandomString = (length: number) => {
             const array = new Uint8Array(length);
@@ -146,7 +136,6 @@ export function DeploymentManager({ schoolId, initialDeployment, features }: Dep
                     nextAuth: { ...nextAuth, secret },
                     encryptionKey: encKey,
                     licenseCookieSecret: cookieSecret,
-                    whatsappTemplates: waTemplates,
                 };
 
                 await fetch(`/api/admin/schools/${schoolId}/deployment`, {
@@ -191,7 +180,6 @@ MONGODB_URI=${mongoUri}
 NEXTAUTH_SECRET=${secret}
 NEXTAUTH_URL=${nextAuth.url || publicAppUrl}
 
-
 # Cloudinary (Image Uploads)
 CLOUDINARY_CLOUD_NAME=${cloudinary.cloudName}
 CLOUDINARY_API_KEY=${cloudinary.apiKey}
@@ -201,14 +189,6 @@ CLOUDINARY_API_SECRET=${cloudinary.apiSecret}
 FEEEASE_WORKER_URL=${workerUrl}
 WORKER_WEBHOOK_SECRET=${workerWebhookSecret}
 
-# WhatsApp Templates
-WHATSAPP_TEMPLATE_RECEIPT=${waTemplates.receipt}
-WHATSAPP_TEMPLATE_REMINDER_HINDI=${waTemplates.reminderHindi}
-WHATSAPP_TEMPLATE_REMINDER_ENGLISH=${waTemplates.reminderEnglish}
-WHATSAPP_TEMPLATE_REMINDER_URDU=${waTemplates.reminderUrdu}
-WHATSAPP_TEMPLATE_UNIVERSAL_TEXT=${waTemplates.universalText}
-WHATSAPP_TEMPLATE_UNIVERSAL_IMAGE=${waTemplates.universalImage}
-WHATSAPP_TEMPLATE_OTP=${waTemplates.otp || 'login_otp'}
     `.trim();
 
         setGeneratedEnv(env);
@@ -229,7 +209,7 @@ WHATSAPP_TEMPLATE_OTP=${waTemplates.otp || 'login_otp'}
                     <CardTitle>Deployment Configuration</CardTitle>
                     <CardDescription>Manage environment variables and deployment settings</CardDescription>
                 </div>
-                <Button variant="outline" onClick={generateEnv}>
+                <Button variant="outline" onClick={generateEnvAction}>
                     <Terminal className="mr-2 h-4 w-4" />
                     Generate ENV
                 </Button>
@@ -422,43 +402,6 @@ WHATSAPP_TEMPLATE_OTP=${waTemplates.otp || 'login_otp'}
                                             </Button>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </AccordionContent>
-                    </AccordionItem>
-
-                    {/* WhatsApp Templates */}
-                    <AccordionItem value="whatsapp">
-                        <AccordionTrigger>WhatsApp Templates</AccordionTrigger>
-                        <AccordionContent className="space-y-4 pt-4">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div className="space-y-2">
-                                    <Label>Receipt Template</Label>
-                                    <Input value={waTemplates.receipt} onChange={(e) => setWaTemplates({ ...waTemplates, receipt: e.target.value })} />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label>Reminder Template (English)</Label>
-                                    <Input value={waTemplates.reminderEnglish} onChange={(e) => setWaTemplates({ ...waTemplates, reminderEnglish: e.target.value })} />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label>Reminder Template (Hindi)</Label>
-                                    <Input value={waTemplates.reminderHindi} onChange={(e) => setWaTemplates({ ...waTemplates, reminderHindi: e.target.value })} />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label>Reminder Template (Urdu)</Label>
-                                    <Input value={waTemplates.reminderUrdu} onChange={(e) => setWaTemplates({ ...waTemplates, reminderUrdu: e.target.value })} />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label>Universal Broadcast (Text)</Label>
-                                    <Input value={waTemplates.universalText} onChange={(e) => setWaTemplates({ ...waTemplates, universalText: e.target.value })} />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label>Universal Broadcast (Image)</Label>
-                                    <Input value={waTemplates.universalImage} onChange={(e) => setWaTemplates({ ...waTemplates, universalImage: e.target.value })} />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label>Login OTP Template</Label>
-                                    <Input value={waTemplates.otp} onChange={(e) => setWaTemplates({ ...waTemplates, otp: e.target.value })} />
                                 </div>
                             </div>
                         </AccordionContent>
