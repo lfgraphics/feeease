@@ -36,7 +36,7 @@ const Footer = () => {
                 </div>
             </div>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-border text-center text-sm">
-                &copy; {new Date().getFullYear()} FeeEase is a proprietary software owned and operated by <a className="text-primary hover:text-primary/80" target="_blank" href="https://www.codvista.com">Cod Vista</a>.
+                &copy; {new Date().getFullYear()} FeeEase. All rights reserved. FeeEase is a proprietary software owned and operated by <a className="text-primary hover:text-primary/80" target="_blank" href="https://www.codvista.com">Cod Vista</a>.
             </div>
         </footer>
     )
