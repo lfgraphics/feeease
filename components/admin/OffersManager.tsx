@@ -49,6 +49,76 @@ const emptyForm = {
   isActive: true,
 };
 
+interface OfferFormProps {
+  form: typeof emptyForm;
+  setForm: (form: any) => void;
+  loading: boolean;
+  onSubmit: () => void;
+  submitLabel: string;
+}
+
+const OfferForm = ({ form, setForm, loading, onSubmit, submitLabel }: OfferFormProps) => (
+  <div className="space-y-4 py-2">
+    <div className="space-y-2">
+      <Label>Offer Title *</Label>
+      <Input
+        placeholder="e.g., School Referral Reward Program"
+        value={form.title}
+        onChange={(e) => setForm({ ...form, title: e.target.value })}
+      />
+    </div>
+    <div className="space-y-2">
+      <Label>Description *</Label>
+      <Textarea
+        placeholder="e.g., Refer 20 schools and get 6 months free recurring payment"
+        value={form.description}
+        onChange={(e) => setForm({ ...form, description: e.target.value })}
+        rows={3}
+      />
+    </div>
+    <div className="grid grid-cols-2 gap-4">
+      <div className="space-y-2">
+        <Label>Referral Target (schools) *</Label>
+        <Input
+          type="number"
+          min={1}
+          value={form.referralTarget}
+          onChange={(e) => setForm({ ...form, referralTarget: Number(e.target.value) })}
+        />
+      </div>
+      <div className="space-y-2">
+        <Label>Free Months Reward *</Label>
+        <Input
+          type="number"
+          min={1}
+          value={form.rewardMonths}
+          onChange={(e) => setForm({ ...form, rewardMonths: Number(e.target.value) })}
+        />
+      </div>
+    </div>
+    <div className="space-y-2">
+      <Label>Valid Until *</Label>
+      <DatePicker
+        date={form.validUntil}
+        setDate={(date) => setForm({ ...form, validUntil: date || new Date() })}
+      />
+    </div>
+    <div className="flex items-center gap-3">
+      <Switch
+        checked={form.isActive}
+        onCheckedChange={(checked) => setForm({ ...form, isActive: checked })}
+      />
+      <Label>Active</Label>
+    </div>
+    <DialogFooter>
+      <Button onClick={onSubmit} disabled={loading} className="w-full">
+        {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+        {submitLabel}
+      </Button>
+    </DialogFooter>
+  </div>
+);
+
 export function OffersManager({ initialOffers }: OffersManagerProps) {
   const [offers, setOffers] = useState<Offer[]>(initialOffers);
   const [loading, setLoading] = useState(false);
@@ -134,67 +204,7 @@ export function OffersManager({ initialOffers }: OffersManagerProps) {
     });
   };
 
-  const OfferForm = ({ onSubmit, submitLabel }: { onSubmit: () => void; submitLabel: string }) => (
-    <div className="space-y-4 py-2">
-      <div className="space-y-2">
-        <Label>Offer Title *</Label>
-        <Input
-          placeholder="e.g., School Referral Reward Program"
-          value={form.title}
-          onChange={(e) => setForm({ ...form, title: e.target.value })}
-        />
-      </div>
-      <div className="space-y-2">
-        <Label>Description *</Label>
-        <Textarea
-          placeholder="e.g., Refer 20 schools and get 6 months free recurring payment"
-          value={form.description}
-          onChange={(e) => setForm({ ...form, description: e.target.value })}
-          rows={3}
-        />
-      </div>
-      <div className="grid grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <Label>Referral Target (schools) *</Label>
-          <Input
-            type="number"
-            min={1}
-            value={form.referralTarget}
-            onChange={(e) => setForm({ ...form, referralTarget: Number(e.target.value) })}
-          />
-        </div>
-        <div className="space-y-2">
-          <Label>Free Months Reward *</Label>
-          <Input
-            type="number"
-            min={1}
-            value={form.rewardMonths}
-            onChange={(e) => setForm({ ...form, rewardMonths: Number(e.target.value) })}
-          />
-        </div>
-      </div>
-      <div className="space-y-2">
-        <Label>Valid Until *</Label>
-        <DatePicker
-          date={form.validUntil}
-          setDate={(date) => setForm({ ...form, validUntil: date || new Date() })}
-        />
-      </div>
-      <div className="flex items-center gap-3">
-        <Switch
-          checked={form.isActive}
-          onCheckedChange={(checked) => setForm({ ...form, isActive: checked })}
-        />
-        <Label>Active</Label>
-      </div>
-      <DialogFooter>
-        <Button onClick={onSubmit} disabled={loading} className="w-full">
-          {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          {submitLabel}
-        </Button>
-      </DialogFooter>
-    </div>
-  );
+
 
   return (
     <div className="space-y-4">
@@ -217,7 +227,13 @@ export function OffersManager({ initialOffers }: OffersManagerProps) {
                 <Gift className="h-5 w-5 text-primary" /> Create New Offer
               </DialogTitle>
             </DialogHeader>
-            <OfferForm onSubmit={handleCreate} submitLabel="Create Offer" />
+            <OfferForm
+              form={form}
+              setForm={setForm}
+              loading={loading}
+              onSubmit={handleCreate}
+              submitLabel="Create Offer"
+            />
           </DialogContent>
         </Dialog>
       </div>
@@ -298,7 +314,13 @@ export function OffersManager({ initialOffers }: OffersManagerProps) {
                             <Pencil className="h-5 w-5 text-primary" /> Edit Offer
                           </DialogTitle>
                         </DialogHeader>
-                        <OfferForm onSubmit={handleUpdate} submitLabel="Update Offer" />
+                        <OfferForm
+                          form={form}
+                          setForm={setForm}
+                          loading={loading}
+                          onSubmit={handleUpdate}
+                          submitLabel="Update Offer"
+                        />
                       </DialogContent>
                     </Dialog>
 
