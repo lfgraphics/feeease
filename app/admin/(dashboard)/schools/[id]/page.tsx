@@ -9,11 +9,13 @@ import { ArrowLeft, ExternalLink, Mail, Phone, MapPin, ShieldAlert, Calendar } f
 import { format } from "date-fns";
 import { getSchoolById } from "@/actions/schools";
 import { getSchoolPayments } from "@/actions/finances";
+import { getAdminSchoolReferralData } from "@/actions/offers";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { SCHOOL_FEATURES } from "@/lib/features";
 import { WhatsAppUsageManager } from "@/components/admin/WhatsAppUsageManager";
 import { getWhatsAppUsage } from "@/actions/whatsapp-usage";
+import { SchoolReferralSection } from "@/components/school/SchoolReferralSection";
 
 export default async function SchoolDetailPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
@@ -21,6 +23,12 @@ export default async function SchoolDetailPage({ params }: { params: Promise<{ i
     const payments = await getSchoolPayments(id);
     const session = await getServerSession(authOptions);
     const whatsappUsage = await getWhatsAppUsage(id);
+    let schoolReferralData: any = null;
+    try {
+        schoolReferralData = await getAdminSchoolReferralData(id);
+    } catch {
+        schoolReferralData = null;
+    }
 
     if (!school) {
         notFound();
@@ -218,16 +226,31 @@ export default async function SchoolDetailPage({ params }: { params: Promise<{ i
                 )}
 
                 {(!canViewCredentials && !isMarketing) && (
-                    <div className="col-span-1 sm:col-span-2 lg:col-span-3\">
-                        <Card className="bg-muted/30 border-dashed\">
-                            <CardContent className="flex flex-col items-center justify-center py-8 sm:py-12 px-4 text-center text-muted-foreground\">
-                                <ShieldAlert className="h-10 w-10 sm:h-12 sm:w-12 mb-3 sm:mb-4 opacity-50\" />
-                                <h3 className="text-base sm:text-lg font-semibold\">Access Restricted</h3>
-                                <p className="text-xs sm:text-sm max-w-sm mt-2\">
+                    <div className="col-span-1 sm:col-span-2 lg:col-span-3">
+                        <Card className="bg-muted/30 border-dashed">
+                            <CardContent className="flex flex-col items-center justify-center py-8 sm:py-12 px-4 text-center text-muted-foreground">
+                                <ShieldAlert className="h-10 w-10 sm:h-12 sm:w-12 mb-3 sm:mb-4 opacity-50" />
+                                <h3 className="text-base sm:text-lg font-semibold">Access Restricted</h3>
+                                <p className="text-xs sm:text-sm max-w-sm mt-2">
                                     You do not have permission to view deployment credentials and sensitive configuration details.
                                 </p>
                             </CardContent>
                         </Card>
+                    </div>
+                )}
+
+                {/* School Referral Section */}
+                {schoolReferralData && (
+                    <div className="col-span-1 sm:col-span-2 lg:col-span-3">
+                        <h2 className="text-xl font-bold tracking-tight mb-4">Referral Program</h2>
+                        <SchoolReferralSection
+                            referralCode={schoolReferralData.referralCode}
+                            referredSchools={schoolReferralData.referredSchools}
+                            offerRewardMonthsRemaining={schoolReferralData.offerRewardMonthsRemaining}
+                            offerGrantedAt={schoolReferralData.offerGrantedAt}
+                            offersProgress={schoolReferralData.offersProgress}
+                            showReferralCode={true}
+                        />
                     </div>
                 )}
 

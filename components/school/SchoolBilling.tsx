@@ -26,7 +26,7 @@ interface Payment {
     billingPeriod?: string;
 }
 
-export function SchoolBilling({ schoolId, financials, initialSubscription }: any) {
+export function SchoolBilling({ schoolId, financials, initialSubscription, offerRewardMonthsRemaining = 0 }: any) {
     const [payments, setPayments] = useState<Payment[]>([]);
     const [fetchingPayments, setFetchingPayments] = useState(false);
     const [historyOpen, setHistoryOpen] = useState(false);
@@ -125,13 +125,30 @@ export function SchoolBilling({ schoolId, financials, initialSubscription }: any
             count++;
         }
         return periods;
-    }, [initialSubscription?.startDate, financials.planType, financials.recurringCosts, payments]);
+    }, [initialSubscription?.startDate, financials.planType, financials.recurringCosts, payments, offerRewardMonthsRemaining]);
 
-    const nextDue = billingPeriods.find(p => !p.isPaid);
+    // Calculate which future unpaid periods are "free" due to offer reward
+    const unpaidPeriods = billingPeriods.filter(p => !p.isPaid);
+    const freeMonthsCount = Math.min(offerRewardMonthsRemaining, unpaidPeriods.length);
+    const freePeriodIds = new Set(unpaidPeriods.slice(0, freeMonthsCount).map(p => p.id));
+
+    const nextDue = billingPeriods.find(p => !p.isPaid && !freePeriodIds.has(p.id));
     const upcomingExpenses = billingPeriods.filter(p => !p.isPaid).slice(0, 5);
 
     return (
         <div className="space-y-6">
+            {/* Offer Reward Banner */}
+            {offerRewardMonthsRemaining > 0 && (
+                <div className="flex items-start gap-3 p-4 rounded-lg bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800">
+                    <span className="text-2xl">🎉</span>
+                    <div>
+                        <p className="font-semibold text-amber-800 dark:text-amber-200">Offer Reward Active</p>
+                        <p className="text-sm text-amber-700 dark:text-amber-300">
+                            Your next <strong>{offerRewardMonthsRemaining} month{offerRewardMonthsRemaining > 1 ? 's' : ''}</strong> of recurring payments are <strong>FREE</strong> due to your referral achievement!
+                        </p>
+                    </div>
+                </div>
+            )}
             <Card>
                 <CardHeader>
                     <CardTitle>Financial Overview</CardTitle>
@@ -198,13 +215,24 @@ export function SchoolBilling({ schoolId, financials, initialSubscription }: any
                                 </TableHeader>
                                 <TableBody>
                                     {upcomingExpenses.length > 0 ? (
-                                        upcomingExpenses.map((expense, idx) => (
-                                            <TableRow key={idx}>
-                                                <TableCell>{expense.label}</TableCell>
+                                        upcomingExpenses.map((expense, idx) => {
+                                            const isFree = freePeriodIds.has(expense.id);
+                                            return (
+                                            <TableRow key={idx} className={isFree ? 'bg-green-50/50 dark:bg-green-950/20' : ''}>
+                                                <TableCell className="flex items-center gap-2">
+                                                    {expense.label}
+                                                    {isFree && <Badge className="text-xs bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 hover:bg-green-100">FREE</Badge>}
+                                                </TableCell>
                                                 <TableCell>{format(expense.date, "MMM d, yyyy")}</TableCell>
-                                                <TableCell className="text-right">₹{expense.cost.toLocaleString()}</TableCell>
+                                                <TableCell className="text-right">
+                                                    {isFree ? (
+                                                        <span className="line-through text-muted-foreground mr-1">₹{expense.cost.toLocaleString()}</span>
+                                                    ) : null}
+                                                    <span className={isFree ? 'font-bold text-green-600' : ''}>{isFree ? '₹0' : `₹${expense.cost.toLocaleString()}`}</span>
+                                                </TableCell>
                                             </TableRow>
-                                        ))
+                                        );
+                                        })
                                     ) : (
                                         <TableRow>
                                             <TableCell colSpan={3} className="text-center text-muted-foreground">No upcoming expenses found</TableCell>

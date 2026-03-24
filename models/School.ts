@@ -49,6 +49,14 @@ export interface ISchool extends Document {
   referral: {
     code?: string;
     referredBy?: mongoose.Types.ObjectId;
+    referredByType?: 'marketing' | 'school';
+    referredSchools?: Array<{
+      schoolId: mongoose.Types.ObjectId;
+      schoolName: string;
+      onboardedAt: Date;
+    }>;
+    offerRewardMonthsRemaining?: number;
+    offerGrantedAt?: Date;
   };
 
   financials: {
@@ -122,8 +130,16 @@ const SchoolSchema: Schema = new Schema({
   },
 
   referral: {
-    code: { type: String },
-    referredBy: { type: mongoose.Schema.Types.ObjectId, ref: 'AdminUser' },
+    code: { type: String, unique: true, sparse: true },
+    referredBy: { type: mongoose.Schema.Types.ObjectId },
+    referredByType: { type: String, enum: ['marketing', 'school'] },
+    referredSchools: [{
+      schoolId: { type: mongoose.Schema.Types.ObjectId, ref: 'School' },
+      schoolName: { type: String },
+      onboardedAt: { type: Date, default: Date.now }
+    }],
+    offerRewardMonthsRemaining: { type: Number, default: 0 },
+    offerGrantedAt: { type: Date },
   },
 
   financials: {

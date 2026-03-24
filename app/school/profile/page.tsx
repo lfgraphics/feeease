@@ -10,7 +10,9 @@ import { CopyButton, ChangePasswordButton } from "@/components/SchoolProfileActi
 import { getSchoolByEmail } from "@/actions/schools";
 import { SchoolBilling } from "@/components/school/SchoolBilling";
 import { SchoolWhatsAppStats } from "@/components/school/SchoolWhatsAppStats";
+import { SchoolReferralSection } from "@/components/school/SchoolReferralSection";
 import { getWhatsAppUsage } from "@/actions/whatsapp-usage";
+import { getSchoolReferralData } from "@/actions/offers";
 import { SCHOOL_FEATURES } from "@/lib/features";
 
 export default async function SchoolProfilePage() {
@@ -40,6 +42,12 @@ export default async function SchoolProfilePage() {
   }
 
   const whatsappUsage = await getWhatsAppUsage(school._id.toString());
+  let referralData: any = null;
+  try {
+    referralData = await getSchoolReferralData(school._id.toString());
+  } catch {
+    referralData = null;
+  }
 
   return (
     <div className="container mx-auto py-10 px-4 max-w-6xl">
@@ -208,6 +216,7 @@ export default async function SchoolProfilePage() {
           schoolId={school._id.toString()}
           financials={JSON.parse(JSON.stringify(school.financials || {}))}
           initialSubscription={JSON.parse(JSON.stringify(school.subscription || {}))}
+          offerRewardMonthsRemaining={referralData?.offerRewardMonthsRemaining || 0}
         />
       </div>
 
@@ -215,6 +224,20 @@ export default async function SchoolProfilePage() {
         <div className="mt-8">
           <h2 className="text-2xl font-bold tracking-tight text-foreground mb-4">WhatsApp Notifications</h2>
           <SchoolWhatsAppStats usage={whatsappUsage} />
+        </div>
+      )}
+
+      {referralData && (
+        <div className="mt-8">
+          <h2 className="text-2xl font-bold tracking-tight text-foreground mb-4">Referral Program</h2>
+          <SchoolReferralSection
+            referralCode={referralData.referralCode}
+            referredSchools={referralData.referredSchools}
+            offerRewardMonthsRemaining={referralData.offerRewardMonthsRemaining}
+            offerGrantedAt={referralData.offerGrantedAt}
+            offersProgress={referralData.offersProgress}
+            showReferralCode={true}
+          />
         </div>
       )}
     </div>

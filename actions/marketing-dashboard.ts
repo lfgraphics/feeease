@@ -61,10 +61,20 @@ const getPaymentStatusPipeline = () => [
   },
   {
     $addFields: {
+      freeMonths: { $ifNull: ["$referral.offerRewardMonthsRemaining", 0] }
+    }
+  },
+  {
+    $addFields: {
       expectedTotal: {
         $add: [
           { $ifNull: ["$financials.installationCost", 0] },
-          { $multiply: ["$periodsDue", "$currentRecurringCost"] }
+          {
+            $multiply: [
+              { $max: [{ $subtract: ["$periodsDue", "$freeMonths"] }, 0] },
+              "$currentRecurringCost"
+            ]
+          }
         ]
       }
     }

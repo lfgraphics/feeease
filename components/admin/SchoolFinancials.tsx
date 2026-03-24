@@ -118,7 +118,12 @@ export function SchoolFinancials({ schoolId, initialReferral, initialFinancials,
           count++;
       }
       return periods;
-  }, [initialSubscription?.startDate, financials.planType, financials.recurringCosts, financials.payments]);
+  }, [initialSubscription?.startDate, financials.planType, financials.recurringCosts, financials.payments, initialReferral?.offerRewardMonthsRemaining]);
+
+  const offerRewardMonthsRemaining = initialReferral?.offerRewardMonthsRemaining || 0;
+  const unpaidPeriods = billingPeriods.filter(p => !p.isPaid);
+  const freeMonthsCount = Math.min(offerRewardMonthsRemaining, unpaidPeriods.length);
+  const freePeriodIds = new Set(unpaidPeriods.slice(0, freeMonthsCount).map(p => p.id));
 
   const handleReferralSubmit = async () => {
     setLoading(true);
@@ -434,7 +439,9 @@ export function SchoolFinancials({ schoolId, initialReferral, initialFinancials,
                                           <SelectValue placeholder="Select billing period" />
                                       </SelectTrigger>
                                       <SelectContent className="max-h-[200px]">
-                                          {billingPeriods.filter(period => !period.isPaid).map((period) => (
+                                          {billingPeriods
+                                              .filter(period => !period.isPaid && !freePeriodIds.has(period.id))
+                                              .map((period) => (
                                               <SelectItem key={period.id} value={period.id}>
                                                   <span className="flex justify-between w-full gap-4">
                                                       <span>{period.label}</span>
