@@ -7,7 +7,7 @@ import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Loader2, Upload, CheckCircle2, Clipboard, Star, Calendar, Zap, Building2, User, Lock } from "lucide-react";
+import { Loader2, Upload, CheckCircle2, Clipboard, Star, Calendar, Zap, Building2, User, Lock, Sparkles } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { toast } from "sonner";
@@ -172,7 +172,7 @@ export function OnboardingForm() {
             {/* Standard Plan */}
             <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-slate-200 dark:border-slate-700 overflow-hidden flex flex-col h-full">
               {/* Card Header */}
-              <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-8 text-white">
+              <div className="bg-linear-to-r from-blue-600 to-blue-700 px-6 py-8 text-white">
                 <h3 className="text-2xl sm:text-3xl font-bold mb-2">Standard Plan</h3>
                 <p className="text-blue-100 text-sm">Perfect for most schools</p>
               </div>
@@ -256,14 +256,14 @@ export function OnboardingForm() {
             {/* Professional Plan */}
             <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-purple-500 overflow-hidden flex flex-col h-full relative">
               {/* Badge */}
-              <div className="absolute top-0 right-0 bg-purple-500 text-white px-4 py-1 rounded-bl-lg text-xs font-bold">
-                RECOMMENDED
+              <div className="absolute top-0 right-0 bg-blue-600 text-white px-4 py-1 rounded-bl-lg text-xs font-bold flex items-center gap-1.5">
+                MOST POPULAR <Sparkles size={12} className="text-yellow-400" />
               </div>
 
               {/* Card Header */}
-              <div className="bg-gradient-to-r from-purple-600 to-purple-700 px-6 py-8 text-white pt-12">
+              <div className="bg-linear-to-r from-blue-600 to-indigo-600 px-6 py-8 text-white pt-12">
                 <h3 className="text-2xl sm:text-3xl font-bold mb-2">Professional Plan</h3>
-                <p className="text-purple-100 text-sm">Everything you need to grow</p>
+                <p className="text-blue-100 text-sm">All Standard features + Advanced capabilities</p>
               </div>
 
               {/* Pricing */}
@@ -272,7 +272,7 @@ export function OnboardingForm() {
                   <div className="flex items-end justify-between">
                     <span className="text-slate-600 dark:text-slate-400 font-medium">Installation</span>
                     <div className="text-right">
-                      <span className="text-3xl font-bold text-slate-900 dark:text-white">₹8,500</span>
+                      <span className="text-3xl font-bold text-slate-900 dark:text-white">₹11,500</span>
                       <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">One-time + Additional features</p>
                     </div>
                   </div>
@@ -280,8 +280,8 @@ export function OnboardingForm() {
                   <div className="flex items-end justify-between">
                     <span className="text-slate-600 dark:text-slate-400 font-medium">Monthly Billing</span>
                     <div className="text-right">
-                      <span className="text-3xl font-bold text-slate-900 dark:text-white">₹850</span>
-                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">/month + any plan specific external charges (if any)</p>
+                      <span className="text-3xl font-bold text-slate-900 dark:text-white">₹1,150</span>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">/month</p>
                     </div>
                   </div>
                   <p className="text-xs text-slate-500 dark:text-slate-400 italic pt-2">
@@ -348,9 +348,9 @@ export function OnboardingForm() {
   }
 
   return (
-    <div className="w-full bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900 min-h-screen py-8 px-4">
+    <div className="w-full bg-linear-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900 min-h-screen py-8 px-4">
       <Card className="w-full max-w-3xl mx-auto shadow-xl border-0">
-        <CardHeader className="bg-gradient-to-r from-slate-900 to-slate-800 dark:from-slate-800 dark:to-slate-900 text-white rounded-t-xl">
+        <CardHeader className="bg-linear-to-r from-slate-900 to-slate-800 dark:from-slate-800 dark:to-slate-900 text-white rounded-t-xl">
           <div className="flex items-center justify-between mb-4">
             <Button variant="ghost" onClick={() => setSelectedPlan(null)} className="text-white hover:bg-white/20 -ml-2">
               ← Back to Plans
@@ -371,7 +371,7 @@ export function OnboardingForm() {
           <CardDescription className="text-slate-300 mt-2">
             {selectedPlan === "Basic"
               ? "Get started with essential school management tools. Installation: ₹8,500 | Monthly: ₹850"
-              : "Unlock advanced features for your school. Installation: ₹8,500 | Monthly: ₹850 + custom features"}
+              : "Unlock advanced features for your school. Installation: ₹11,500 | Monthly: ₹1,150"}
           </CardDescription>
         </CardHeader>
 
@@ -380,7 +380,7 @@ export function OnboardingForm() {
 
             {/* Billing Options for Professional Plan */}
             {selectedPlan === "Custom" && (
-              <div className="bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-900/10 dark:to-blue-900/10 p-6 rounded-xl border border-purple-200 dark:border-purple-800/30">
+              <div className="bg-linear-to-br from-purple-50 to-blue-50 dark:from-purple-900/10 dark:to-blue-900/10 p-6 rounded-xl border border-purple-200 dark:border-purple-800/30">
                 <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                   <Calendar className="w-5 h-5" /> Select Your Billing Cycle
                 </h3>
@@ -389,21 +389,21 @@ export function OnboardingForm() {
                     <input type="radio" name="billingCycle" value="monthly" className="mr-3" defaultChecked />
                     <div>
                       <p className="font-semibold text-slate-900 dark:text-white">Monthly</p>
-                      <p className="text-sm text-slate-600 dark:text-slate-400">₹850/month</p>
+                      <p className="text-sm text-slate-600 dark:text-slate-400">₹1,150/month</p>
                     </div>
                   </label>
                   <label className="flex items-center p-3 border-2 border-purple-200 dark:border-purple-700 rounded-lg cursor-pointer hover:bg-purple-100 dark:hover:bg-purple-900/20 transition-colors">
                     <input type="radio" name="billingCycle" value="quarterly" className="mr-3" />
                     <div>
                       <p className="font-semibold text-slate-900 dark:text-white">Quarterly</p>
-                      <p className="text-sm text-slate-600 dark:text-slate-400">₹2,400 (save 6%)</p>
+                      <p className="text-sm text-slate-600 dark:text-slate-400">₹3,243 (save 6%)</p>
                     </div>
                   </label>
                   <label className="flex items-center p-3 border-2 border-purple-200 dark:border-purple-700 rounded-lg cursor-pointer hover:bg-purple-100 dark:hover:bg-purple-900/20 transition-colors">
                     <input type="radio" name="billingCycle" value="annual" className="mr-3" />
                     <div>
                       <p className="font-semibold text-slate-900 dark:text-white">Annual</p>
-                      <p className="text-sm text-slate-600 dark:text-slate-400">₹9,180 (save 12%)</p>
+                      <p className="text-sm text-slate-600 dark:text-slate-400">₹12,144 (save 12%)</p>
                     </div>
                   </label>
                 </div>
@@ -460,7 +460,7 @@ export function OnboardingForm() {
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">School Logo *</label>
                 <div className="flex flex-col sm:flex-row items-center gap-4">
-                  <div className="relative w-24 h-24 border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-lg flex items-center justify-center bg-slate-100 dark:bg-slate-700/30 overflow-hidden flex-shrink-0">
+                  <div className="relative w-24 h-24 border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-lg flex items-center justify-center bg-slate-100 dark:bg-slate-700/30 overflow-hidden shrink-0">
                     {previewUrl ? (
                       <Image src={previewUrl} alt="Logo Preview" fill className="object-contain p-1" />
                     ) : (
@@ -533,7 +533,7 @@ export function OnboardingForm() {
             {/* Terms & Conditions */}
             <div className="bg-blue-50 dark:bg-blue-900/10 p-4 rounded-lg border border-blue-200 dark:border-blue-800/30">
               <p className="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 mt-0.5 flex-shrink-0" /> By registering, you agree to our service terms. Our team will contact you within 24 hours to complete the setup and data migration process.
+                <CheckCircle2 className="w-4 h-4 mt-0.5 shrink-0" /> By registering, you agree to our service terms. Our team will contact you within 24 hours to complete the setup and data migration process.
               </p>
             </div>
 
@@ -541,7 +541,7 @@ export function OnboardingForm() {
             <Button
               type="submit"
               disabled={loading}
-              className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 rounded-lg transition-all duration-200 text-base sm:text-lg"
+              className="w-full bg-linear-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 rounded-lg transition-all duration-200 text-base sm:text-lg"
             >
               {loading ? (
                 <div className="flex items-center gap-2">

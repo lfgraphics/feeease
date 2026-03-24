@@ -443,21 +443,21 @@ export default function Home() {
             <h4 className="text-2xl font-bold text-center mb-12 text-foreground">What's Included in Both Plans</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               <div className="flex gap-4 p-5 bg-card rounded-xl border border-border hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
-                <div className="text-3xl flex-shrink-0 text-orange-500"><Wrench size={24} /></div>
+                <div className="text-3xl shrink-0 text-orange-500"><Wrench size={24} /></div>
                 <div>
                   <h5 className="font-semibold text-foreground mb-1">Setup & Migration</h5>
                   <p className="text-sm text-muted-foreground">Our team handles all setup & assists in data migration</p>
                 </div>
               </div>
               <div className="flex gap-4 p-5 bg-card rounded-xl border border-border hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
-                <div className="text-3xl flex-shrink-0 text-blue-500"><Smartphone size={24} /></div>
+                <div className="text-3xl shrink-0 text-blue-500"><Smartphone size={24} /></div>
                 <div>
                   <h5 className="font-semibold text-foreground mb-1">Mobile & Web</h5>
                   <p className="text-sm text-muted-foreground">Access anywhere, anytime on any device</p>
                 </div>
               </div>
               <div className="flex gap-4 p-5 bg-card rounded-xl border border-border hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
-                <div className="text-3xl flex-shrink-0 text-red-500"><Lock size={24} /></div>
+                <div className="text-3xl shrink-0 text-red-500"><Lock size={24} /></div>
                 <div>
                   <h5 className="font-semibold text-foreground mb-1">Security</h5>
                   <p className="text-sm text-muted-foreground">Enterprise-grade encryption & daily backups</p>
@@ -472,14 +472,14 @@ export default function Home() {
                 </div>
               </div> */}
               <div className="flex gap-4 p-5 bg-card rounded-xl border border-border hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
-                <div className="text-3xl flex-shrink-0 text-green-500"><TrendingUp size={24} /></div>
+                <div className="text-3xl shrink-0 text-green-500"><TrendingUp size={24} /></div>
                 <div>
                   <h5 className="font-semibold text-foreground mb-1">No Hidden Fees</h5>
                   <p className="text-sm text-muted-foreground">Transparent pricing, period. Nothing sneaky.</p>
                 </div>
               </div>
               <div className="flex gap-4 p-5 bg-card rounded-xl border border-border hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
-                <div className="text-3xl flex-shrink-0 text-indigo-500"><Target size={24} /></div>
+                <div className="text-3xl shrink-0 text-indigo-500"><Target size={24} /></div>
                 <div>
                   <h5 className="font-semibold text-foreground mb-1">Scale Anytime</h5>
                   <p className="text-sm text-muted-foreground">Add features whenever your school grows</p>
