@@ -14,6 +14,7 @@ import { SchoolReferralSection } from "@/components/school/SchoolReferralSection
 import { getWhatsAppUsage } from "@/actions/whatsapp-usage";
 import { getSchoolReferralData } from "@/actions/offers";
 import { SCHOOL_FEATURES } from "@/lib/features";
+import { PaymentDialog } from "@/components/school/PaymentDialog";
 
 export default async function SchoolProfilePage() {
   const session = await getServerSession(authOptions);
@@ -56,6 +57,14 @@ export default async function SchoolProfilePage() {
           <h1 className="text-3xl font-bold tracking-tight text-foreground">School Profile</h1>
           <p className="text-muted-foreground mt-1">Manage your school&apos;s information and subscription details.</p>
         </div>
+        <PaymentDialog 
+            school={{
+                _id: school._id.toString(),
+                name: school.name,
+                adminName: school.adminName,
+                adminMobile: school.adminMobile
+            }}
+        />
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
