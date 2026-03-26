@@ -221,6 +221,8 @@ export default async function SchoolDetailPage({ params }: { params: Promise<{ i
                             schoolId={school._id.toString()}
                             initialDeployment={school.decryptedDeployment}
                             features={JSON.parse(JSON.stringify(school.features || {}))}
+                            workerWebhookSecret={process.env.WORKER_WEBHOOK_SECRET}
+                            workerUrl={process.env.FEEEASE_WORKER_URL}
                         />
                     </div>
                 )}

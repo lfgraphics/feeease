@@ -18,9 +18,11 @@ interface DeploymentManagerProps {
     schoolId: string;
     initialDeployment: any;
     features: any;
+    workerWebhookSecret?: string;
+    workerUrl?: string;
 }
 
-export function DeploymentManager({ schoolId, initialDeployment, features }: DeploymentManagerProps) {
+export function DeploymentManager({ schoolId, initialDeployment, features, workerWebhookSecret, workerUrl: propWorkerUrl }: DeploymentManagerProps) {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
 
@@ -150,8 +152,8 @@ export function DeploymentManager({ schoolId, initialDeployment, features }: Dep
         }
 
         const whatsappEnabled = localFeatures.whatsapp ? "true" : "false";
-        const workerUrl = process.env.NEXT_PUBLIC_WORKER_URL || "https://feeease-worker.onrender.com";
-        const workerWebhookSecret = process.env.WORKER_WEBHOOK_SECRET || "replace_with_worker_webhook_secret";
+        const workerUrl = propWorkerUrl || process.env.NEXT_PUBLIC_WORKER_URL || "https://feeease-worker.onrender.com";
+        const webhookSecret = workerWebhookSecret || "replace_with_worker_webhook_secret";
 
         const env = `
 # Generated ENV for ${project || "modern-nursery"}
@@ -187,7 +189,7 @@ CLOUDINARY_API_SECRET=${cloudinary.apiSecret}
 
 # WhatsApp Broadcaster (feeease-worker)
 FEEEASE_WORKER_URL=${workerUrl}
-WORKER_WEBHOOK_SECRET=${workerWebhookSecret}
+WORKER_WEBHOOK_SECRET=${webhookSecret}
 
     `.trim();
 
