@@ -38,6 +38,9 @@ const formSchema = z.object({
   referralCode: z.string().length(6, "Referral code must be 6 digits").optional().or(z.literal("")),
   plan: z.string(),
   features: featuresSchema,
+  acceptTerms: z.boolean().refine((val) => val === true, {
+    message: "You must accept the terms and privacy policy to continue",
+  }),
 });
 
 export function OnboardingForm() {
@@ -60,6 +63,7 @@ export function OnboardingForm() {
       referralCode: "",
       plan: "",
       features: DEFAULT_FEATURES,
+      acceptTerms: false,
     },
   });
 
@@ -531,10 +535,31 @@ export function OnboardingForm() {
             </div>
 
             {/* Terms & Conditions */}
-            <div className="bg-blue-50 dark:bg-blue-900/10 p-4 rounded-lg border border-blue-200 dark:border-blue-800/30">
-              <p className="text-xs text-slate-700 dark:text-slate-300 flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 mt-0.5 shrink-0" /> By registering, you agree to our service terms. Our team will contact you within 24 hours to complete the setup and data migration process.
-              </p>
+            <div className="space-y-4">
+              <div className="flex items-start space-x-3 p-4 bg-blue-50 dark:bg-blue-900/10 rounded-xl border border-blue-200 dark:border-blue-800/30">
+                <Checkbox
+                  id="acceptTerms"
+                  checked={form.watch("acceptTerms")}
+                  onCheckedChange={(checked) => form.setValue("acceptTerms", checked as boolean, { shouldValidate: true })}
+                  className="mt-1"
+                />
+                <div className="grid gap-1.5 leading-none">
+                  <Label
+                    htmlFor="acceptTerms"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    I accept the <a href="/terms" className="text-primary hover:underline" target="_blank">Terms of Service</a> and <a href="/privacy" className="text-primary hover:underline" target="_blank">Privacy Policy</a>
+                  </Label>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                    By registering, you agree to our service terms. Our team will contact you within 24 hours to complete the setup and data migration process.
+                  </p>
+                </div>
+              </div>
+              {form.formState.errors.acceptTerms && (
+                <p className="text-destructive text-xs font-medium ml-1">
+                  {form.formState.errors.acceptTerms.message}
+                </p>
+              )}
             </div>
 
             {/* Submit Button */}

@@ -10,10 +10,10 @@ export const metadata = {
     "School Management, Fee Collection, Expense Tracking, Attendance System, Salary management, Staff Administration, Student Records",
   author: "FeeEase Team",
   robots: "index, follow",
-  canonical: "https://fee-ease.vercel.app",
+  canonical: "https://www.feeease.com",
   openGraph: {
     type: "website",
-    url: "https://fee-ease.vercel.app",
+    url: "https://www.feeease.com",
     title: "FeeEase - Complete School Management Solution",
     description:
       "Manage your entire school ecosystem with FeeEase. Fees, expenses, attendance, salaries, and more.",
@@ -207,7 +207,7 @@ export default function Home() {
 
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Link
-                href="https://try-fee-ease.vercel.app/"
+                href="https://try.feeease.com/"
                 target="_blank"
                 className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-primary-foreground transition-all duration-200 bg-primary font-lg rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary hover:bg-primary/90 hover:shadow-xl hover:-translate-y-1"
               >
@@ -233,12 +233,12 @@ export default function Home() {
               <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
               <div className="w-3 h-3 rounded-full bg-green-400"></div>
               <div className="ml-4 bg-card px-3 py-1 rounded text-xs text-muted-foreground flex-1 text-center font-mono">
-                try-fee-ease.vercel.app
+                try.feeease.com
               </div>
             </div>
             <div className="mt-8 aspect-video w-full bg-muted relative group">
               <iframe
-                src="https://try-fee-ease.vercel.app/"
+                src="https://try.feeease.com/"
                 className="w-full h-full border-0"
                 title="FeeEase Live Demo"
                 loading="lazy"
@@ -743,7 +743,7 @@ export default function Home() {
           </div>
           <p className="text-slate-400 text-sm mt-8">
             Want to explore the features first?{" "}
-            <a href="https://try-fee-ease.vercel.app" target="_blank" rel="noopener noreferrer" className="text-white font-semibold hover:underline">
+            <a href="https://try.feeease.com" target="_blank" rel="noopener noreferrer" className="text-white font-semibold hover:underline">
               Try our demo
             </a>
           </p>

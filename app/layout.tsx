@@ -5,7 +5,7 @@ import PublicLayout from "@/components/PublicLayout";
 import Providers from "@/components/providers";
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://fee-ease.vercel.app'),
+  metadataBase: new URL('https://www.feeease.com'),
   title: "FeeEase - Complete School Management",
   description: "FeeEase - A responsive and powerful school management software for fees, attendance, staff, and more.",
   openGraph: {
