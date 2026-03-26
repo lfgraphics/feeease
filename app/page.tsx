@@ -14,7 +14,7 @@ export const metadata = {
       "Manage your entire school ecosystem with FeeEase. Fees, expenses, attendance, salaries, and more.",
     images: [
       {
-        url: "/images/assets/logo-horizontal.png",
+        url: "/images/assets/logo.jpg",
         width: 1200,
         height: 630,
         alt: "FeeEase Dashboard",
@@ -27,7 +27,7 @@ export const metadata = {
     title: "FeeEase - Complete School Management Solution",
     description:
       "Manage your entire school ecosystem with FeeEase. Fees, expenses, attendance, salaries, and more.",
-    images: ["/images/assets/logo-horizontal.png"],
+    images: ["/images/assets/logo.jpg"],
   },
 };
 
