@@ -39,10 +39,11 @@ export function Header() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
           <div className="relative w-8 h-8">
-            <Image
-              src="/images/assets/logo.jpeg"
+            <img
+              src="/images/assets/logo.jpg"
               alt="FeeEase Logo"
-              fill
+              width={40}
+              height={40}
               className="object-contain rounded-md"
             />
           </div>
@@ -55,14 +56,13 @@ export function Header() {
             <Link
               key={link.name}
               href={link.href}
-              className={`text-sm font-medium transition-colors hover:text-primary ${
-                pathname === link.href ? "text-primary" : "text-muted-foreground"
-              }`}
+              className={`text-sm font-medium transition-colors hover:text-primary ${pathname === link.href ? "text-primary" : "text-muted-foreground"
+                }`}
             >
               {link.name}
             </Link>
           ))}
-          
+
           <ThemeToggle />
 
           {session ? (
@@ -70,7 +70,7 @@ export function Header() {
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                   <div className="flex h-full w-full items-center justify-center rounded-full bg-muted">
-                     <User className="h-4 w-4" />
+                    <User className="h-4 w-4" />
                   </div>
                 </Button>
               </DropdownMenuTrigger>
@@ -85,7 +85,7 @@ export function Header() {
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
-                    <Link href="/portal">Dashboard</Link>
+                  <Link href="/portal">Dashboard</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/" })}>
                   Log out
@@ -129,42 +129,41 @@ export function Header() {
             <Link
               key={link.name}
               href={link.href}
-              className={`text-lg font-medium ${
-                pathname === link.href ? "text-primary" : "text-muted-foreground"
-              }`}
+              className={`text-lg font-medium ${pathname === link.href ? "text-primary" : "text-muted-foreground"
+                }`}
             >
               {link.name}
             </Link>
           ))}
           <hr className="border-border" />
           {session ? (
-             <div className="flex flex-col gap-2">
-                <div className="px-2 py-1">
-                    <p className="font-medium text-foreground">{session.user?.name}</p>
-                    <p className="text-xs text-muted-foreground">{session.user?.email}</p>
-                </div>
-                <Link href="/portal" className="text-lg font-medium text-muted-foreground">Dashboard</Link>
-                <button 
-                    onClick={() => signOut({ callbackUrl: "/" })}
-                    className="text-lg font-medium text-destructive text-left"
-                >
-                    Log out
-                </button>
-             </div>
+            <div className="flex flex-col gap-2">
+              <div className="px-2 py-1">
+                <p className="font-medium text-foreground">{session.user?.name}</p>
+                <p className="text-xs text-muted-foreground">{session.user?.email}</p>
+              </div>
+              <Link href="/portal" className="text-lg font-medium text-muted-foreground">Dashboard</Link>
+              <button
+                onClick={() => signOut({ callbackUrl: "/" })}
+                className="text-lg font-medium text-destructive text-left"
+              >
+                Log out
+              </button>
+            </div>
           ) : (
             <div className="flex flex-col gap-3">
-                <Link
+              <Link
                 href="/login"
                 className="text-center text-muted-foreground font-medium px-4 py-2 border border-input rounded-lg"
-                >
+              >
                 Login
-                </Link>
-                <Link
+              </Link>
+              <Link
                 href="/get-started"
                 className="text-center bg-primary text-primary-foreground px-4 py-2 rounded-lg font-medium"
-                >
+              >
                 Get Started
-                </Link>
+              </Link>
             </div>
           )}
         </div>

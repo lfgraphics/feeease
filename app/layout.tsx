@@ -9,10 +9,10 @@ export const metadata: Metadata = {
   title: "FeeEase - Complete School Management",
   description: "FeeEase - A responsive and powerful school management software for fees, attendance, staff, and more.",
   openGraph: {
-    images: '/images/assets/logo.jpeg',
+    images: '/images/assets/logo.jpg',
   },
   twitter: {
-    images: '/images/assets/logo.jpeg',
+    images: '/images/assets/logo.jpg',
   }
 };
 

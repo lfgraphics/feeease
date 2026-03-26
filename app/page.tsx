@@ -1,7 +1,6 @@
-import { Star, Banknote, CalendarCheck, Users, GraduationCap, Wallet, BarChart3, Printer, ShieldCheck, Zap, CreditCard, Wrench, Settings, RefreshCw, TrendingUp, Smartphone, Lock, HardDrive, Target, Sparkles } from "lucide-react";
+import { Star, Banknote, CalendarCheck, Users, GraduationCap, Wallet, BarChart3, Printer, ShieldCheck, Wrench, Settings, RefreshCw, TrendingUp, Smartphone, Lock, Target, Sparkles, History } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 
 export const metadata = {
   title: "FeeEase - Complete School Management Solution",
@@ -20,7 +19,7 @@ export const metadata = {
       "Manage your entire school ecosystem with FeeEase. Fees, expenses, attendance, salaries, and more.",
     images: [
       {
-        url: "/images/assets/logo.jpeg", // Assumed path
+        url: "/images/assets/logo.jpg", // Assumed path
         width: 800,
         height: 600,
         alt: "FeeEase Dashboard",
@@ -33,7 +32,7 @@ export const metadata = {
     title: "FeeEase - Complete School Management Solution",
     description:
       "Manage your entire school ecosystem with FeeEase. Fees, expenses, attendance, salaries, and more.",
-    image: "/images/assets/logo.jpeg",
+    image: "/images/assets/logo.jpg",
   },
 };
 
@@ -41,15 +40,28 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground font-sans">
       {/* Hero Section */}
-      <section className="w-full py-20 bg-gradient-to-b from-blue-50 to-background dark:from-background dark:to-background relative overflow-hidden">
+      <section className="w-full py-20 bg-linear-to-b from-teal-50 to-background dark:from-background dark:to-background relative overflow-hidden">
+
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-20">
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage:
+                "radial-gradient(circle at 2px 2px, currentColor 1px, transparent 0)",
+              backgroundSize: "48px 48px",
+            }}
+          ></div>
+        </div>
+
         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-primary/10 dark:bg-primary/20 rounded-full blur-3xl opacity-50"></div>
-        <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 bg-secondary/20 dark:bg-secondary/20 rounded-full blur-3xl opacity-50"></div>
+        <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 bg-primary/20 dark:bg-primary/20 rounded-full blur-3xl opacity-50"></div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center relative z-10">
           <div className="lg:w-1/2 lg:pr-12 mb-12 lg:mb-0 text-center lg:text-left">
             <h1 className="text-5xl lg:text-6xl font-extrabold mb-6 leading-tight text-foreground">
               The All-In-One <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+              <span className="text-transparent bg-clip-text bg-linear-to-r from-teal-600 to-emerald-600">
                 School Operating System
               </span>
             </h1>
@@ -59,7 +71,7 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Link
                 href="/get-started"
-                className="bg-primary text-primary-foreground px-8 py-4 rounded-full font-bold text-lg hover:bg-primary/90 shadow-xl shadow-blue-200 dark:shadow-blue-900/20 transition-all hover:-translate-y-1"
+                className="bg-primary text-primary-foreground px-8 py-4 rounded-full font-bold text-lg hover:bg-primary/90 shadow-xl shadow-teal-200 dark:shadow-teal-900/20 transition-all hover:-translate-y-1"
               >
                 View Plans & Start
               </Link>
@@ -73,7 +85,7 @@ export default function Home() {
           </div>
           <div className="lg:w-1/2 relative">
             <div className="relative rounded-2xl shadow-2xl overflow-hidden border border-border bg-card">
-              <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/10 to-purple-500/10 pointer-events-none"></div>
+              <div className="absolute inset-0 bg-linear-to-tr from-teal-500/10 to-emerald-500/10 pointer-events-none"></div>
               <Image
                 width={800}
                 height={600}
@@ -112,8 +124,8 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Feature 1: Fee Management */}
-            <div className="group bg-secondary/50 p-8 rounded-2xl hover:bg-card hover:shadow-xl hover:shadow-blue-100 dark:hover:shadow-blue-900/10 transition-all duration-300 border border-border hover:border-blue-100 dark:hover:border-blue-900/50">
-              <div className="w-14 h-14 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center text-blue-600 dark:text-blue-400 mb-6 group-hover:scale-110 transition-transform">
+            <div className="group bg-secondary/50 p-8 rounded-2xl hover:bg-card hover:shadow-xl hover:shadow-teal-100 dark:hover:shadow-teal-900/10 transition-all duration-300 border border-border hover:border-teal-100 dark:hover:border-teal-900/50">
+              <div className="w-14 h-14 bg-teal-100 dark:bg-teal-900/30 rounded-xl flex items-center justify-center text-teal-600 dark:text-teal-400 mb-6 group-hover:scale-110 transition-transform">
                 <Wallet size={28} />
               </div>
               <h4 className="text-xl font-bold mb-3 text-foreground">Smart Fee Management</h4>
@@ -123,8 +135,8 @@ export default function Home() {
             </div>
 
             {/* Feature 2: Expense Tracking */}
-            <div className="group bg-secondary/50 p-8 rounded-2xl hover:bg-card hover:shadow-xl hover:shadow-purple-100 dark:hover:shadow-purple-900/10 transition-all duration-300 border border-border hover:border-purple-100 dark:hover:border-purple-900/50">
-              <div className="w-14 h-14 bg-purple-100 dark:bg-purple-900/30 rounded-xl flex items-center justify-center text-purple-600 dark:text-purple-400 mb-6 group-hover:scale-110 transition-transform">
+            <div className="group bg-secondary/50 p-8 rounded-2xl hover:bg-card hover:shadow-xl hover:shadow-emerald-100 dark:hover:shadow-emerald-900/10 transition-all duration-300 border border-border hover:border-emerald-100 dark:hover:border-emerald-900/50">
+              <div className="w-14 h-14 bg-emerald-100 dark:bg-emerald-900/30 rounded-xl flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-6 group-hover:scale-110 transition-transform">
                 <BarChart3 size={28} />
               </div>
               <h4 className="text-xl font-bold mb-3 text-foreground">Expense Tracking</h4>
@@ -147,7 +159,7 @@ export default function Home() {
             {/* Feature 4: Staff & Salary */}
             <div className="group bg-secondary/50 p-8 rounded-2xl hover:bg-card hover:shadow-xl hover:shadow-orange-100 dark:hover:shadow-orange-900/10 transition-all duration-300 border border-border hover:border-orange-100 dark:hover:border-orange-900/50">
               <div className="w-14 h-14 bg-orange-100 dark:bg-orange-900/30 rounded-xl flex items-center justify-center text-orange-600 dark:text-orange-400 mb-6 group-hover:scale-110 transition-transform">
-                <Users size={28} />
+                <History size={28} />
               </div>
               <h4 className="text-xl font-bold mb-3 text-foreground">Payment History & Reports</h4>
               <p className="text-muted-foreground leading-relaxed">
@@ -167,8 +179,8 @@ export default function Home() {
             </div>
 
             {/* Feature 6: Modern UI */}
-            <div className="group bg-secondary/50 p-8 rounded-2xl hover:bg-card hover:shadow-xl hover:shadow-indigo-100 dark:hover:shadow-indigo-900/10 transition-all duration-300 border border-border hover:border-indigo-100 dark:hover:border-indigo-900/50">
-              <div className="w-14 h-14 bg-indigo-100 dark:bg-indigo-900/30 rounded-xl flex items-center justify-center text-indigo-600 dark:text-indigo-400 mb-6 group-hover:scale-110 transition-transform">
+            <div className="group bg-secondary/50 p-8 rounded-2xl hover:bg-card hover:shadow-xl hover:shadow-teal-100 dark:hover:shadow-teal-900/10 transition-all duration-300 border border-border hover:border-teal-100 dark:hover:border-teal-900/50">
+              <div className="w-14 h-14 bg-teal-100 dark:bg-teal-900/30 rounded-xl flex items-center justify-center text-teal-600 dark:text-teal-400 mb-6 group-hover:scale-110 transition-transform">
                 <ShieldCheck size={28} />
               </div>
               <h4 className="text-xl font-bold mb-3 text-foreground">Secure & Modern</h4>
@@ -181,7 +193,7 @@ export default function Home() {
       </section>
 
       {/* Live Demo Section */}
-      <section className="w-full py-12 bg-gradient-to-b from-card to-secondary/30">
+      <section className="w-full py-12 bg-linear-to-b from-card to-secondary/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="max-w-3xl mx-auto mb-12">
             <h2 className="text-primary font-semibold tracking-wide uppercase text-sm mb-3">Experience It Yourself</h2>
@@ -243,7 +255,7 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
               <div className="mb-4">
-                <span className="inline-block bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-3 py-1 rounded-full text-sm font-semibold mb-6">Why Schools Love FeeEase</span>
+                <span className="inline-block bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300 px-3 py-1 rounded-full text-sm font-semibold mb-6">Why Schools Love FeeEase</span>
               </div>
               <h3 className="text-4xl font-bold mb-6 leading-tight">Managing your school shouldn't be complicated.</h3>
               <p className="text-muted-foreground mb-10 text-lg leading-relaxed">
@@ -252,7 +264,7 @@ export default function Home() {
 
               <div className="space-y-6">
                 <div className="flex gap-4">
-                  <div className="shrink-0 w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-600 dark:text-blue-400">
+                  <div className="shrink-0 w-10 h-10 rounded-full bg-teal-500/20 flex items-center justify-center text-teal-600 dark:text-teal-400">
                     <Printer size={22} />
                   </div>
                   <div>
@@ -261,7 +273,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-600 dark:text-purple-400">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
                     <Wallet size={22} />
                   </div>
                   <div>
@@ -281,7 +293,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-card via-card to-secondary/30 p-10 rounded-3xl border border-border/50 shadow-xl">
+            <div className="bg-linear-to-br from-card via-card to-secondary/30 p-10 rounded-3xl border border-border/50 shadow-xl">
               <h4 className="text-2xl font-bold mb-8 text-foreground">Complete Feature Suite</h4>
               <div className="grid grid-cols-1 gap-1">
                 {[
@@ -295,7 +307,7 @@ export default function Home() {
                   { icon: Users, title: "Team Support", desc: "Personalized training and priority assistance" },
                 ].map((item, index) => (
                   <div key={index} className="flex items-start gap-4 p-3 rounded-lg hover:bg-secondary/30 transition-colors">
-                    <div className="text-2xl flex-shrink-0 mt-0.5 text-blue-600 dark:text-blue-400"><item.icon size={20} /></div>
+                    <div className="text-2xl flex-shrink-0 mt-0.5 text-teal-600 dark:text-teal-400"><item.icon size={20} /></div>
                     <div className="flex-1">
                       <p className="font-semibold text-foreground text-sm">{item.title}</p>
                       <p className="text-xs text-muted-foreground mt-0.5">{item.desc}</p>
@@ -309,10 +321,10 @@ export default function Home() {
       </section>
 
       {/* Pricing Section */}
-      <section className="w-full py-24 bg-gradient-to-b from-background to-secondary/20 border-t border-border">
+      <section className="w-full py-24 bg-linear-to-b from-background to-secondary/20 border-t border-border">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <span className="inline-block bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-3 py-1 rounded-full text-sm font-semibold mb-4">Simple, Transparent Pricing</span>
+            <span className="inline-block bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300 px-3 py-1 rounded-full text-sm font-semibold mb-4">Simple, Transparent Pricing</span>
             <h3 className="text-5xl font-bold text-foreground mb-6">Plans built for schools of every size</h3>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
               No surprises. No hidden fees. Just clear, honest pricing that scales with your school.
@@ -322,7 +334,7 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {/* Standard Plan Card */}
             <div className="bg-card rounded-2xl shadow-lg border border-border overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col group">
-              <div className="bg-gradient-to-r from-slate-100 to-slate-50 dark:from-slate-800 dark:to-slate-900 px-8 py-6 border-b border-border">
+              <div className="bg-linear-to-r from-slate-100 to-slate-50 dark:from-slate-800 dark:to-slate-900 px-8 py-6 border-b border-border">
                 <h3 className="text-2xl font-bold text-foreground mb-2">Standard Plan</h3>
                 <p className="text-muted-foreground text-sm">Perfect for most schools</p>
               </div>
@@ -380,11 +392,11 @@ export default function Home() {
             </div>
 
             {/* Professional Plan Card */}
-            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950 dark:to-indigo-950 rounded-2xl shadow-2xl border-2 border-blue-300 dark:border-blue-700 overflow-hidden hover:shadow-2xl transition-all duration-300 flex flex-col relative ring-2 ring-blue-200 dark:ring-blue-800">
-              <div className="absolute top-0 right-0 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-1 text-xs font-bold rounded-bl-lg shadow-lg flex gap-2">
+            <div className="bg-linear-to-br from-teal-50 to-emerald-50 dark:from-teal-950 dark:to-emerald-950 rounded-2xl shadow-2xl border-2 border-teal-300 dark:border-teal-700 overflow-hidden hover:shadow-2xl transition-all duration-300 flex flex-col relative ring-2 ring-teal-200 dark:ring-teal-800">
+              <div className="absolute top-0 right-0 bg-linear-to-r from-teal-600 to-emerald-600 text-white px-4 py-1 text-xs font-bold rounded-bl-lg shadow-lg flex gap-2">
                 MOST POPULAR <Sparkles color="yellow" size={12} />
               </div>
-              <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-8 text-white pt-14">
+              <div className="bg-linear-to-r from-teal-600 to-emerald-600 px-8 py-8 text-white pt-14">
                 <h3 className="text-2xl font-bold mb-2">Professional Plan</h3>
                 <p className="text-blue-100 text-sm">All Standard features + Advanced capabilities</p>
               </div>
@@ -394,7 +406,7 @@ export default function Home() {
                     ₹11,500
                   </div>
                   <p className="text-muted-foreground mb-4 text-sm">Installation (one-time) + Additional Features one-time fee</p>
-                  <div className="flex items-baseline gap-2 pb-4 border-b border-blue-200 dark:border-blue-800">
+                  <div className="flex items-baseline gap-2 pb-4 border-b border-teal-200 dark:border-teal-800">
                     <span className="text-4xl font-bold text-foreground">₹1,150</span>
                     <span className="text-muted-foreground">/month</span>
                   </div>
@@ -405,33 +417,33 @@ export default function Home() {
                   <h4 className="font-semibold text-foreground mb-4">Everything in Standard +</h4>
                   <ul className="space-y-3">
                     <li className="flex items-start gap-3 text-sm">
-                      <span className="text-blue-600 dark:text-blue-400 font-bold text-lg"><Star /></span>
+                      <span className="text-teal-600 dark:text-teal-400 font-bold text-lg"><Star /></span>
                       <span className="text-foreground"><strong>WhatsApp automation</strong> for reminders & receipts</span>
                     </li>
                     <li className="flex items-start gap-3 text-sm">
-                      <span className="text-blue-600 dark:text-blue-400 font-bold text-lg"><Star /></span>
+                      <span className="text-teal-600 dark:text-teal-400 font-bold text-lg"><Star /></span>
                       <span className="text-foreground"><strong>Teachers & parents portals</strong> with real-time updates</span>
                     </li>
                     <li className="flex items-start gap-3 text-sm">
-                      <span className="text-blue-600 dark:text-blue-400 font-bold"><Star /></span>
+                      <span className="text-teal-600 dark:text-teal-400 font-bold"><Star /></span>
                       <span>Exam management & result publishing</span>
                     </li>
                     <li className="flex items-start gap-3 text-sm">
-                      <span className="text-blue-600 dark:text-blue-400 font-bold"><Star /></span>
+                      <span className="text-teal-600 dark:text-teal-400 font-bold"><Star /></span>
                       <span>Payroll management</span>
                     </li>
                     <li className="flex items-start gap-3 text-sm">
-                      <span className="text-blue-600 dark:text-blue-400 font-bold"><Star /></span>
+                      <span className="text-teal-600 dark:text-teal-400 font-bold"><Star /></span>
                       <span>Custom features & integrations</span>
                     </li>
                     <li className="flex items-start gap-3 text-sm">
-                      <span className="text-blue-600 dark:text-blue-400 font-bold"><Star /></span>
+                      <span className="text-teal-600 dark:text-teal-400 font-bold"><Star /></span>
                       <span>Priority 1-on-1 support</span>
                     </li>
                   </ul>
                 </div>
 
-                <a href="/get-started" className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 text-center shadow-lg hover:shadow-xl">
+                <a href="/get-started" className="w-full bg-linear-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 text-center shadow-lg hover:shadow-xl">
                   Get Onboarded Now
                 </a>
               </div>
@@ -442,21 +454,21 @@ export default function Home() {
           <div className="mt-20 max-w-5xl mx-auto">
             <h4 className="text-2xl font-bold text-center mb-12 text-foreground">What's Included in Both Plans</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="flex gap-4 p-5 bg-card rounded-xl border border-border hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
+              <div className="flex gap-4 p-5 bg-card rounded-xl border border-border hover:border-teal-300 dark:hover:border-teal-700 transition-colors">
                 <div className="text-3xl shrink-0 text-orange-500"><Wrench size={24} /></div>
                 <div>
                   <h5 className="font-semibold text-foreground mb-1">Setup & Migration</h5>
                   <p className="text-sm text-muted-foreground">Our team handles all setup & assists in data migration</p>
                 </div>
               </div>
-              <div className="flex gap-4 p-5 bg-card rounded-xl border border-border hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
-                <div className="text-3xl shrink-0 text-blue-500"><Smartphone size={24} /></div>
+              <div className="flex gap-4 p-5 bg-card rounded-xl border border-border hover:border-teal-300 dark:hover:border-teal-700 transition-colors">
+                <div className="text-3xl shrink-0 text-teal-500"><Smartphone size={24} /></div>
                 <div>
                   <h5 className="font-semibold text-foreground mb-1">Mobile & Web</h5>
                   <p className="text-sm text-muted-foreground">Access anywhere, anytime on any device</p>
                 </div>
               </div>
-              <div className="flex gap-4 p-5 bg-card rounded-xl border border-border hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
+              <div className="flex gap-4 p-5 bg-card rounded-xl border border-border hover:border-teal-300 dark:hover:border-teal-700 transition-colors">
                 <div className="text-3xl shrink-0 text-red-500"><Lock size={24} /></div>
                 <div>
                   <h5 className="font-semibold text-foreground mb-1">Security</h5>
@@ -478,7 +490,7 @@ export default function Home() {
                   <p className="text-sm text-muted-foreground">Transparent pricing, period. Nothing sneaky.</p>
                 </div>
               </div>
-              <div className="flex gap-4 p-5 bg-card rounded-xl border border-border hover:border-blue-300 dark:hover:border-blue-700 transition-colors">
+              <div className="flex gap-4 p-5 bg-card rounded-xl border border-border hover:border-teal-300 dark:hover:border-teal-700 transition-colors">
                 <div className="text-3xl shrink-0 text-indigo-500"><Target size={24} /></div>
                 <div>
                   <h5 className="font-semibold text-foreground mb-1">Scale Anytime</h5>
@@ -609,7 +621,7 @@ export default function Home() {
 
             {/* Step 1 */}
             <div className="bg-card p-8 rounded-2xl shadow-lg border border-border relative text-center">
-              <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-2xl font-bold mx-auto mb-6 shadow-lg shadow-blue-200 dark:shadow-blue-900/20 border-4 border-card">1</div>
+              <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-2xl font-bold mx-auto mb-6 shadow-lg shadow-teal-200 dark:shadow-teal-900/20 border-4 border-card">1</div>
               <h4 className="text-xl font-bold mb-3 text-foreground">Connect with Sales</h4>
               <p className="text-muted-foreground">
                 Contact our team to discuss your school&apos;s specific needs. We&apos;ll tailor a package just for you.
@@ -618,7 +630,7 @@ export default function Home() {
 
             {/* Step 2 */}
             <div className="bg-card p-8 rounded-2xl shadow-lg border border-border relative text-center">
-              <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-2xl font-bold mx-auto mb-6 shadow-lg shadow-blue-200 dark:shadow-blue-900/20 border-4 border-card">2</div>
+              <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-2xl font-bold mx-auto mb-6 shadow-lg shadow-teal-200 dark:shadow-teal-900/20 border-4 border-card">2</div>
               <h4 className="text-xl font-bold mb-3 text-foreground">Personalized Setup</h4>
               <p className="text-muted-foreground">
                 We set up your dashboard, configure your branded receipts, and install your <strong>thermal printer</strong>.
@@ -627,7 +639,7 @@ export default function Home() {
 
             {/* Step 3 */}
             <div className="bg-card p-8 rounded-2xl shadow-lg border border-border relative text-center">
-              <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-2xl font-bold mx-auto mb-6 shadow-lg shadow-blue-200 dark:shadow-blue-900/20 border-4 border-card">3</div>
+              <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-primary-foreground text-2xl font-bold mx-auto mb-6 shadow-lg shadow-teal-200 dark:shadow-teal-900/20 border-4 border-card">3</div>
               <h4 className="text-xl font-bold mb-3 text-foreground">Go Live</h4>
               <p className="text-muted-foreground">
                 Start managing your school efficiently. Enjoy 1-on-1 training and ongoing support.
@@ -638,10 +650,10 @@ export default function Home() {
       </section>
 
       {/* Testimonials */}
-      <section id="testimonials" className="w-full py-24 bg-gradient-to-b from-white to-slate-50 dark:from-slate-900 dark:to-slate-950">
+      <section id="testimonials" className="w-full py-24 bg-linear-to-b from-white to-slate-50 dark:from-slate-900 dark:to-slate-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <span className="inline-block bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 px-4 py-2 rounded-full text-sm font-semibold mb-4">TRUSTED BY SCHOOLS</span>
+            <span className="inline-block bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-300 px-4 py-2 rounded-full text-sm font-semibold mb-4">TRUSTED BY SCHOOLS</span>
             <h3 className="text-4xl font-bold mb-6 text-slate-900 dark:text-white">Loved by School Leaders Across India</h3>
             <p className="text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">See how top schools are transforming their operations with FeeEase</p>
           </div>
@@ -656,7 +668,7 @@ export default function Home() {
               </div>
               <p className="text-slate-700 dark:text-slate-300 mb-8 text-base leading-relaxed">"FeeEase cut our fee management work in half. The thermal printer receipts are so professional, and parents get instant WhatsApp notifications. Game-changer for our school!"</p>
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-bold text-lg">
+                <div className="w-12 h-12 rounded-full bg-linear-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-bold text-lg">
                   RP
                 </div>
                 <div>
@@ -675,7 +687,7 @@ export default function Home() {
               </div>
               <p className="text-slate-700 dark:text-slate-300 mb-8 text-base leading-relaxed">"No hidden charges, transparent everything. Our finance team loves the automated reports. Setup was quick, migration was painless, and support was phenomenal!"</p>
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center text-white font-bold text-lg">
+                <div className="w-12 h-12 rounded-full bg-linear-to-br from-purple-400 to-purple-600 flex items-center justify-center text-white font-bold text-lg">
                   MS
                 </div>
                 <div>
@@ -694,7 +706,7 @@ export default function Home() {
               </div>
               <p className="text-slate-700 dark:text-slate-300 mb-8 text-base leading-relaxed">"Modern, sleek interface. Zero learning curve for our staff. The real-time sync and unlimited storage mean we never worry about data. Highly recommend FeeEase!"</p>
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center text-white font-bold text-lg">
+                <div className="w-12 h-12 rounded-full bg-linear-to-br from-green-400 to-green-600 flex items-center justify-center text-white font-bold text-lg">
                   AV
                 </div>
                 <div>
@@ -708,7 +720,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="w-full py-24 bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 dark:from-slate-950 dark:via-blue-950 dark:to-slate-950 text-white relative overflow-hidden">
+      <section className="w-full py-24 bg-linear-to-r from-slate-900 via-teal-900 to-slate-900 dark:from-slate-950 dark:via-teal-950 dark:to-slate-950 text-white relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full bg-[url('/images/assets/pattern.png')] opacity-5"></div>
         <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
           <h2 className="text-5xl font-bold mb-6 leading-tight">Ready to Transform Your School?</h2>

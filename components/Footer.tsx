@@ -6,10 +6,10 @@ const Footer = () => {
         <footer className="bg-card text-muted-foreground py-12 border-t border-border">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div className="col-span-1 md:col-span-2">
-                    <Image
-                        src="/images/assets/logo-horizontal.png" // Ideally a white version
+                    <img
+                        src="/images/assets/logo-horizontal.png"
                         alt="FeeEase"
-                        width={120}
+                        width={240}
                         height={40}
                         className="mb-4"
                     />
