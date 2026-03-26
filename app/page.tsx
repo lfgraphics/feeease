@@ -6,11 +6,6 @@ export const metadata = {
   title: "FeeEase - Complete School Management Solution",
   description:
     "FeeEase is the ultimate school management platform. Streamline fees, expenses, attendance, staff salaries, and student records in one powerful, easy-to-use application.",
-  keywords:
-    "School Management, Fee Collection, Expense Tracking, Attendance System, Salary management, Staff Administration, Student Records",
-  author: "FeeEase Team",
-  robots: "index, follow",
-  canonical: "https://www.feeease.com",
   openGraph: {
     type: "website",
     url: "https://www.feeease.com",
@@ -19,9 +14,9 @@ export const metadata = {
       "Manage your entire school ecosystem with FeeEase. Fees, expenses, attendance, salaries, and more.",
     images: [
       {
-        url: "/images/assets/logo.jpg", // Assumed path
-        width: 800,
-        height: 600,
+        url: "/images/assets/logo-horizontal.png",
+        width: 1200,
+        height: 630,
         alt: "FeeEase Dashboard",
       },
     ],
@@ -32,7 +27,7 @@ export const metadata = {
     title: "FeeEase - Complete School Management Solution",
     description:
       "Manage your entire school ecosystem with FeeEase. Fees, expenses, attendance, salaries, and more.",
-    image: "/images/assets/logo.jpg",
+    images: ["/images/assets/logo-horizontal.png"],
   },
 };
 

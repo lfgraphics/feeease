@@ -6,14 +6,57 @@ import Providers from "@/components/providers";
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.feeease.com'),
-  title: "FeeEase - Complete School Management",
+  title: {
+    default: "FeeEase - Complete School Management Solution",
+    template: "%s | FeeEase"
+  },
   description: "FeeEase - A responsive and powerful school management software for fees, attendance, staff, and more.",
+  keywords: ["School Management", "Fee Collection", "Expense Tracking", "Attendance System", "Salary management", "Staff Administration", "Student Records"],
+  authors: [{ name: "FeeEase Team" }],
+  creator: "FeeEase Team",
+  publisher: "FeeEase",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   openGraph: {
-    images: '/images/assets/logo.jpg',
+    type: "website",
+    locale: "en_US",
+    url: "https://www.feeease.com",
+    siteName: "FeeEase",
+    title: "FeeEase - Complete School Management Solution",
+    description: "Manage your entire school ecosystem with FeeEase. Fees, expenses, attendance, salaries, and more.",
+    images: [
+      {
+        url: '/images/assets/logo-horizontal.png',
+        width: 1200,
+        height: 630,
+        alt: 'FeeEase - Complete School Management',
+      },
+    ],
   },
   twitter: {
-    images: '/images/assets/logo.jpg',
-  }
+    card: "summary_large_image",
+    title: "FeeEase - Complete School Management Solution",
+    description: "Manage your entire school ecosystem with FeeEase. Fees, expenses, attendance, salaries, and more.",
+    images: ['/images/assets/logo-horizontal.png'],
+    creator: "@feeease",
+  },
+  icons: {
+    icon: [
+      { url: "/images/assets/favicon/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/images/assets/favicon/favicon.ico" },
+    ],
+    shortcut: "/images/assets/favicon/favicon.ico",
+    apple: "/images/assets/favicon/apple-touch-icon.png",
+    other: [
+      {
+        rel: "apple-touch-icon-precomposed",
+        url: "/images/assets/favicon/apple-touch-icon.png",
+      },
+    ],
+  },
 };
 
 export const viewport: Viewport = {
