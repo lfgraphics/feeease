@@ -1,4 +1,5 @@
 import { OnboardingForm } from "@/components/onboarding/OnboardingForm";
+import Script from "next/script";
 
 export default function GetStartedPage() {
   return (
@@ -10,6 +11,13 @@ export default function GetStartedPage() {
         </div>
         <OnboardingForm />
       </main>
+
+      <Script
+        type="text/javascript"
+        src="https://d3mkw6s8thqya7.cloudfront.net/integration-plugin.js"
+        id="aisensy-wa-widget"
+        widget-id="aab0a4"
+      />
     </div>
   );
 }
