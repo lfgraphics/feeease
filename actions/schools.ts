@@ -79,6 +79,10 @@ export async function getSchoolById(id: string) {
     const school = await School.findById(id).lean();
     if (!school) return null;
 
+    return decryptSchoolDeployment(school);
+}
+
+function decryptSchoolDeployment(school: any) {
     // Helper to safely decrypt fields
     const safeDecrypt = (value?: string) => {
         if (!value) return undefined;
@@ -126,11 +130,9 @@ export async function getSchoolById(id: string) {
 }
 
 export async function getSchoolByEmail(email: string) {
+
     await dbConnect();
     const school = await School.findOne({ adminEmail: email }).lean();
     if (!school) return null;
-    return {
-        ...school,
-        _id: school._id.toString()
-    };
+    return decryptSchoolDeployment(school);
 }

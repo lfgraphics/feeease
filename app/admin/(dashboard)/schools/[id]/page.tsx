@@ -17,7 +17,7 @@ import { WhatsAppUsageManager } from "@/components/admin/WhatsAppUsageManager";
 import { getWhatsAppUsage } from "@/actions/whatsapp-usage";
 import { SchoolReferralSection } from "@/components/school/SchoolReferralSection";
 import { DNSManager } from "@/components/admin/DNSManager";
-
+import { SchoolStorageStats } from "@/components/school/SchoolStorageStats";
 
 export default async function SchoolDetailPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
@@ -177,6 +177,19 @@ export default async function SchoolDetailPage({ params }: { params: Promise<{ i
                         </div>
                     </CardContent>
                 </Card>
+
+                {/* Storage Stats Card */}
+                {(isSuperAdmin || isOperationsAdmin) && (
+                    <div className="col-span-1 sm:col-span-2 lg:col-span-3">
+                        <SchoolStorageStats
+                            mongoDbUri={school.decryptedDeployment?.mongoDbUri}
+                            cloudinary={school.decryptedDeployment?.cloudinaryConfig}
+                            title="Infrastructure Consumption"
+                            description={`${school.name}'s data & media usage`}
+                        />
+                    </div>
+                )}
+
 
                 {/* Financials & Referral - Visible to admins and referring marketing staff */}
                 {canViewFinancials && (

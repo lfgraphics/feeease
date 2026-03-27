@@ -11,7 +11,9 @@ import { getSchoolByEmail } from "@/actions/schools";
 import { SchoolBilling } from "@/components/school/SchoolBilling";
 import { SchoolWhatsAppStats } from "@/components/school/SchoolWhatsAppStats";
 import { SchoolReferralSection } from "@/components/school/SchoolReferralSection";
+import { SchoolStorageStats } from "@/components/school/SchoolStorageStats";
 import { getWhatsAppUsage } from "@/actions/whatsapp-usage";
+
 import { getSchoolReferralData } from "@/actions/offers";
 import { SCHOOL_FEATURES } from "@/lib/features";
 import { PaymentDialog } from "@/components/school/PaymentDialog";
@@ -183,6 +185,18 @@ export default async function SchoolProfilePage() {
               )}
             </CardContent>
           </Card>
+
+          {/* Storage Details */}
+          <div className="md:col-span-2 lg:col-span-3">
+            <SchoolStorageStats 
+              mongoDbUri={(school as any).decryptedDeployment?.mongoDbUri}
+              cloudinary={(school as any).decryptedDeployment?.cloudinaryConfig}
+              title="Infrastructure Storage"
+              description="Real-time usage from your servers and media storage"
+            />
+          </div>
+
+
 
           {/* Admin Contact */}
           <Card>
