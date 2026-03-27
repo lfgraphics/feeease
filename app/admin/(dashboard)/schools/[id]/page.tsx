@@ -16,6 +16,8 @@ import { SCHOOL_FEATURES } from "@/lib/features";
 import { WhatsAppUsageManager } from "@/components/admin/WhatsAppUsageManager";
 import { getWhatsAppUsage } from "@/actions/whatsapp-usage";
 import { SchoolReferralSection } from "@/components/school/SchoolReferralSection";
+import { DNSManager } from "@/components/admin/DNSManager";
+
 
 export default async function SchoolDetailPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
@@ -223,6 +225,18 @@ export default async function SchoolDetailPage({ params }: { params: Promise<{ i
                             features={JSON.parse(JSON.stringify(school.features || {}))}
                             workerWebhookSecret={process.env.WORKER_WEBHOOK_SECRET}
                             workerUrl={process.env.FEEEASE_WORKER_URL}
+                        />
+                    </div>
+                )}
+
+                {/* DNS Manager - Visible to admins */}
+                {canViewCredentials && (
+                    <div className="col-span-1 sm:col-span-2 lg:col-span-3">
+                        <DNSManager 
+                            schoolId={school._id.toString()}
+                            shortName={school.shortName || ""}
+                            currentPublicUrl={school.deployment?.publicAppUrl}
+                            canEdit={canViewCredentials}
                         />
                     </div>
                 )}

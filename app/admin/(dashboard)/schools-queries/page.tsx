@@ -5,7 +5,9 @@ import { redirect } from "next/navigation";
 import { getSchoolQueries, getSchoolQueriesStats } from "@/actions/schoolQueries";
 import SchoolQueriesClient from "@/components/SchoolQueriesClient";
 
-export default async function SchoolQueriesPage({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined }}) {
+export default async function SchoolQueriesPage({ searchParams }: { searchParams: Promise<{ [key: string]: string | string[] | undefined }>}) {
+  const resolvedSearchParams = await searchParams;
+
   const session = await getServerSession(authOptions);
   if (!session || !session.user.role?.includes("admin")) {
     if (session?.user.role === "marketing") {
@@ -15,12 +17,12 @@ export default async function SchoolQueriesPage({ searchParams }: { searchParams
   }
 
   // parse search params for initial data
-  const page = typeof searchParams.page === 'string' ? parseInt(searchParams.page) : 1;
+  const page = typeof resolvedSearchParams.page === 'string' ? parseInt(resolvedSearchParams.page) : 1;
   const limit = 10;
-  const query = typeof searchParams.query === 'string' ? searchParams.query : undefined;
-  const status = typeof searchParams.status === 'string' ? searchParams.status : undefined;
-  const from = typeof searchParams.from === 'string' ? searchParams.from : undefined;
-  const to = typeof searchParams.to === 'string' ? searchParams.to : undefined;
+  const query = typeof resolvedSearchParams.query === 'string' ? resolvedSearchParams.query : undefined;
+  const status = typeof resolvedSearchParams.status === 'string' ? resolvedSearchParams.status : undefined;
+  const from = typeof resolvedSearchParams.from === 'string' ? resolvedSearchParams.from : undefined;
+  const to = typeof resolvedSearchParams.to === 'string' ? resolvedSearchParams.to : undefined;
 
   const { queries, totalPages } = await getSchoolQueries({ page, limit, query, status: status as any, from, to });
   const stats = await getSchoolQueriesStats({ from, to });

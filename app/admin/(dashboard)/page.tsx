@@ -9,6 +9,8 @@ import { FinanceOverview } from "@/components/admin/FinanceOverview";
 import { ExpenseManager } from "@/components/admin/ExpenseManager";
 import { ExpirationTables } from "@/components/admin/ExpirationTables";
 import { redirect } from "next/navigation";
+import { DNSUsageManager } from "@/components/admin/DNSUsageManager";
+
 
 export default async function AdminDashboard() {
   const session = await getServerSession(authOptions);
@@ -45,6 +47,8 @@ export default async function AdminDashboard() {
           <TabsTrigger value="expiring">Expirations</TabsTrigger>
           {isSuperAdmin && <TabsTrigger value="finances">Finances</TabsTrigger>}
           {isSuperAdmin && <TabsTrigger value="expenses">Transactions</TabsTrigger>}
+          {isSuperAdmin && <TabsTrigger value="dns">Cloudflare DNS</TabsTrigger>}
+
         </TabsList>
         
         <TabsContent value="overview" className="space-y-4">
@@ -113,7 +117,14 @@ export default async function AdminDashboard() {
                 />
             </TabsContent>
         )}
+
+        {isSuperAdmin && (
+            <TabsContent value="dns" className="space-y-4">
+                <DNSUsageManager />
+            </TabsContent>
+        )}
       </Tabs>
+
     </div>
   );
 }

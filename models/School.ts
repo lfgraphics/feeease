@@ -44,7 +44,11 @@ export interface ISchool extends Document {
     licenseCookieSecret?: string;
     publicAppUrl?: string;
     notes?: string;
+
+    cloudflareRecordId?: string;
+    cloudflareRecordName?: string;
   };
+
 
   referral: {
     code?: string;
@@ -127,7 +131,10 @@ const SchoolSchema: Schema = new Schema({
     licenseCookieSecret: { type: String },
     publicAppUrl: { type: String },
     notes: { type: String },
+    cloudflareRecordId: { type: String },
+    cloudflareRecordName: { type: String },
   },
+
 
   referral: {
     code: { type: String, unique: true, sparse: true },

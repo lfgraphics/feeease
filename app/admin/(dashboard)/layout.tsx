@@ -5,6 +5,8 @@ import Link from "next/link";
 import { LayoutDashboard, Users, School as SchoolIcon, Key, Settings, LogOut, Menu, BarChart3, MessageSquare } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetHeader } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme-toggle";
+
 
 export default async function AdminLayout({
   children,
@@ -83,21 +85,26 @@ export default async function AdminLayout({
         )}
       </nav>
 
-      <div className="p-4 border-t border-border">
-        <div className="flex items-center gap-3 px-4 py-3 text-muted-foreground">
-          <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center font-bold text-xs text-foreground">
-            {session.user?.name?.[0] || "A"}
+      <div className="p-4 border-t border-border space-y-4">
+        <div className="flex items-center justify-between px-2">
+          <div className="flex items-center gap-3">
+             <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center font-bold text-xs text-foreground shrink-0">
+              {session.user?.name?.[0] || "A"}
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium truncate text-foreground">{session.user?.name}</p>
+              <p className="text-[10px] text-muted-foreground truncate">{session.user?.email}</p>
+            </div>
           </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium truncate text-foreground">{session.user?.name}</p>
-            <p className="text-xs truncate">{session.user?.email}</p>
-          </div>
+          <ThemeToggle />
         </div>
-        <Link href="/api/auth/signout" className="flex items-center gap-3 px-4 py-2 mt-2 text-destructive hover:text-destructive/80 text-sm">
+        
+        <Link href="/api/auth/signout" className="flex items-center gap-3 px-4 py-2 text-destructive hover:bg-destructive/10 rounded-lg transition-colors text-sm font-medium">
           <LogOut size={16} />
           <span>Sign Out</span>
         </Link>
       </div>
+
     </div>
   );
 
@@ -105,23 +112,26 @@ export default async function AdminLayout({
     <div className="flex h-screen bg-muted/30 overflow-hidden flex-col md:flex-row">
       {/* Mobile Header */}
       <div className="md:hidden p-4 border-b border-border bg-card flex items-center justify-between shrink-0">
-         <Sheet>
-           <SheetTrigger asChild>
-             <Button variant="ghost" size="icon">
-               <Menu className="h-6 w-6" />
-               <span className="sr-only">Toggle menu</span>
-             </Button>
-           </SheetTrigger>
-           <SheetContent side="left" className="p-0 w-64 border-r border-border">
-              <SheetHeader className="sr-only">
-                <SheetTitle>Navigation Menu</SheetTitle>
-              </SheetHeader>
-              <SidebarContent />
-           </SheetContent>
-         </Sheet>
-         <h1 className="font-bold text-lg">FeeEase Admin</h1>
-         <div className="w-10"></div>
+         <div className="flex items-center gap-2">
+           <Sheet>
+             <SheetTrigger asChild>
+               <Button variant="ghost" size="icon">
+                 <Menu className="h-6 w-6" />
+                 <span className="sr-only">Toggle menu</span>
+               </Button>
+             </SheetTrigger>
+             <SheetContent side="left" className="p-0 w-64 border-r border-border">
+                <SheetHeader className="sr-only">
+                  <SheetTitle>Navigation Menu</SheetTitle>
+                </SheetHeader>
+                <SidebarContent />
+             </SheetContent>
+           </Sheet>
+           <h1 className="font-bold text-lg">FeeEase Admin</h1>
+         </div>
+         <ThemeToggle />
       </div>
+
 
       {/* Desktop Sidebar */}
       <aside className="hidden md:flex w-64 bg-card text-foreground flex-col shrink-0 border-r border-border">
