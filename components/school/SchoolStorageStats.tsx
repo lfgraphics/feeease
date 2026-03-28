@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { Database, Image, AlertCircle, RefreshCw, Loader2, HardDrive } from "lucide-react";
+import { Database, Image, AlertCircle, RefreshCw, Loader2, HardDrive, Zap } from "lucide-react";
+
 import { getStorageUsage } from "@/actions/storage";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -105,9 +106,17 @@ export function SchoolStorageStats({ mongoDbUri, cloudinary, title = "Storage De
                                     <Database className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                                 </div>
                                 <div className="space-y-0.5">
-                                    <p className="text-sm font-semibold">MongoDB Atlas</p>
+                                    <div className="flex items-center gap-2">
+                                        <p className="text-sm font-semibold">MongoDB Atlas</p>
+                                        {stats.mongodb.plan && (
+                                            <Badge className="px-1.5 py-0 h-4 text-[9px] uppercase font-bold bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300 border-none">
+                                                {stats.mongodb.plan}
+                                            </Badge>
+                                        )}
+                                    </div>
                                     <p className="text-xs text-muted-foreground">Database Usage</p>
                                 </div>
+
                             </div>
                             <div className="text-right">
                                 <Badge variant="outline" className="text-xs font-mono">
@@ -127,15 +136,22 @@ export function SchoolStorageStats({ mongoDbUri, cloudinary, title = "Storage De
                 )}
 
                 {stats?.cloudinary && (
-                    <div className="space-y-3 pt-2">
-                        <div className="flex items-center justify-between">
+                    <div className="space-y-4 pt-2 border-t border-muted/30">
+                        <div className="flex items-center justify-between pt-2">
                             <div className="flex items-center gap-2">
                                 <div className="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-md">
                                     <Image className="h-4 w-4 text-purple-600 dark:text-purple-400" />
                                 </div>
                                 <div className="space-y-0.5">
-                                    <p className="text-sm font-semibold">Cloudinary</p>
-                                    <p className="text-xs text-muted-foreground">Media Assets</p>
+                                    <div className="flex items-center gap-2">
+                                        <p className="text-sm font-semibold">Cloudinary</p>
+                                        {stats.cloudinary.plan && (
+                                            <Badge className="px-1.5 py-0 h-4 text-[9px] uppercase font-bold bg-purple-100 text-purple-700 dark:bg-purple-900/50 dark:text-purple-300 border-none">
+                                                {stats.cloudinary.plan}
+                                            </Badge>
+                                        )}
+                                    </div>
+                                    <p className="text-xs text-muted-foreground">Media Storage</p>
                                 </div>
                             </div>
                             <div className="text-right">
@@ -146,14 +162,49 @@ export function SchoolStorageStats({ mongoDbUri, cloudinary, title = "Storage De
                         </div>
                         <Progress
                             value={(stats.cloudinary.total > 0 ? (stats.cloudinary.used / stats.cloudinary.total) : 0) * 100}
-                            className="h-2"
+                            className="h-1.5"
                         />
+
+                        {/* Bandwidth Usage */}
+                        <div className="space-y-2 pl-2 border-l-2 border-muted/50 ml-4">
+                            <div className="flex items-center justify-between text-xs">
+                                <div className="flex items-center gap-1.5 text-muted-foreground">
+                                    <Zap className="h-3 w-3 text-amber-500" />
+                                    <span>Bandwidth</span>
+                                </div>
+                                <span className="font-mono text-[10px]">
+                                    {formatMB(stats.cloudinary.bandwidth.used)} / {formatMB(stats.cloudinary.bandwidth.total)}
+                                </span>
+                            </div>
+                            <Progress
+                                value={(stats.cloudinary.bandwidth.total > 0 ? (stats.cloudinary.bandwidth.used / stats.cloudinary.bandwidth.total) : 0) * 100}
+                                className="h-1 bg-muted/30"
+                            />
+                        </div>
+
+                        {/* Transformations Usage */}
+                        <div className="space-y-2 pl-2 border-l-2 border-muted/50 ml-4">
+                            <div className="flex items-center justify-between text-xs">
+                                <div className="flex items-center gap-1.5 text-muted-foreground">
+                                    <RefreshCw className="h-3 w-3 text-blue-500" />
+                                    <span>Transformations</span>
+                                </div>
+                                <span className="font-mono text-[10px]">
+                                    {stats.cloudinary.transformations.used.toLocaleString()} / {stats.cloudinary.transformations.total.toLocaleString()}
+                                </span>
+                            </div>
+                            <Progress
+                                value={(stats.cloudinary.transformations.total > 0 ? (stats.cloudinary.transformations.used / stats.cloudinary.transformations.total) : 0) * 100}
+                                className="h-1 bg-muted/30"
+                            />
+                        </div>
 
                         {stats.cloudinary.error && (
                             <p className="text-[10px] text-destructive mt-1 italic">{stats.cloudinary.error}</p>
                         )}
                     </div>
                 )}
+
 
                 {!loading && !stats?.mongodb && !stats?.cloudinary && !error && (
                     <div className="text-center py-6 text-muted-foreground">

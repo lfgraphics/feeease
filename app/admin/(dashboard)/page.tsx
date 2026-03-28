@@ -10,6 +10,8 @@ import { ExpenseManager } from "@/components/admin/ExpenseManager";
 import { ExpirationTables } from "@/components/admin/ExpirationTables";
 import { redirect } from "next/navigation";
 import { DNSUsageManager } from "@/components/admin/DNSUsageManager";
+import { SystemStats } from "@/components/admin/SystemStats";
+
 
 
 export default async function AdminDashboard() {
@@ -48,6 +50,8 @@ export default async function AdminDashboard() {
           {isSuperAdmin && <TabsTrigger value="finances">Finances</TabsTrigger>}
           {isSuperAdmin && <TabsTrigger value="expenses">Transactions</TabsTrigger>}
           {isSuperAdmin && <TabsTrigger value="dns">Cloudflare DNS</TabsTrigger>}
+          {isSuperAdmin && <TabsTrigger value="infrastructure">Infrastructure</TabsTrigger>}
+
 
         </TabsList>
         
@@ -123,7 +127,15 @@ export default async function AdminDashboard() {
                 <DNSUsageManager />
             </TabsContent>
         )}
+        
+        {isSuperAdmin && (
+            <TabsContent value="infrastructure" className="space-y-4">
+                <SystemStats />
+            </TabsContent>
+        )}
       </Tabs>
+
+
 
     </div>
   );
