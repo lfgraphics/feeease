@@ -195,18 +195,24 @@ export async function getGlobalSystemStats() {
         const data = await response.json();
         const infoStr = data.result || "";
         const info: Record<string, string> = {};
-        infoStr.split('\r\n').forEach((line: string) => {
-          const [key, val] = line.split(':');
-          if (key && val) info[key] = val;
+        
+        // Split by standard or carriage return newlines
+        infoStr.split(/\r?\n/).forEach((line: string) => {
+          const parts = line.split(':');
+          if (parts.length >= 2) {
+            info[parts[0].trim()] = parts[1].trim();
+          }
         });
 
         result.redis = {
           usedMemory: parseInt(info.used_memory) || 0,
           peakMemory: parseInt(info.used_memory_peak) || 0,
-          totalConnections: parseInt(info.total_connections_received) || 0,
+          // total_commands_processed is the true metric for Upstash (rate limiter requests)
+          totalConnections: parseInt(info.total_commands_processed) || parseInt(info.total_connections_received) || 0,
           connectedClients: parseInt(info.connected_clients) || 0,
           uptime: parseInt(info.uptime_in_seconds) || 0,
         };
+
       }
     } catch (e) {
       console.error("Upstash Redis Stats Error:", e);
