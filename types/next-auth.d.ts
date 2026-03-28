@@ -24,5 +24,6 @@ declare module "next-auth/jwt" {
     role: string;
     referralCode?: string;
     requiresPasswordChange?: boolean;
+    lastRefetchedAt?: number;
   }
 }

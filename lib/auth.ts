@@ -69,16 +69,62 @@ export const authOptions: NextAuthOptions = {
     })
   ],
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
+      // 1. Initial Login: store initial data
       if (user) {
         token.role = user.role;
         token.id = user.id;
         token.requiresPasswordChange = user.requiresPasswordChange;
         token.referralCode = user.referralCode;
+        token.lastRefetchedAt = Math.floor(Date.now() / 1000);
+      } 
+      
+      // 2. Allow manual refresh via update() if needed
+      else if (trigger === "update" && session) {
+        token.role = session.user?.role || token.role;
+        token.lastRefetchedAt = Math.floor(Date.now() / 1000);
       }
+
+      // 3. Periodic/Subsequent calls: Throttled re-validation (e.g. every 30 minutes)
+      // This is triggered by navigation or refetchOnWindowFocus from the client SessionProvider
+      else if (token.id) {
+        const now = Math.floor(Date.now() / 1000);
+        const lastRefetched = (token.lastRefetchedAt as number) || 0;
+        
+        // Only hit the DB if 30 minutes (1800s) have passed since the last fetch
+        // Or if we don't have a timestamp yet
+        if (now - lastRefetched > 1800) {
+          try {
+            await dbConnect();
+            const admin = await AdminUser.findById(token.id);
+            if (admin) {
+              if (!admin.isActive) {
+                return { ...token, error: "AccountInactive" };
+              }
+              token.role = admin.role;
+              token.requiresPasswordChange = admin.requiresPasswordChange;
+              token.lastRefetchedAt = now;
+            } else {
+              // Check if it's a school owner
+              const school = await School.findById(token.id);
+              if (school) {
+                token.role = "school_owner";
+                token.lastRefetchedAt = now;
+              }
+            }
+          } catch (error) {
+            console.error("JWT Session re-validation failed:", error);
+            // On DB failure, we might want to return the stale token and try again next time
+          }
+        }
+      }
+      
       return token;
     },
     async session({ session, token }) {
+      if (token.error === "AccountInactive") {
+          return null as any; 
+      }
       if (session.user) {
         session.user.role = token.role;
         session.user.id = token.id;
@@ -93,7 +139,8 @@ export const authOptions: NextAuthOptions = {
   },
   session: {
     strategy: "jwt",
-    maxAge: 7 * 24 * 60 * 60, // 7 days
+    maxAge: 365 * 24 * 60 * 60, // 1 year persistence (long lived token)
+    updateAge: 30 * 60, // Throttle cookie writes to once every 30 minutes (refresh logic)
   },
   secret: process.env.NEXTAUTH_SECRET,
 };
